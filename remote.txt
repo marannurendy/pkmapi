@@ -1,0 +1,8 @@
+
+echo 1nd0n3s1@PNM | sudo u svrapp01
+sudo tar -xvzf pkmapi.tar.gz
+sudo chmod -R 777 .
+sudo systemctl daemon-reload
+sudo systemctl enable pkm_new
+sudo systemctl restart pkm_new
+sudo systemctl status pkm_new

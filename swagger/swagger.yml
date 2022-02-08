@@ -1,0 +1,2493 @@
+swagger: "2.0"
+info:
+  title: PKM API
+  description: api untuk kebutuhan mobile pkm
+  version: 1.0.0
+  termsOfService: http://beego.me/
+  contact:
+    email: astaxie@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+basePath: /v1
+paths:
+  /images/home/PKM/{data}:
+    get:
+      tags:
+      - images
+      description: PkmImages
+      operationId: ImagesController.PkmImages
+      parameters:
+      - in: header
+        name: Authorization
+        description: Authorization Token
+        type: string
+      - in: path
+        name: data
+        description: path file
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{"code": 200,"message": "Data berhasil disimpan"}'
+          schema:
+            $ref: '#/definitions/global.APIResponse'
+        "404":
+          description: '{"code": 404,"message": "Error not found"}'
+        "405":
+          description: '{"code": 405,"message": "Error json"}'
+        "500":
+          description: '{"code": 500,"message": "Error sql"}'
+  /images/home/PKM_PROD/{data}:
+    get:
+      tags:
+      - images
+      description: PkmImages
+      operationId: ImagesController.PkmImages
+      parameters:
+      - in: header
+        name: Authorization
+        description: Authorization Token
+        type: string
+      - in: path
+        name: data
+        description: path file
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{"code": 200,"message": "Data berhasil disimpan"}'
+          schema:
+            $ref: '#/definitions/global.APIResponse'
+        "404":
+          description: '{"code": 404,"message": "Error not found"}'
+        "405":
+          description: '{"code": 405,"message": "Error json"}'
+        "500":
+          description: '{"code": 500,"message": "Error sql"}'
+  /inisiasi/GetAllWilayah:
+    get:
+      tags:
+      - inisiasi
+      description: Semua wilayah
+      operationId: MasterDataController.Get Semua WIlayah PKM
+      parameters:
+      - in: header
+        name: Authorization
+        description: Authorization Token
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/models.MasterWilayahMobile'
+        "403":
+          description: '"Error"'
+        "500":
+          description: '"Error"'
+  /inisiasi/GetListClient/{OurBranchID}/{CreatedBy}/{Search}/{PAGE}/{LIMIT}:
+    get:
+      tags:
+      - inisiasi
+      description: master_data
+      operationId: MasterDataController.MASTER_DATA
+      parameters:
+      - in: header
+        name: Authorization
+        description: Authorization Token
+        type: string
+      - in: path
+        name: OurBranchID
+        description: OurBranchID
+        required: true
+        type: string
+      - in: path
+        name: CreatedBy
+        description: CreatedBy
+        type: string
+      - in: path
+        name: Search
+        description: Pencarian
+        type: string
+      - in: path
+        name: PAGE
+        description: Halaman berapa
+        required: true
+        type: string
+      - in: path
+        name: LIMIT
+        description: Jumlah baris per Halaman
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.SP_GET_LIST_OF_CLIENT'
+        "403":
+          description: '"Error"'
+        "500":
+          description: '"Error"'
+  /inisiasi/GetListClientBRNET/{OurBranchID}/{CreatedBy}/{Search}/{PAGE}/{LIMIT}:
+    get:
+      tags:
+      - inisiasi
+      description: master_data
+      operationId: MasterDataController.MASTER_DATA
+      parameters:
+      - in: header
+        name: Authorization
+        description: Authorization Token
+        type: string
+      - in: path
+        name: OurBranchID
+        description: OurBranchID
+        required: true
+        type: string
+      - in: path
+        name: CreatedBy
+        description: CreatedBy
+        type: string
+      - in: path
+        name: Search
+        description: Pencarian
+        type: string
+      - in: path
+        name: PAGE
+        description: Halaman berapa
+        required: true
+        type: string
+      - in: path
+        name: LIMIT
+        description: Jumlah baris per Halaman
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.SP_GET_LIST_OF_CLIENT_BRNET'
+        "403":
+          description: '"Error"'
+        "500":
+          description: '"Error"'
+  /inisiasi/GetMasterData/{OurBranchID}:
+    get:
+      tags:
+      - inisiasi
+      description: master_data
+      operationId: MasterDataController.MASTER_DATA
+      parameters:
+      - in: header
+        name: Authorization
+        description: Authorization Token
+        type: string
+      - in: path
+        name: OurBranchID
+        description: OurBranchID
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.GetMasterDataResponse'
+        "403":
+          description: '"Error"'
+        "500":
+          description: '"Error"'
+  /inisiasi/GetPencairanMobile/{OurBranchID}/{CreatedBy}:
+    get:
+      tags:
+      - inisiasi
+      description: master_data
+      operationId: MasterDataController.MASTER_DATA
+      parameters:
+      - in: header
+        name: Authorization
+        description: Authorization Token
+        type: string
+      - in: path
+        name: OurBranchID
+        description: OurBranchID
+        required: true
+        type: string
+      - in: path
+        name: CreatedBy
+        description: CreatedBy
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.GET_DATA_PENCAIRAN'
+        "403":
+          description: '"Error"'
+        "500":
+          description: '"Error"'
+  /inisiasi/GetSiklusNasabahBrnet:
+    post:
+      tags:
+      - inisiasi
+      description: GET SIKLUS NASABAH
+      operationId: MasterDataController.SIKLUS NASABAH
+      parameters:
+      - in: header
+        name: Authorization
+        description: Authorization Token
+        type: string
+      - in: body
+        name: data
+        description: parameter get data
+        required: true
+        schema:
+          $ref: '#/definitions/models.PARAM_GET_SIKLUS_NASABAH_BRNET'
+      responses:
+        "200":
+          description: ""
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/models.SP_GET_SIKLUS_NASABAH_BRNET'
+        "403":
+          description: '"Error"'
+        "500":
+          description: '"Error"'
+  /inisiasi/GetSosialisasiMobile:
+    post:
+      tags:
+      - inisiasi
+      description: master_data
+      operationId: MasterDataController.MASTER_DATA
+      parameters:
+      - in: header
+        name: Authorization
+        description: Authorization Token
+        type: string
+      - in: body
+        name: data
+        description: parameter get data
+        required: true
+        schema:
+          $ref: '#/definitions/models.PARAM_DATA_SOSIALISASI'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.GET_DATA_SOSIALISASI'
+        "403":
+          description: '"Error"'
+        "500":
+          description: '"Error"'
+  /inisiasi/ScoringStatus/{prospek_id}:
+    get:
+      tags:
+      - inisiasi
+      description: Status Layak
+      operationId: MasterDataController.Scoring
+      parameters:
+      - in: header
+        name: Authorization
+        description: Authorization Token
+        type: string
+      - in: path
+        name: prospek_id
+        description: prospek_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.SP_GET_SCORING_STATUS'
+        "403":
+          description: '"Error"'
+        "500":
+          description: '"Error"'
+  /other/AuthLogout:
+    post:
+      tags:
+      - other
+      description: Logout Hapus Prospek yang ke ambil oleh user
+      operationId: OtherController.Logout
+      parameters:
+      - in: header
+        name: Authorization
+        description: Authorization Token
+        type: string
+      - in: body
+        name: data
+        description: data LogoutReleaseProspek
+        required: true
+        schema:
+          $ref: '#/definitions/models.LogoutReleaseProspek'
+      responses:
+        "200":
+          description: '{"code": 200,"message": "Data berhasil disimpan"}'
+          schema:
+            $ref: '#/definitions/global.APIResponse'
+        "404":
+          description: '{"code": 404,"message": "Error not found"}'
+        "405":
+          description: '{"code": 405,"message": "Error json"}'
+        "500":
+          description: '{"code": 500,"message": "Error sql"}'
+  /other/post_audit_trail:
+    post:
+      tags:
+      - other
+      description: PKM AUDIT TRAIL
+      operationId: OtherController.PKM INISIASI
+      parameters:
+      - in: header
+        name: Authorization
+        description: Authorization Token
+        type: string
+      - in: body
+        name: data
+        description: simpan data
+        required: true
+        schema:
+          $ref: '#/definitions/models.AUDIT_TRAILT'
+      responses:
+        "200":
+          description: '{"code": 200,"message": "Data berhasil disimpan"}'
+          schema:
+            $ref: '#/definitions/global.APIResponse'
+        "404":
+          description: '{"code": 404,"message": "Error not found"}'
+        "405":
+          description: '{"code": 405,"message": "Error json"}'
+        "500":
+          description: '{"code": 500,"message": "Error sql"}'
+  /pkm/AuthLogin:
+    post:
+      tags:
+      - pkm
+      description: Auth Login
+      operationId: MainController.PKM
+      parameters:
+      - in: body
+        name: data
+        description: login
+        required: true
+        schema:
+          $ref: '#/definitions/models.LoginRequest'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.LoginResponse'
+        "403":
+          description: '"Error"'
+        "500":
+          description: '"Error"'
+  /pkm/GetCollectionList/{OurBranchID}/{AO_ID}:
+    get:
+      tags:
+      - pkm
+      description: pkm
+      operationId: MainController.PKM
+      parameters:
+      - in: path
+        name: OurBranchID
+        description: OurBranchID
+        required: true
+        type: string
+      - in: path
+        name: AO_ID
+        description: AO_ID
+        required: true
+        type: string
+      responses:
+        "200":
+          description: models.ListCollection
+        "403":
+          description: '"Error"'
+        "500":
+          description: '"Error"'
+  /pkm/GetCollectionListPAR/{OurBranchID}/{AO_ID}:
+    get:
+      tags:
+      - pkm
+      description: pkm
+      operationId: MainController.PKM
+      parameters:
+      - in: path
+        name: OurBranchID
+        description: OurBranchID
+        required: true
+        type: string
+      - in: path
+        name: AO_ID
+        description: USERNAME
+        required: true
+        type: string
+      responses:
+        "200":
+          description: models.ListCollection
+        "403":
+          description: '"Error"'
+  /pkm/GetCollectionListPKMIndividual/{OurBranchID}/{AO_ID}:
+    get:
+      tags:
+      - pkm
+      description: pkm
+      operationId: MainController.PKM
+      parameters:
+      - in: path
+        name: OurBranchID
+        description: OurBranchID
+        required: true
+        type: string
+      - in: path
+        name: AO_ID
+        description: AO_ID
+        required: true
+        type: string
+      responses:
+        "200":
+          description: models.ListCollection
+        "403":
+          description: '"Error"'
+  /pkm/GetDate:
+    get:
+      tags:
+      - pkm
+      description: pkm
+      operationId: MainController.PKM
+      responses:
+        "200":
+          description: models.DateResponse
+        "403":
+          description: '"Error"'
+  /pkm/GetListGroup/{OurBranchID}/{USERNAME}:
+    get:
+      tags:
+      - pkm
+      description: pkm
+      operationId: MainController.PKM
+      parameters:
+      - in: path
+        name: OurBranchID
+        description: OurBranchID
+        required: true
+        type: string
+      - in: path
+        name: AO_ID
+        description: USERNAME
+        required: true
+        type: string
+      responses:
+        "200":
+          description: models.ListCollection
+        "403":
+          description: '"Error"'
+  /pkm/PostPKMIndividual:
+    post:
+      tags:
+      - pkm
+      description: pkm
+      operationId: MainController.PKM
+      parameters:
+      - in: formData
+        name: accountid
+        description: accountid
+        required: true
+        type: string
+      - in: formData
+        name: AOSign
+        description: AOSign
+        required: true
+        type: string
+      - in: formData
+        name: accountid
+        description: accountid
+        required: true
+        type: string
+      - in: formData
+        name: cabangid
+        description: cabangid
+        required: true
+        type: string
+      - in: formData
+        name: clientSign
+        description: clientSign
+        required: true
+        type: string
+      - in: formData
+        name: clientid
+        description: clientid
+        required: true
+        type: string
+      - in: formData
+        name: createdby
+        description: createdby
+        required: true
+        type: string
+      - in: formData
+        name: groupid
+        description: groupid
+        required: true
+        type: string
+      - in: formData
+        name: jumlahpar
+        description: jumlahpar
+        required: true
+        type: string
+      - in: formData
+        name: CreatedDate
+        description: CreatedDate
+        required: true
+        type: string
+      responses:
+        "200":
+          description: models.ListCollection
+        "403":
+          description: '"Error"'
+  /pkm/PostTransaction:
+    post:
+      tags:
+      - pkm
+      description: pkm
+      operationId: MainController.PKM
+      parameters:
+      - in: body
+        name: data
+        description: PostTransaction
+        required: true
+        schema:
+          $ref: '#/definitions/models.TransactionAll'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.TransactionResponse'
+        "403":
+          description: '"Error"'
+  /pkm/ReqShit:
+    post:
+      tags:
+      - pkm
+      responses:
+        "200":
+          description: models.ListCollection
+        "403":
+          description: '"Error"'
+  /pkm/ReqShitPAR:
+    post:
+      tags:
+      - pkm
+      description: pkm
+      operationId: MainController.PKM
+      parameters:
+      - in: formData
+        name: accountid
+        description: accountid
+        required: true
+        type: string
+      responses:
+        "200":
+          description: models.ListCollection
+        "403":
+          description: '"Error"'
+  /pkm/SetLogin/{Username}/{Password}:
+    get:
+      tags:
+      - pkm
+      description: pkm
+      operationId: MainController.PKM
+      parameters:
+      - in: path
+        name: Username
+        description: Username
+        required: true
+        type: string
+      - in: path
+        name: Password
+        description: Password
+        required: true
+        type: string
+      responses:
+        "200":
+          description: models.ListCollection
+        "403":
+          description: '"Error"'
+  /pkm/Shit/{OurBranchID}/{AO_ID}:
+    get:
+      tags:
+      - pkm
+      description: pkm
+      operationId: MainController.PKM
+      parameters:
+      - in: path
+        name: OurBranchID
+        description: OurBranchID
+        required: true
+        type: string
+      - in: path
+        name: AO_ID
+        description: AO_ID
+        required: true
+        type: string
+      responses:
+        "200":
+          description: models.ListCollection
+        "403":
+          description: '"Error"'
+  /pkmb/get_pkmb/{Username}:
+    get:
+      tags:
+      - pkmb
+      description: pkmb untuk data
+      operationId: PkmbController.PKM Bersama (menu divisi PKU)
+      parameters:
+      - in: header
+        name: Authorization
+        description: Authorization Token
+        type: string
+      - in: path
+        name: Username
+        description: Username
+        required: true
+        type: string
+      responses:
+        "404":
+          description: '{"code": 404,"message": "Error not found"}'
+        "405":
+          description: '{"code": 405,"message": "Error json"}'
+        "500":
+          description: '{"code": 500,"message": "Error sql"}'
+  /pkmb/post_pkmb:
+    post:
+      tags:
+      - pkmb
+      description: pkmb untuk data
+      operationId: PkmbController.PKM Bersama (menu divisi PKU)
+      parameters:
+      - in: header
+        name: Authorization
+        description: Authorization Token
+        type: string
+      - in: body
+        name: data
+        description: simpan data pkmb
+        required: true
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/models.PostPkmSurvey'
+      responses:
+        "404":
+          description: '{"code": 404,"message": "Error not found"}'
+        "405":
+          description: '{"code": 405,"message": "Error json"}'
+        "500":
+          description: '{"code": 500,"message": "Error sql"}'
+  /post_inisiasi/persetujuan_pembiayaan:
+    post:
+      tags:
+      - post_inisiasi
+      description: SP_ADD_PERSETUJUAN_PEMBIAYAAN
+      operationId: PostInisiasiController.INISIASI PERSETUJUAN PEMBIAYAAN
+      parameters:
+      - in: header
+        name: Authorization
+        description: Authorization Token
+        type: string
+      - in: body
+        name: data
+        description: simpan data
+        required: true
+        schema:
+          $ref: '#/definitions/models.SP_ADD_PERSETUJUAN_PEMBIAYAAN'
+      responses:
+        "200":
+          description: '{"code": 200,"message": "Data berhasil disimpan"}'
+          schema:
+            $ref: '#/definitions/global.APIResponse'
+        "404":
+          description: '{"code": 404,"message": "Error not found"}'
+        "405":
+          description: '{"code": 405,"message": "Error json"}'
+        "500":
+          description: '{"code": 500,"message": "Error sql"}'
+  /post_inisiasi/post_data_kelompok:
+    post:
+      tags:
+      - post_inisiasi
+      description: PKM DATA KELOMPOK
+      operationId: PostInisiasiController.PKM INISIASI
+      parameters:
+      - in: header
+        name: Authorization
+        description: Authorization Token
+        type: string
+      - in: body
+        name: data
+        description: simpan data
+        required: true
+        schema:
+          $ref: '#/definitions/models.SP_ADD_DATA_KELOMPOK'
+      responses:
+        "200":
+          description: '{"code": 200,"message": "Data berhasil disimpan"}'
+          schema:
+            $ref: '#/definitions/global.APIResponse'
+        "404":
+          description: '{"code": 404,"message": "Error not found"}'
+        "405":
+          description: '{"code": 405,"message": "Error json"}'
+        "500":
+          description: '{"code": 500,"message": "Error sql"}'
+  /post_inisiasi/post_ketua_subketua:
+    post:
+      tags:
+      - post_inisiasi
+      description: PKM DATA KELOMPOK
+      operationId: PostInisiasiController.PKM INISIASI
+      parameters:
+      - in: header
+        name: Authorization
+        description: Authorization Token
+        type: string
+      - in: body
+        name: data
+        description: simpan data
+        required: true
+        schema:
+          $ref: '#/definitions/models.SP_ADD_KK_KSK_DATA'
+      responses:
+        "200":
+          description: '{"code": 200,"message": "Data berhasil disimpan"}'
+          schema:
+            $ref: '#/definitions/global.APIResponse'
+        "404":
+          description: '{"code": 404,"message": "Error not found"}'
+        "405":
+          description: '{"code": 405,"message": "Error json"}'
+        "500":
+          description: '{"code": 500,"message": "Error sql"}'
+  /post_inisiasi/post_pencairan:
+    post:
+      tags:
+      - post_inisiasi
+      description: PKM PROSPEK DAN UK
+      operationId: PostInisiasiController.PKM INISIASI
+      parameters:
+      - in: body
+        name: data
+        description: simpan data
+        required: true
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/models.SP_ADD_PENCAIRAN'
+      responses:
+        "200":
+          description: '{"code": 200,"message": "Data berhasil disimpan"}'
+          schema:
+            $ref: '#/definitions/global.APIResponse'
+        "404":
+          description: '{"code": 404,"message": "Error not found"}'
+        "405":
+          description: '{"code": 405,"message": "Error json"}'
+        "500":
+          description: '{"code": 500,"message": "Error sql / validasi"}'
+  /post_inisiasi/post_pp:
+    post:
+      tags:
+      - post_inisiasi
+      description: PKM PP
+      operationId: PostInisiasiController.PKM INISIASI
+      parameters:
+      - in: header
+        name: Authorization
+        description: Authorization Token
+        type: string
+      - in: body
+        name: data
+        description: simpan data
+        required: true
+        schema:
+          $ref: '#/definitions/models.SP_ADD_INISIASI_PP'
+      responses:
+        "200":
+          description: '{"code": 200,"message": "Data berhasil disimpan"}'
+          schema:
+            $ref: '#/definitions/global.APIResponse'
+        "404":
+          description: '{"code": 404,"message": "Error not found"}'
+        "405":
+          description: '{"code": 405,"message": "Error json"}'
+        "500":
+          description: '{"code": 500,"message": "Error sql"}'
+  /post_inisiasi/post_prospek:
+    post:
+      tags:
+      - post_inisiasi
+      description: PKM PROSPEK DAN UK
+      operationId: PostInisiasiController.PKM INISIASI
+      parameters:
+      - in: header
+        name: Authorization
+        description: Authorization Token
+        type: string
+      - in: body
+        name: data
+        description: simpan data
+        required: true
+        schema:
+          $ref: '#/definitions/models.SP_ADD_PROSPEK'
+      responses:
+        "200":
+          description: '{"code": 200,"message": "Data berhasil disimpan"}'
+          schema:
+            $ref: '#/definitions/global.APIResponse'
+        "404":
+          description: '{"code": 404,"message": "Error not found"}'
+        "405":
+          description: '{"code": 405,"message": "Error json"}'
+        "500":
+          description: '{"code": 500,"message": "Error sql / validasi"}'
+  /post_inisiasi/post_prospek_lama:
+    post:
+      tags:
+      - post_inisiasi
+      description: PKM PROSPEK LAMA
+      operationId: PostInisiasiController.PKM INISIASI
+      parameters:
+      - in: header
+        name: Authorization
+        description: Authorization Token
+        type: string
+      - in: body
+        name: data
+        description: simpan data
+        required: true
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/models.SP_ADD_PERSETUJUAN_KELOMPOK'
+      responses:
+        "200":
+          description: '{"code": 200,"message": "Data berhasil disimpan"}'
+          schema:
+            $ref: '#/definitions/global.APIResponse'
+        "404":
+          description: '{"code": 404,"message": "Error not found"}'
+        "405":
+          description: '{"code": 405,"message": "Error json"}'
+        "500":
+          description: '{"code": 500,"message": "Error sql"}'
+  /post_inisiasi/post_prospek_uk:
+    post:
+      tags:
+      - post_inisiasi
+      description: PKM PROSPEK DAN UK
+      operationId: PostInisiasiController.PKM INISIASI
+      parameters:
+      - in: header
+        name: Authorization
+        description: Authorization Token
+        type: string
+      - in: body
+        name: data
+        description: simpan data
+        required: true
+        schema:
+          $ref: '#/definitions/models.SP_ADD_PROSPEK_UK'
+      responses:
+        "200":
+          description: '{"code": 200,"message": "Data berhasil disimpan", "data":"prospek
+            id"}'
+          schema:
+            $ref: '#/definitions/global.APIGetResponse'
+        "404":
+          description: '{"code": 404,"message": "Error not found"}'
+        "405":
+          description: '{"code": 405,"message": "Error json"}'
+        "500":
+          description: '{"code": 500,"message": "Error sql / validasi"}'
+  /post_inisiasi/post_verif_status:
+    post:
+      tags:
+      - post_inisiasi
+      description: PKM PP
+      operationId: PostInisiasiController.PKM INISIASI
+      parameters:
+      - in: header
+        name: Authorization
+        description: Authorization Token
+        type: string
+      - in: body
+        name: data
+        description: simpan data
+        required: true
+        schema:
+          $ref: '#/definitions/models.SP_SET_VERIF_STATUS'
+      responses:
+        "200":
+          description: '{"code": 200,"message": "Data berhasil disimpan"}'
+          schema:
+            $ref: '#/definitions/global.APIResponse'
+        "404":
+          description: '{"code": 404,"message": "Error not found"}'
+        "405":
+          description: '{"code": 405,"message": "Error json"}'
+        "500":
+          description: '{"code": 500,"message": "Error sql"}'
+definitions:
+  6687.0xc0007be960.false:
+    title: "false"
+    type: object
+  6743.0xc0007be990.false:
+    title: "false"
+    type: object
+  9331.0xc0007be9c0.false:
+    title: "false"
+    type: object
+  9411.0xc0007be9f0.false:
+    title: "false"
+    type: object
+  9471.0xc0007bea20.false:
+    title: "false"
+    type: object
+  9540.0xc0007bea50.false:
+    title: "false"
+    type: object
+  9909.0xc0007bea80.false:
+    title: "false"
+    type: object
+  10002.0xc0007beab0.false:
+    title: "false"
+    type: object
+  10986.0xc0007beae0.false:
+    title: "false"
+    type: object
+  12909.0xc0007beb10.false:
+    title: "false"
+    type: object
+  12974.0xc0007beb40.false:
+    title: "false"
+    type: object
+  13042.0xc0007beb70.false:
+    title: "false"
+    type: object
+  13277.0xc0007beba0.false:
+    title: "false"
+    type: object
+  13334.0xc0007bebd0.false:
+    title: "false"
+    type: object
+  13390.0xc0007bec00.false:
+    title: "false"
+    type: object
+  29731.0xc0007ded20.false:
+    title: "false"
+    type: object
+  32784.0xc0007df710.false:
+    title: "false"
+    type: object
+  global.APIGetResponse:
+    title: APIGetResponse
+    type: object
+    properties:
+      data:
+        type: object
+      responseCode:
+        type: integer
+        format: int64
+      responseDescription:
+        type: string
+  global.APIResponse:
+    title: APIResponse
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int64
+      message:
+        type: string
+  models.AUDIT_TRAILT:
+    title: AUDIT_TRAILT
+    type: object
+    properties:
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/models.SP_ADD_AUDIT_TRAILT'
+  models.GET_DATA_PENCAIRAN:
+    title: GET_DATA_PENCAIRAN
+    type: object
+    properties:
+      pencairan:
+        type: array
+        items:
+          $ref: '#/definitions/models.SP_GET_PENCAIRAN_MOBILE'
+      pencairan_nasabah:
+        type: array
+        items:
+          $ref: '#/definitions/models.SP_GET_PENCAIRAN_NASABAH_MOBILE'
+  models.GET_DATA_SOSIALISASI:
+    title: GET_DATA_SOSIALISASI
+    type: object
+    properties:
+      Sosialisasi_prospek_lama:
+        type: array
+        items:
+          $ref: '#/definitions/models.SP_GET_SOSIALISASI_MOBILE_PROSPEK_LAMA'
+      persetujuan_pembiayaan_client_kelompok:
+        type: array
+        items:
+          $ref: '#/definitions/models.SP_GET_PERSETUJUAN_PEMBIAYAAN_KELOMPOK_CLIENT_MOBILE'
+      persetujuan_pembiayaan_kelompok:
+        type: array
+        items:
+          $ref: '#/definitions/models.SP_GET_PERSETUJUAN_PEMBIAYAAN_KELOMPOK_MOBILE'
+      pp_2_kelompok:
+        type: array
+        items:
+          $ref: '#/definitions/models.SP_GET_PP_2_KELOMPOK_MOBILE'
+      pp_3_kelompok:
+        type: array
+        items:
+          $ref: '#/definitions/models.SP_GET_PP_3_KELOMPOK_MOBILE'
+      pp_kelompok:
+        type: array
+        items:
+          $ref: '#/definitions/models.SP_GET_PP_KELOMPOK_MOBILE'
+      sosialisai:
+        type: array
+        items:
+          $ref: '#/definitions/models.SP_GET_SOSIALISASI_MOBILE'
+      uk:
+        type: array
+        items:
+          $ref: '#/definitions/models.SP_GET_UK_MOBILE'
+      uk_client_data:
+        type: array
+        items:
+          $ref: '#/definitions/models.SP_GET_UK_CLIENT_DATA_MOBILE'
+      uk_detail:
+        type: array
+        items:
+          $ref: '#/definitions/models.SP_GET_UK_DETAIL_MOBILE'
+  models.GetMasterDataResponse:
+    title: GetMasterDataResponse
+    type: object
+    properties:
+      data:
+        $ref: '#/definitions/models.MasterData'
+      responseCode:
+        type: string
+      responseDescription:
+        type: string
+      status:
+        type: string
+  models.LoginData:
+    title: LoginData
+    type: object
+    properties:
+      LoginSession:
+        type: string
+      branchName:
+        type: string
+      jabatan:
+        type: string
+      nama:
+        type: string
+      nip:
+        type: string
+      password:
+        type: string
+      unitKerja:
+        type: string
+      userName:
+        type: string
+  models.LoginRequest:
+    title: LoginRequest
+    type: object
+    properties:
+      apk_version:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+  models.LoginResponse:
+    title: LoginResponse
+    type: object
+    properties:
+      data:
+        $ref: '#/definitions/models.LoginData'
+      message:
+        type: string
+      responseStatus:
+        type: boolean
+      status:
+        type: string
+      token:
+        type: string
+  models.LogoutReleaseProspek:
+    title: LogoutReleaseProspek
+    type: object
+    properties:
+      ID_Prospek:
+        type: array
+        items:
+          type: string
+  models.MasterAbsent:
+    title: MasterAbsent
+    type: object
+    properties:
+      absent:
+        type: string
+      id:
+        type: string
+  models.MasterAvailableSubGroup:
+    title: MasterAvailableSubGroup
+    type: object
+    properties:
+      GroupID:
+        type: string
+      OurBranchID:
+        type: string
+      SubGroupID:
+        type: string
+      Total:
+        type: string
+  models.MasterBranch:
+    title: MasterBranch
+    type: object
+    properties:
+      branchDetail:
+        type: string
+      id:
+        type: string
+  models.MasterData:
+    title: MasterData
+    type: object
+    properties:
+      Frekuensi:
+        type: array
+        items:
+          $ref: '#/definitions/models.MasterFrekuensi'
+      MasterAvailableSubGroup:
+        type: array
+        items:
+          $ref: '#/definitions/models.MasterAvailableSubGroup'
+      MasterGroupProduct:
+        type: array
+        items:
+          $ref: '#/definitions/models.MasterGroupProduct'
+      SetUKtimeOut:
+        type: string
+      WilayahMobile:
+        type: array
+        items:
+          $ref: '#/definitions/models.MasterWilayahMobile'
+      absent:
+        type: array
+        items:
+          $ref: '#/definitions/models.MasterAbsent'
+      branch:
+        type: array
+        items:
+          $ref: '#/definitions/models.MasterBranch'
+      dwellingCondition:
+        type: array
+        items:
+          $ref: '#/definitions/models.MasterDwellingCondition'
+      economicSector:
+        type: array
+        items:
+          $ref: '#/definitions/models.MasterEconomicSector'
+      education:
+        type: array
+        items:
+          $ref: '#/definitions/models.MasterEducation'
+      homeStatus:
+        type: array
+        items:
+          $ref: '#/definitions/models.MasterHomeStatus'
+      identityType:
+        type: array
+        items:
+          $ref: '#/definitions/models.MasterIdentityType'
+      jenisPembiayaan:
+        type: array
+        items:
+          $ref: '#/definitions/models.MasterJenisPembiayaan'
+      kategoritujuanPembiayaan:
+        type: array
+        items:
+          $ref: '#/definitions/models.MasterKategoriTujuanPembiayaan'
+      livingType:
+        type: array
+        items:
+          $ref: '#/definitions/models.MasterLivingType'
+      marriageStatus:
+        type: array
+        items:
+          $ref: '#/definitions/models.MasterMarriageStatus'
+      partnerJob:
+        type: array
+        items:
+          $ref: '#/definitions/models.MasterPartnerJob'
+      pembiayaanLain:
+        type: array
+        items:
+          $ref: '#/definitions/models.MasterPembiayaanLain'
+      product:
+        type: array
+        items:
+          $ref: '#/definitions/models.MasterProduct'
+      referral:
+        type: array
+        items:
+          $ref: '#/definitions/models.MasterReferral'
+      relationStatus:
+        type: array
+        items:
+          $ref: '#/definitions/models.MasterRelationStatus'
+      religion:
+        type: array
+        items:
+          $ref: '#/definitions/models.MasterReligion'
+      residenceLocation:
+        type: array
+        items:
+          $ref: '#/definitions/models.MasterResidenceLocation'
+      subjenisPembiayaan:
+        type: array
+        items:
+          $ref: '#/definitions/models.MasterSubJenisPembiayaan'
+      transFund:
+        type: array
+        items:
+          $ref: '#/definitions/models.MasterTransFund'
+      tujuanPembiayaan:
+        type: array
+        items:
+          $ref: '#/definitions/models.MasterTujuanPembiayaan'
+  models.MasterDwellingCondition:
+    title: MasterDwellingCondition
+    type: object
+    properties:
+      category:
+        type: string
+      categoryDetail:
+        type: string
+      id:
+        type: string
+      score:
+        type: string
+  models.MasterEconomicSector:
+    title: MasterEconomicSector
+    type: object
+    properties:
+      economicSectorDetail:
+        type: string
+      id:
+        type: string
+      idSubsector:
+        type: string
+      subSectorDetail:
+        type: string
+  models.MasterEducation:
+    title: MasterEducation
+    type: object
+    properties:
+      educationDetail:
+        type: string
+      id:
+        type: string
+  models.MasterFrekuensi:
+    title: MasterFrekuensi
+    type: object
+    properties:
+      id:
+        type: string
+      namafrekuensi:
+        type: string
+  models.MasterGroupProduct:
+    title: MasterGroupProduct
+    type: object
+    properties:
+      Description:
+        type: string
+      Group_Product_Name:
+        type: string
+      ID_Group_Product:
+        type: string
+  models.MasterHomeStatus:
+    title: MasterHomeStatus
+    type: object
+    properties:
+      homeStatusDetail:
+        type: string
+      id:
+        type: string
+  models.MasterIdentityType:
+    title: MasterIdentityType
+    type: object
+    properties:
+      id:
+        type: string
+      identityCard:
+        type: string
+  models.MasterJenisPembiayaan:
+    title: MasterJenisPembiayaan
+    type: object
+    properties:
+      id:
+        type: string
+      namajenispembiayaan:
+        type: string
+  models.MasterKategoriTujuanPembiayaan:
+    title: MasterKategoriTujuanPembiayaan
+    type: object
+    properties:
+      id:
+        type: string
+      namakategoritujuanpembiayaan:
+        type: string
+  models.MasterLivingType:
+    title: MasterLivingType
+    type: object
+    properties:
+      id:
+        type: string
+      livingTypeDetail:
+        type: string
+  models.MasterMarriageStatus:
+    title: MasterMarriageStatus
+    type: object
+    properties:
+      id:
+        type: string
+      marriageStatusDetail:
+        type: string
+  models.MasterPartnerJob:
+    title: MasterPartnerJob
+    type: object
+    properties:
+      id:
+        type: string
+      partnerJob:
+        type: string
+  models.MasterPembiayaanLain:
+    title: MasterPembiayaanLain
+    type: object
+    properties:
+      id:
+        type: string
+      jenisPembiayaanDetail:
+        type: string
+  models.MasterProduct:
+    title: MasterProduct
+    type: object
+    properties:
+      IsMP:
+        type: string
+      id:
+        type: string
+      interest:
+        type: string
+      isReguler:
+        type: string
+      isSyariah:
+        type: string
+      maxPlafond:
+        type: string
+      minPlafond:
+        type: string
+      paymentTerm:
+        type: string
+      productName:
+        type: string
+  models.MasterReferral:
+    title: MasterReferral
+    type: object
+    properties:
+      id:
+        type: string
+      referralDetail:
+        type: string
+  models.MasterRelationStatus:
+    title: MasterRelationStatus
+    type: object
+    properties:
+      id:
+        type: string
+      relationStatus:
+        type: string
+  models.MasterReligion:
+    title: MasterReligion
+    type: object
+    properties:
+      id:
+        type: string
+      religion:
+        type: string
+  models.MasterResidenceLocation:
+    title: MasterResidenceLocation
+    type: object
+    properties:
+      id:
+        type: string
+      locationDetail:
+        type: string
+  models.MasterSubJenisPembiayaan:
+    title: MasterSubJenisPembiayaan
+    type: object
+    properties:
+      id:
+        type: string
+      idjenispembiayaan:
+        type: string
+      namajenispembiayaan:
+        type: string
+  models.MasterTransFund:
+    title: MasterTransFund
+    type: object
+    properties:
+      id:
+        type: string
+      transfundDetail:
+        type: string
+  models.MasterTujuanPembiayaan:
+    title: MasterTujuanPembiayaan
+    type: object
+    properties:
+      id:
+        type: string
+      namatujuanpembiayaan:
+        type: string
+  models.MasterWilayahMobile:
+    title: MasterWilayahMobile
+    type: object
+    properties:
+      ID_Kabkot:
+        type: string
+      ID_Kecamatan:
+        type: string
+      ID_KelDes:
+        type: string
+      ID_Provinsi:
+        type: string
+      Nama_KabKot:
+        type: string
+      Nama_Kecamatan:
+        type: string
+      Nama_KelurahanDesa:
+        type: string
+      Nama_Provinsi:
+        type: string
+  models.PARAM_DATA_SOSIALISASI:
+    title: PARAM_DATA_SOSIALISASI
+    type: object
+    properties:
+      Check_ID_By:
+        type: string
+      Check_ID_Prospek:
+        type: string
+      CreatedBy:
+        type: string
+      ID_Prospek:
+        type: array
+        items:
+          type: string
+      IsPickClient:
+        type: string
+      OurBranchID:
+        type: string
+  models.PARAM_GET_SIKLUS_NASABAH_BRNET:
+    title: PARAM_GET_SIKLUS_NASABAH_BRNET
+    type: object
+    properties:
+      ClientID:
+        type: array
+        items:
+          type: string
+  models.PostPkmSurvey:
+    title: PostPkmSurvey
+    type: object
+    properties:
+      CABANG_ID:
+        type: string
+      KELOMPOK_ID:
+        type: string
+      NAMA_NASABAH:
+        type: string
+      NASABAH_ID:
+        type: string
+      NILAI_STRATEGI_PENJUALAN:
+        type: string
+      NILAI_SURVEY_ASSET:
+        type: string
+      NILAI_SURVEY_DIVERSIFIKASI:
+        type: string
+      NILAI_SURVEY_IJIN:
+        type: string
+      NILAI_SURVEY_MENABUNG:
+        type: string
+      NILAI_SURVEY_OMSET:
+        type: string
+      NILAI_SURVEY_PENGELOLAAN_KEUANGAN:
+        type: string
+      NILAI_SURVEY_TENAGA_KERJA:
+        type: string
+  models.SP_ADD_AUDIT_TRAILT:
+    title: SP_ADD_AUDIT_TRAILT
+    type: object
+    properties:
+      Change_By:
+        type: string
+      Change_Log:
+        type: string
+      Field:
+        type: string
+      ID_Prospek:
+        type: string
+  models.SP_ADD_DATA_KELOMPOK:
+    title: SP_ADD_DATA_KELOMPOK
+    type: object
+    properties:
+      ClientTotal:
+        type: string
+      GroupProduct:
+        type: string
+      HariPertemuan:
+        type: string
+      ID_DK_Mobile:
+        type: string
+      IDKelompok:
+        type: string
+      LokasiPertemuan:
+        type: string
+      NamaKelompok:
+        type: string
+      OurBranchID:
+        type: string
+      TanggalPertemuan:
+        type: string
+      WaktuPertemuan:
+        type: string
+  models.SP_ADD_INISIASI_PP:
+    title: SP_ADD_INISIASI_PP
+    type: object
+    properties:
+      ID_Absen:
+        type: string
+      ID_DK_Mobile:
+        type: string
+      ID_Kelompok:
+        type: string
+      ID_MPP:
+        type: string
+      ID_Prospek:
+        type: string
+      Keterangan_Absen:
+        type: string
+      Nama_Kelompok:
+        type: string
+      Sub_Kelompok:
+        type: string
+  models.SP_ADD_KK_KSK_DATA:
+    title: SP_ADD_KK_KSK_DATA
+    type: object
+    properties:
+      ID_Prospek:
+        type: string
+      Nama_KK:
+        type: string
+      Nama_KSK:
+        type: string
+  models.SP_ADD_PENCAIRAN:
+    title: SP_ADD_PENCAIRAN
+    type: object
+    properties:
+      FP4:
+        type: string
+      Foto_Kegiatan:
+        type: string
+      Foto_Pencairan:
+        type: string
+      ID_Prospek:
+        type: string
+      Is_Batal:
+        type: string
+      Is_Dicairkan:
+        type: string
+      Is_Ludin:
+        type: string
+      Is_PMU:
+        type: string
+      Jml_Cair_PMU:
+        type: string
+      Jml_RealCair:
+        type: string
+      Jml_Sisa_UP:
+        type: string
+      Jml_UP:
+        type: string
+      LRP_TTD_AO:
+        type: string
+      LRP_TTD_Nasabah:
+        type: string
+      TTD_KC:
+        type: string
+      TTD_KK:
+        type: string
+      TTD_KSK:
+        type: string
+      TTD_Nasabah:
+        type: string
+      TTD_Nasabah_2:
+        type: string
+  models.SP_ADD_PERSETUJUAN_KELOMPOK:
+    title: SP_ADD_PERSETUJUAN_KELOMPOK
+    type: object
+    properties:
+      ID_Kelompok:
+        type: string
+      ID_Prospek:
+        type: string
+      Is_Perkawinan_Berubah:
+        type: string
+      Is_Tanggungan_Berubah:
+        type: string
+      Is_Usaha_Berubah:
+        type: string
+      Jml_Kehadiran_PKM:
+        type: string
+      Jml_Pembayaran:
+        type: string
+      Keterangan_Tanggungan:
+        type: string
+      Keterangan_Usaha:
+        type: string
+      Lokasi_Persetujuan:
+        type: string
+      No_Identitas:
+        type: string
+      Plafon_Diajukan:
+        type: string
+      Status_Tempat_Tinggal:
+        type: string
+      TTD_AO:
+        type: string
+      TTD_KK:
+        type: string
+      TTD_KSK:
+        type: string
+      Tahap_Pembiayaan:
+        type: string
+      Tanggal_Persetujuan:
+        type: string
+      Tenor:
+        type: string
+  models.SP_ADD_PERSETUJUAN_PEMBIAYAAN:
+    title: SP_ADD_PERSETUJUAN_PEMBIAYAAN
+    type: object
+    properties:
+      ID_Prospek:
+        type: string
+      Keterangan_Pembelian:
+        type: string
+      TTD_AO:
+        type: string
+      TTD_KC:
+        type: string
+      TTD_KK:
+        type: string
+      TTD_KSK:
+        type: string
+  models.SP_ADD_PROSPEK:
+    title: SP_ADD_PROSPEK
+    type: object
+    properties:
+      ClientID:
+        type: string
+      CreatedBy:
+        type: string
+      CreatedNIP:
+        type: string
+      Kelompok_ID:
+        type: string
+      LanjutUK:
+        type: string
+      LokasiSos:
+        type: string
+      Nama_Kelompok:
+        type: string
+      NamaCalonNasabah:
+        type: string
+      NoHP:
+        type: string
+      OurBranchID:
+        type: string
+      Sisipan:
+        type: string
+      Sub_Kelompok:
+        type: string
+      Sumber:
+        type: string
+      TanggalSos:
+        type: string
+  models.SP_ADD_PROSPEK_UK:
+    title: SP_ADD_PROSPEK_UK
+    type: object
+    properties:
+      Alamat:
+        type: string
+      AlamatDomisili:
+        type: string
+      Angsuran_Pada_Saat_PKM:
+        type: string
+      Berdasarkan_Kemampuan_Angsuran:
+        type: string
+      Berdasarkan_Lembaga_Lain:
+        type: string
+      Berdasarkan_Tingkat_Pendapatan:
+        type: string
+      ClientID:
+        type: string
+      CreatedBy:
+        type: string
+      CreatedNIP:
+        type: string
+      Dinding:
+        type: string
+      FotoKK:
+        type: string
+      FotoKTPPenjamin:
+        type: string
+      FotoKTPSuami:
+        type: string
+      FotoKartuIdentitas:
+        type: string
+      FotoSuketDomisili:
+        type: string
+      FrekuensiPembiayaan:
+        type: string
+      ID_Prospek:
+        type: string
+      ID_SektorEkonomi:
+        type: string
+      ID_SubSektorEkonomi:
+        type: string
+      IDAgama:
+        type: string
+      IDProduk:
+        type: string
+      IDProdukPembiayaan:
+        type: string
+      Is_AdaAdaToiletPribadi:
+        type: string
+      Is_AdaAksesAirBersih:
+        type: string
+      Is_AdaPembiayaanLain:
+        type: string
+      IsAdaRekening:
+        type: string
+      IsPernyataanDibaca:
+        type: string
+      IsSesuaiDukcapil:
+        type: string
+      IsSuamiDitempat:
+        type: string
+      Jenis_Usaha:
+        type: string
+      JenisAtap:
+        type: string
+      JenisIdentitas:
+        type: string
+      JenisPembiayaan:
+        type: string
+      JmlHariUsaha_perBulan:
+        type: string
+      JmlHariUsaha_perBulan_Suami:
+        type: string
+      JmlTenagaKerja:
+        type: string
+      JmlhAnak:
+        type: string
+      JmlhTanggungan:
+        type: string
+      JumlahPinjaman:
+        type: string
+      Kabupaten:
+        type: string
+      KategoriTujuanPembiayaan:
+        type: string
+      Kecamatan:
+        type: string
+      Kelompok_ID:
+        type: string
+      Kelurahan:
+        type: string
+      Kemampuan_Angsuran:
+        type: string
+      KondisiBangunan:
+        type: string
+      LamaTinggal:
+        type: string
+      Lantai:
+        type: string
+      Latitude:
+        type: string
+      LokasiSos:
+        type: string
+      LokasiUK:
+        type: string
+      Longitude:
+        type: string
+      LuasBangunan:
+        type: string
+      Nama_Kelompok:
+        type: string
+      Nama_Pembiayaan_Lembaga_Lain:
+        type: string
+      Nama_TTD_AO:
+        type: string
+      Nama_TTD_KK:
+        type: string
+      Nama_TTD_KSK:
+        type: string
+      Nama_TTD_Nasabah:
+        type: string
+      Nama_TTD_Penjamin:
+        type: string
+      NamaAyah:
+        type: string
+      NamaBank:
+        type: string
+      NamaGadisIBU:
+        type: string
+      NamaLengkap:
+        type: string
+      NamaPemilikRekening:
+        type: string
+      NamaPenjamin:
+        type: string
+      NamaProduk:
+        type: string
+      NamaSuami:
+        type: string
+      NoHP:
+        type: string
+      NoKK:
+        type: string
+      NoRekening:
+        type: string
+      NomorIdentitas:
+        type: string
+      NomorRekening:
+        type: string
+      OurBranchID:
+        type: string
+      PekerjaanSuami:
+        type: string
+      PemilikRekening:
+        type: string
+      PendapatanBersih_perBulan:
+        type: string
+      PendapatanBersih_perBulan_Suami:
+        type: string
+      PendapatanBersih_perHari:
+        type: string
+      PendapatanBersih_perHari_Suami:
+        type: string
+      PendapatanBersih_perMinggu:
+        type: string
+      PendapatanBersih_perMinggu_Suami:
+        type: string
+      PendapatanKotor_perHari:
+        type: string
+      PendapatanKotor_perHari_Suami:
+        type: string
+      PengeluaranKel_perHari:
+        type: string
+      PengeluaranKel_perHari_Suami:
+        type: string
+      ProdukPembiayaan:
+        type: string
+      Provinsi:
+        type: string
+      Siklus:
+        type: string
+      Sisipan:
+        type: string
+      Status_Perkawinan:
+        type: string
+      StatusPenjamin:
+        type: string
+      StatusRumah:
+        type: string
+      Sub_Kelompok:
+        type: string
+      Sumber:
+        type: string
+      TTD_AO:
+        type: string
+      TTD_KK:
+        type: string
+      TTD_KSK:
+        type: string
+      TTD_Nasabah:
+        type: string
+      TTD_Penjamin:
+        type: string
+      TanggalLahir:
+        type: string
+      TempatLahir:
+        type: string
+      TermPembiayaan:
+        type: string
+      TujuanPembiayaan:
+        type: string
+      TypePencairan:
+        type: string
+      kehadiran_pkm:
+        type: string
+  models.SP_GET_LIST_OF_CLIENT:
+    title: SP_GET_LIST_OF_CLIENT
+    type: object
+    properties:
+      ID_Prospek:
+        type: string
+      Nama:
+        type: string
+  models.SP_GET_LIST_OF_CLIENT_BRNET:
+    title: SP_GET_LIST_OF_CLIENT_BRNET
+    type: object
+    properties:
+      ClientID:
+        type: string
+      Name:
+        type: string
+  models.SP_GET_PENCAIRAN_MOBILE:
+    title: SP_GET_PENCAIRAN_MOBILE
+    type: object
+    properties:
+      Jml_ID_Prospek:
+        type: string
+      Kelompok_ID:
+        type: string
+      Nama_Kelompok:
+        type: string
+  models.SP_GET_PENCAIRAN_NASABAH_MOBILE:
+    title: SP_GET_PENCAIRAN_NASABAH_MOBILE
+    type: object
+    properties:
+      Alamat_Domisili:
+        type: string
+      Angsuran_Per_Minggu:
+        type: string
+      ClientID:
+        $ref: '#/definitions/32784.0xc0007df710.false'
+      ID_Prospek:
+        type: string
+      Jasa:
+        type: string
+      Jumlah_Pinjaman:
+        type: string
+      Kelompok_ID:
+        type: string
+      Nama_Kelompok:
+        type: string
+      Nama_Penjamin:
+        type: string
+      Nama_Produk:
+        type: string
+      Nama_Prospek:
+        type: string
+      Nama_Tipe_Pencairan:
+        type: string
+      Nomor_Identitas:
+        type: string
+      Term_Pembiayaan:
+        type: string
+  models.SP_GET_PERSETUJUAN_PEMBIAYAAN_KELOMPOK_CLIENT_MOBILE:
+    title: SP_GET_PERSETUJUAN_PEMBIAYAAN_KELOMPOK_CLIENT_MOBILE
+    type: object
+    properties:
+      Angsuran_Per_Minggu:
+        type: string
+      Jasa:
+        type: string
+      Jumlah_Pinjaman:
+        type: string
+      Kelompok_ID:
+        type: string
+      Nama_Prospek:
+        type: string
+      TTD_AO:
+        type: string
+      TTD_KC:
+        type: string
+      Term_Pembiayaan:
+        type: string
+  models.SP_GET_PERSETUJUAN_PEMBIAYAAN_KELOMPOK_MOBILE:
+    title: SP_GET_PERSETUJUAN_PEMBIAYAAN_KELOMPOK_MOBILE
+    type: object
+    properties:
+      Kelompok_ID:
+        type: string
+      Nama_Kelompok:
+        type: string
+      Total:
+        type: string
+  models.SP_GET_PP_2_KELOMPOK_MOBILE:
+    title: SP_GET_PP_2_KELOMPOK_MOBILE
+    type: object
+    properties:
+      Created_Date:
+        type: string
+      Nama_Kelompok:
+        type: string
+      Total:
+        type: string
+  models.SP_GET_PP_3_KELOMPOK_MOBILE:
+    title: SP_GET_PP_3_KELOMPOK_MOBILE
+    type: object
+    properties:
+      Created_Date:
+        type: string
+      Nama_Kelompok:
+        type: string
+      Total:
+        type: string
+  models.SP_GET_PP_KELOMPOK_MOBILE:
+    title: SP_GET_PP_KELOMPOK_MOBILE
+    type: object
+    properties:
+      Created_Date:
+        type: string
+      Nama_Kelompok:
+        type: string
+      Total:
+        type: string
+  models.SP_GET_SCORING_STATUS:
+    title: SP_GET_SCORING_STATUS
+    type: object
+    properties:
+      ID_Prospek:
+        type: string
+      Status_Kelayakan:
+        $ref: '#/definitions/29731.0xc0007ded20.false'
+  models.SP_GET_SIKLUS_NASABAH_BRNET:
+    title: SP_GET_SIKLUS_NASABAH_BRNET
+    type: object
+    properties:
+      ClientID:
+        type: string
+      ClientName:
+        type: string
+      GroupID:
+        type: string
+      GroupName:
+        type: string
+      IdentityNumber:
+        type: string
+      LoanSeries:
+        type: string
+      SubGroup:
+        type: string
+  models.SP_GET_SOSIALISASI_MOBILE:
+    title: SP_GET_SOSIALISASI_MOBILE
+    type: object
+    properties:
+      CalonNasabah:
+        type: string
+      Lokasi_Sos:
+        type: string
+      TanggalSos:
+        type: string
+  models.SP_GET_SOSIALISASI_MOBILE_PROSPEK_LAMA:
+    title: SP_GET_SOSIALISASI_MOBILE_PROSPEK_LAMA
+    type: object
+    properties:
+      Last_Status:
+        type: string
+      Nama_Lengkap:
+        type: string
+      No_Telp:
+        type: string
+  models.SP_GET_UK_CLIENT_DATA_MOBILE:
+    title: SP_GET_UK_CLIENT_DATA_MOBILE
+    type: object
+    properties:
+      Alamat_Domisili:
+        type: string
+      Alamat_Sesuai_ID:
+        type: string
+      Angsuran_Perminggu:
+        type: string
+      Created_By:
+        type: string
+      Dinding:
+        type: string
+      Foto_KK:
+        type: string
+      Foto_KTP_Penjamin:
+        type: string
+      Foto_KTP_Suami:
+        type: string
+      Foto_Kartu_Identitas:
+        type: string
+      Foto_Suket_Domisili:
+        type: string
+      Frekuensi_Pembiayaan:
+        type: string
+      ID_Agama:
+        type: string
+      ID_MPP:
+        type: string
+      ID_Produk:
+        type: string
+      ID_Produk_Pembiayaan:
+        type: string
+      ID_Prospek:
+        type: string
+      ID_SektorEkonomi:
+        type: string
+      ID_SubSektorEkonomi:
+        type: string
+      ID_Sumber:
+        type: string
+      Is_Ada_Rekening_Bank:
+        $ref: '#/definitions/9331.0xc0007be9c0.false'
+      Is_AdaAdaToiletPribadi:
+        $ref: '#/definitions/10002.0xc0007beab0.false'
+      Is_AdaAksesAirBersih:
+        $ref: '#/definitions/9909.0xc0007bea80.false'
+      Is_AdaPembiayaanLain:
+        type: string
+      Is_Ditempat:
+        type: string
+      Is_Ketua_Kelompok:
+        type: string
+      Is_Ketua_Sub_Kelompok:
+        type: string
+      Is_LanjutUK:
+        type: string
+      Is_Layak:
+        type: string
+      Is_Pencairan:
+        type: string
+      Is_Pernyataan_Dibaca:
+        type: string
+      Is_Sisipan:
+        type: string
+      Is_Syariah:
+        type: string
+      Is_UKPass:
+        type: string
+      Is_VerifPass:
+        type: string
+      Jasa:
+        type: string
+      Jenis_Atap:
+        type: string
+      Jenis_Identitas:
+        type: string
+      Jenis_Pembiayaan:
+        type: string
+      Jenis_Usaha:
+        type: string
+      Jml_Anak:
+        type: string
+      Jml_Tanggungan:
+        type: string
+      Jml_Tenaga_Kerja:
+        type: string
+      JmlHariUsaha_perBulan:
+        type: string
+      JmlHariUsaha_perBulan_Suami:
+        type: string
+      Jumlah_Pinjaman:
+        type: string
+      Kabupaten:
+        type: string
+      Kategori_Tujuan_Pembiayaan:
+        type: string
+      Kecamatan:
+        type: string
+      Kelompok_ID:
+        $ref: '#/definitions/12909.0xc0007beb10.false'
+      Kelurahan:
+        type: string
+      Kemampuan_Angsuran:
+        type: string
+      Kondisi_Bangunan:
+        type: string
+      Kualitas_KehadiranPKM:
+        type: string
+      Kualitas_Pembayaran:
+        type: string
+      Lama_Tinggal:
+        type: string
+      Lantai:
+        type: string
+      Latitude:
+        $ref: '#/definitions/6687.0xc0007be960.false'
+      Lokasi_Sos:
+        type: string
+      Longitude:
+        $ref: '#/definitions/6743.0xc0007be990.false'
+      Luas_Bangunan:
+        type: string
+      Nama_Ayah:
+        type: string
+      Nama_Bank:
+        $ref: '#/definitions/9411.0xc0007be9f0.false'
+      Nama_Gadis_Ibu_Kandung:
+        type: string
+      Nama_KabKot:
+        type: string
+      Nama_Kecamatan:
+        type: string
+      Nama_Kelompok:
+        $ref: '#/definitions/13042.0xc0007beb70.false'
+      Nama_KelurahanDesa:
+        type: string
+      Nama_Lengkap:
+        type: string
+      Nama_Pembiayaan_Lembaga_Lain:
+        $ref: '#/definitions/10986.0xc0007beae0.false'
+      Nama_Penjamin:
+        type: string
+      Nama_Produk:
+        type: string
+      Nama_Provinsi:
+        type: string
+      Nama_Suami:
+        type: string
+      Nama_TTD_AO:
+        type: string
+      Nama_TTD_KC_SAO:
+        type: string
+      Nama_TTD_KK:
+        type: string
+      Nama_TTD_KSK:
+        type: string
+      Nama_TTD_Nasabah:
+        type: string
+      Nama_TTD_Penjamin:
+        type: string
+      No_KK:
+        type: string
+      No_Rekening:
+        $ref: '#/definitions/9471.0xc0007bea20.false'
+      No_Telp:
+        type: string
+      Nomor_Identitas:
+        type: string
+      OurBranchID:
+        type: string
+      Pekerjaan:
+        type: string
+      Pemilik_Rekening:
+        $ref: '#/definitions/9540.0xc0007bea50.false'
+      PendapatanBersih_perBulan:
+        type: string
+      PendapatanBersih_perBulan_Suami:
+        type: string
+      PendapatanBersih_perHari:
+        type: string
+      PendapatanBersih_perHari_Suami:
+        type: string
+      PendapatanBersih_perMinggu:
+        type: string
+      PendapatanBersih_perMinggu_Suami:
+        type: string
+      PendapatanKotor_perHari:
+        type: string
+      PendapatanKotor_perHari_Suami:
+        type: string
+      Pendidikan_Anak:
+        type: string
+      PengeluaranKel_perHari:
+        type: string
+      PengeluaranKel_perHari_Suami:
+        type: string
+      PostStatus:
+        $ref: '#/definitions/13277.0xc0007beba0.false'
+      Produk_Pembiayaan:
+        type: string
+      Provinsi:
+        type: string
+      Reason:
+        $ref: '#/definitions/13334.0xc0007bebd0.false'
+      Siklus:
+        type: string
+      Siklus_Pembiayaan:
+        type: string
+      Status_Penjamin:
+        type: string
+      Status_Perkawinan:
+        type: string
+      StatusRumah:
+        type: string
+      Sub_Kelompok:
+        $ref: '#/definitions/12974.0xc0007beb40.false'
+      TTD_AO:
+        type: string
+      TTD_KC_SAO:
+        type: string
+      TTD_KK:
+        type: string
+      TTD_KSK:
+        type: string
+      TTD_Nasabah:
+        type: string
+      TTD_Penjamin:
+        type: string
+      Tanggal_Input:
+        type: string
+      Tanggal_Lahir:
+        type: string
+      Tanggal_Sos:
+        type: string
+      Tanggal_Verif:
+        $ref: '#/definitions/13390.0xc0007bec00.false'
+      Tempat_Lahir:
+        type: string
+      Term_Pembiayaan:
+        type: string
+      Tujuan_Pembiayaan:
+        type: string
+      Type_Pencairan:
+        type: string
+  models.SP_GET_UK_DETAIL_MOBILE:
+    title: SP_GET_UK_DETAIL_MOBILE
+    type: object
+    properties:
+      DATE:
+        type: string
+      Lokasi_Sos:
+        type: string
+      Nama_Prospek:
+        type: string
+  models.SP_GET_UK_MOBILE:
+    title: SP_GET_UK_MOBILE
+    type: object
+    properties:
+      DATE:
+        type: string
+      Lokasi_Sos:
+        type: string
+  models.SP_SET_VERIF_STATUS:
+    title: SP_SET_VERIF_STATUS
+    type: object
+    properties:
+      ID_Prospek:
+        type: string
+      PostStatus:
+        type: string
+      Reason:
+        type: string
+      TTD_KC_SAO:
+        type: string
+      URL_FP4:
+        type: string
+      VerifBy:
+        type: string
+  models.Signatures:
+    title: Signatures
+    type: object
+    properties:
+      GroupID:
+        type: string
+      IDKetuaKelompok:
+        type: string
+      TtdAccountOfficer:
+        type: string
+      TtdKetuaKelompok:
+        type: string
+      latitude:
+        type: string
+      longitude:
+        type: string
+      trxdate:
+        type: string
+      userName:
+        type: string
+  models.TransactionAll:
+    title: TransactionAll
+    type: object
+    properties:
+      pkm:
+        type: array
+        items:
+          $ref: '#/definitions/models.TransactionPost'
+      sign:
+        $ref: '#/definitions/models.Signatures'
+      up:
+        type: array
+        items:
+          $ref: '#/definitions/models.TransactionUP'
+  models.TransactionPost:
+    title: TransactionPost
+    type: object
+    properties:
+      AccountID:
+        type: string
+      ClientID:
+        type: string
+      GroupID:
+        type: string
+      InstallmentAmount:
+        type: string
+      attendStatus:
+        type: string
+      savings:
+        type: string
+      trxdate:
+        type: string
+      userName:
+        type: string
+      withDraw:
+        type: string
+  models.TransactionResponse:
+    title: TransactionResponse
+    type: object
+    properties:
+      Message:
+        type: string
+      ResponseStatus:
+        type: boolean
+      Status:
+        type: string
+      Statusid:
+        type: string
+  models.TransactionUP:
+    title: TransactionUP
+    type: object
+    properties:
+      clientid:
+        type: string
+      jumlahup:
+        type: string
+tags:
+- name: pkm
+  description: |
+    PKM controllerrr
+- name: inisiasi
+  description: |
+    Inisiasi Mobile
+- name: post_inisiasi
+  description: |
+    Post Inisiasi PKM Mobile
+- name: other
+  description: |
+    Post Audit PKM Mobile
+- name: images
+  description: |
+    Post Audit PKM Mobile
