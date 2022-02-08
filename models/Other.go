@@ -31,6 +31,8 @@ func POST_AUDIT_TRAIL(params AUDIT_TRAILT)error {
 	if err != nil {
 		return err
 	}	
+	defer db.Close()
+
 	var query string
 
 	err = db.Begin() //Begin Transaction
@@ -57,8 +59,8 @@ func POST_AUDIT_TRAIL(params AUDIT_TRAILT)error {
 	err = db.Commit() //Commit Transaction
 	if err != nil {return err}
 
-	err = db.Close()
-	if err != nil {return err}	
+	// err = db.Close()
+	// if err != nil {return err}	
 
 	return nil	
 
@@ -73,6 +75,7 @@ func INSERT_RKH_ID_PROSPEK_TERPAKAI(ID_Prospek []string,By string)([]string,erro
 	if err != nil {
 		return ID_Prospek_Allow,err
 	}			
+	defer db.Close()
 
 	for _, v := range ID_Prospek {
 		query = "INSERT INTO TEMP_RKH_PROSPEK WITH (ROWLOCK) (ID_Prospek_Terpakai,Terpakai_Oleh) values ('"+v+"','"+By+"') "
@@ -85,8 +88,8 @@ func INSERT_RKH_ID_PROSPEK_TERPAKAI(ID_Prospek []string,By string)([]string,erro
 	}	
 
 
-	err = db.Close()
-	if err != nil {return ID_Prospek_Allow,err}	
+	// err = db.Close()
+	// if err != nil {return ID_Prospek_Allow,err}	
 
 	return ID_Prospek_Allow,nil	
 }
@@ -102,6 +105,8 @@ func DELETE_RKH_ID_PROSPEK_TERPAKAI(ID_Prospek string)error{
 	if err != nil {
 		return err
 	}	
+	defer db.Close()
+
 	var query string
 
 	err = db.Begin() //Begin Transaction
@@ -120,8 +125,8 @@ func DELETE_RKH_ID_PROSPEK_TERPAKAI(ID_Prospek string)error{
 	err = db.Commit() //Commit Transaction
 	if err != nil {return err}
 
-	err = db.Close()
-	if err != nil {return err}	
+	// err = db.Close()
+	// if err != nil {return err}	
 
 	return nil		
 }

@@ -38,6 +38,8 @@ func POST_PENCAIRAN(data_arr []SP_ADD_PENCAIRAN)error {
 	if err != nil {
 		return err
 	}	
+	defer db.Close()
+
 	var query string
 	var fileimages = make(map[string]string)
 	// var pathfile string
@@ -100,8 +102,8 @@ func POST_PENCAIRAN(data_arr []SP_ADD_PENCAIRAN)error {
 	err = db.Commit() //Commit Transaction
 	if err != nil {return err}
 
-	err = db.Close()
-	if err != nil {return err}	
+	// err = db.Close()
+	// if err != nil {return err}	
 
 	return nil	
 

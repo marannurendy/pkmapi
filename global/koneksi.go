@@ -8,7 +8,7 @@ import (
 	"github.com/samonzeweb/godb/adapters/mssql"
 
 	"github.com/jlaffaye/ftp"
-	"errors"
+	// "errors"
 	// "fmt"
 	// "github.com/minio/minio-go"
 	// "github.com/minio/minio-go/pkg/credentials"
@@ -32,8 +32,7 @@ import (
 func ConnPKM() (*sql.DB,error) {
 	conn,err := sql.Open("mssql", beego.AppConfig.String("SqlConnPKM"))
 	if err != nil {
-		// return nil,err
-		return nil,errors.New("koneksi ke database PKM terhenti, coba beberapa saat lagi ")
+		return nil,err
 	}
 	return conn,nil	
 }
@@ -41,8 +40,7 @@ func ConnPKM() (*sql.DB,error) {
 func Conn() (*godb.DB,error) {
 	conn, err := godb.Open(mssql.Adapter, beego.AppConfig.String("SqlConnInisiasi"))
 	if err != nil {
-		// return nil,err
-		return nil,errors.New("koneksi ke database INISIASI terhenti, coba beberapa saat lagi ")
+		return nil,err
 	}
 	return conn,nil
 }
@@ -50,8 +48,7 @@ func Conn() (*godb.DB,error) {
 func ConnPKU() (*godb.DB,error) {
 	conn, err := godb.Open(mssql.Adapter, beego.AppConfig.String("SqlConnPelatihan"))
 	if err != nil {
-		// return nil,err
-		return nil,errors.New("koneksi ke database PELATIHAN terhenti, coba beberapa saat lagi ")
+		return nil,err
 	}
 	return conn,nil
 }
@@ -59,8 +56,7 @@ func ConnPKU() (*godb.DB,error) {
 func ConnPKUold() (*sql.DB,error) {
 	conn,err := sql.Open("mssql", beego.AppConfig.String("SqlConnPelatihan"))
 	if err != nil {
-		// return nil,err
-		return nil,errors.New("koneksi ke database PELATIHAN terhenti, coba beberapa saat lagi ")
+		return nil,err
 	}
 	return conn,nil	
 }
@@ -68,8 +64,7 @@ func ConnPKUold() (*sql.DB,error) {
 func ConnBRNET_GET() (*godb.DB,error) {
 	conn, err := godb.Open(mssql.Adapter, beego.AppConfig.String("SqlConnBRNET_GET"))
 	if err != nil {
-		// return nil,err
-		return nil,errors.New("koneksi ke database GET BRNET terhenti, coba beberapa saat lagi ")
+		return nil,err
 	}
 	return conn,nil
 }
@@ -78,8 +73,7 @@ func ConnBRNET_GET() (*godb.DB,error) {
 func ConnBRNET_POST() (*godb.DB,error) {
 	conn, err := godb.Open(mssql.Adapter, beego.AppConfig.String("SqlConnBRNET_POST"))
 	if err != nil {
-		// return nil,err
-		return nil,errors.New("koneksi ke database POST BRNET terhenti, coba beberapa saat lagi ")
+		return nil,err
 	}
 	return conn,nil
 }
@@ -87,8 +81,7 @@ func ConnBRNET_POST() (*godb.DB,error) {
 func ConnSCORING() (*godb.DB,error) {
 	conn, err := godb.Open(mssql.Adapter, beego.AppConfig.String("SqlConnSCORING"))
 	if err != nil {
-		// return nil,err
-		return nil,errors.New("koneksi ke database SCORING terhenti, coba beberapa saat lagi ")
+		return nil,err
 	}
 	return conn,nil
 }

@@ -44,6 +44,8 @@ func GetSosialisasiMobile(params PARAM_DATA_SOSIALISASI)([]SP_GET_SOSIALISASI_MO
 	if err != nil {
 		return data,err
 	}		
+	defer db.Close()		
+
 	var qmain string = ""
 
 	if params.IsPickClient=="1" {
@@ -89,6 +91,8 @@ func GetUkMobile(params PARAM_DATA_SOSIALISASI)([]SP_GET_UK_MOBILE,error) {
 	if err != nil {
 		return data,err
 	}			
+	defer db.Close()
+
 	var qmain string = ""
 
 	if params.IsPickClient=="1" {
@@ -135,6 +139,8 @@ func GetUkDetailMobile(params PARAM_DATA_SOSIALISASI)([]SP_GET_UK_DETAIL_MOBILE,
 	if err != nil {
 		return data,err
 	}			
+	defer db.Close()
+
 	var qmain string = ""
 
 	if params.IsPickClient=="1" {
@@ -312,7 +318,9 @@ func GetUkClientDataMobile(params PARAM_DATA_SOSIALISASI)([]SP_GET_UK_CLIENT_DAT
 	db,err := global.Conn()
 	if err != nil {
 		return data,err
-	}			
+	}		
+	defer db.Close()
+
 	var qmain string = ""
 
 	if params.IsPickClient=="1" {
@@ -483,6 +491,8 @@ func GetPpKelompokMobile(params PARAM_DATA_SOSIALISASI)([]SP_GET_PP_KELOMPOK_MOB
 	if err != nil {
 		return data,err
 	}			
+	defer db.Close()
+
 	var qmain string = ""
 
 	if params.IsPickClient=="1" {
@@ -529,6 +539,8 @@ func GetPp2KelompokMobile(params PARAM_DATA_SOSIALISASI)([]SP_GET_PP_2_KELOMPOK_
 	if err != nil {
 		return data,err
 	}			
+	defer db.Close()
+
 	var qmain string = ""
 
 	if params.IsPickClient=="1" {
@@ -575,6 +587,8 @@ func GetPp3KelompokMobile(params PARAM_DATA_SOSIALISASI)([]SP_GET_PP_3_KELOMPOK_
 	if err != nil {
 		return data,err
 	}			
+	defer db.Close()
+
 	var qmain string = ""
 
 	if params.IsPickClient=="1" {
@@ -621,6 +635,8 @@ func GetPersetujuanPembiayaanKelompokMobile(params PARAM_DATA_SOSIALISASI)([]SP_
 	if err != nil {
 		return data,err
 	}			
+	defer db.Close()
+
 	var qmain string = ""
 
 	if params.IsPickClient=="1" {
@@ -671,6 +687,8 @@ func GetPersetujuanPembiayaanKelompokClientMobile(params PARAM_DATA_SOSIALISASI)
 	if err != nil {
 		return data,err
 	}			
+	defer db.Close()
+
 	var qmain string = ""
 
 	if params.IsPickClient=="1" {
@@ -727,6 +745,8 @@ func GetListOfClient(params map[string]string)([]SP_GET_LIST_OF_CLIENT,error) {
 	if err != nil {
 		return data,err
 	}			
+	defer db.Close()
+
 	var qmain string
 
 	if params["CreatedBy"]=="undefined" {
@@ -762,6 +782,8 @@ func GetScoringStatus(id_prospek string) ([]SP_GET_SCORING_STATUS,error) {
 	if err != nil {
 		return data,err
 	}			
+	defer db.Close()
+
 	var qmain string
 
 	qmain = "EXEC GET_SCORING_STATUS @ID_Prospek='"+id_prospek+"' "
@@ -793,6 +815,8 @@ func GetPencairanMobile(params map[string]string)([]SP_GET_PENCAIRAN_MOBILE,erro
 	if err != nil {
 		return data,err
 	}		
+	defer db.Close()
+
 	var qmain string
 
 	if params["CreatedBy"]=="undefined" {
@@ -844,6 +868,8 @@ func GetPencairanNasabahMobile(params map[string]string)([]SP_GET_PENCAIRAN_NASA
 	if err != nil {
 		return data,err
 	}		
+	defer db.Close()
+
 	var qmain string
 
 	if params["CreatedBy"]=="undefined" {
@@ -876,6 +902,8 @@ func GetSosialisasiMobileProspekLama(params PARAM_DATA_SOSIALISASI)([]SP_GET_SOS
 	if err != nil {
 		return data,err
 	}		
+	defer db.Close()
+
 	var qmain string = ""
 
 	if params.IsPickClient=="1" {
@@ -960,6 +988,8 @@ func GetMasterAbsent() ([]MasterAbsent,error) {
 	if err != nil {
 		return data,err
 	}			
+	defer db.Close()
+
 	var qmain string
 
 	qmain = "EXEC GET_MASTER_ABSEN "
@@ -985,6 +1015,8 @@ func GetMasterReligion() ([]MasterReligion,error) {
 	if err != nil {
 		return data,err
 	}			
+	defer db.Close()
+
 	var qmain string
 
 	qmain = "EXEC GET_MASTER_AGAMA "
@@ -1010,6 +1042,9 @@ func GetMasterBranch() ([]MasterBranch,error) {
 	if err != nil {
 		return data,err
 	}			
+	defer db.Close()
+
+
 	var qmain string
 
 	qmain = "EXEC GET_MASTER_CABANG @type = 'CabangAsal', @OurBranchID = '' "
@@ -1036,6 +1071,9 @@ func GetMasterLivingType() ([]MasterLivingType,error) {
 	if err != nil {
 		return data,err
 	}			
+	defer db.Close()
+
+
 	var qmain string
 
 	qmain = "SELECT ID_Daerah_Tempat_Tinggal, Nama_Daerah_Tempat_Tinggal from INISIASI_MASTER_DAERAH_TEMPAT_TINGGAL with (NOLOCK)"
@@ -1061,6 +1099,8 @@ func GetMasterIdentityType() ([]MasterIdentityType,error) {
 	if err != nil {
 		return data,err
 	}			
+	defer db.Close()
+
 	var qmain string
 
 	qmain = "SELECT ID_Jenis_Kartu_Identitas, Nama_Jenis_Kartu_Identitas from INISIASI_MASTER_JENIS_KARTU_IDENTITAS with (NOLOCK)"
@@ -1086,6 +1126,8 @@ func GetMasterPartnerJob() ([]MasterPartnerJob,error) {
 	if err != nil {
 		return data,err
 	}			
+	defer db.Close()
+
 	var qmain string
 
 	qmain = "SELECT ID_Jenis_Pekerjaan_Suami, Nama_Jenis_Pekerjaan_Suami from INISIASI_MASTER_JENIS_PEKERJAAN_SUAMI with (NOLOCK)"
@@ -1113,6 +1155,8 @@ func GetMasterDwellingCondition() ([]MasterDwellingCondition,error) {
 	if err != nil {
 		return data,err
 	}			
+	defer db.Close()
+
 	var qmain string
 
 	qmain = "EXEC GET_MASTER_KONDISI_RUMAH "
@@ -1138,6 +1182,8 @@ func GetMasterResidenceLocation() ([]MasterResidenceLocation,error) {
 	if err != nil {
 		return data,err
 	}			
+	defer db.Close()
+
 	var qmain string
 
 	qmain = "SELECT ID_Lokasi_Tempat_Tinggal, Nama_Lokasi_Tempat_Tinggal from INISIASI_MASTER_LOKASI_TEMPAT_TINGGAL with (NOLOCK)"
@@ -1163,6 +1209,8 @@ func GetMasterPembiayaanLain() ([]MasterPembiayaanLain,error) {
 	if err != nil {
 		return data,err
 	}			
+	defer db.Close()
+
 	var qmain string
 
 	qmain = "SELECT ID_Pembiyaan_Lembaga_Lain, Nama_Pembiayan_Lembaga_Lain from INISIASI_MASTER_PEMBIAYAAN_LEMBAGA_LAIN with (NOLOCK)"
@@ -1188,6 +1236,8 @@ func GetMasterEducation() ([]MasterEducation,error) {
 	if err != nil {
 		return data,err
 	}			
+	defer db.Close()
+
 	var qmain string
 
 	qmain = "SELECT ID_Pendidikan, Nama_Pendidikan from INISIASI_MASTER_PENDIDIKAN with (NOLOCK)"
@@ -1220,6 +1270,8 @@ func GetMasterProduct() ([]MasterProduct,error) {
 	if err != nil {
 		return data,err
 	}			
+	defer db.Close()
+
 	var qmain string
 
 	qmain = "SELECT ID_Produk, Nama_Produk, Is_Reguler, Is_MP, Min_Plafon, Max_Plafon, Term_Pembiayaan, Bunga, Is_Syariah from INISIASI_MASTER_PRODUK with (NOLOCK)"
@@ -1247,6 +1299,8 @@ func GetMasterEconomicSector() ([]MasterEconomicSector,error) {
 	if err != nil {
 		return data,err
 	}			
+	defer db.Close()
+
 	var qmain string
 
 	qmain = "SELECT ID_SektorEkonomi, Nama_SektorEkonomi, ID_SubSektorEkonomi, Nama_SubSektorEkonomi from INISIASI_MASTER_SEKTOR_EKONOMI with (NOLOCK) "
@@ -1273,6 +1327,8 @@ func GetMasterRelationStatus() ([]MasterRelationStatus,error) {
 	if err != nil {
 		return data,err
 	}			
+	defer db.Close()
+
 	var qmain string
 
 	qmain = "SELECT ID_Status_Hubungan_Keluarga, Nama_Status_Hubungan_Keluarga from INISIASI_MASTER_STATUS_HUBUNGAN_KELUARGA with (NOLOCK) "
@@ -1298,6 +1354,8 @@ func GetMasterMarriageStatus() ([]MasterMarriageStatus,error) {
 	if err != nil {
 		return data,err
 	}			
+	defer db.Close()
+
 	var qmain string
 
 	qmain = "SELECT ID_Status_Perkawinan, Nama_Status_Perkawinan from INISIASI_MASTER_STATUS_PERKAWINAN with (NOLOCK) "
@@ -1323,6 +1381,8 @@ func GetMasterHomeStatus() ([]MasterHomeStatus,error) {
 	if err != nil {
 		return data,err
 	}			
+	defer db.Close()
+
 	var qmain string
 
 	qmain = "SELECT ID_Status_Rumah_Tinggal, Nama_Status_Rumah_Tinggal from INISIASI_MASTER_STATUS_RUMAH_TINGGAL with (NOLOCK) "
@@ -1348,6 +1408,8 @@ func GetMasterReferral() ([]MasterReferral,error) {
 	if err != nil {
 		return data,err
 	}			
+	defer db.Close()
+
 	var qmain string
 
 	qmain = "SELECT ID_Sumber, Nama_Sumber from INISIASI_MASTER_SUMBER with (NOLOCK) "
@@ -1373,6 +1435,8 @@ func GetMasterTransFund() ([]MasterTransFund,error) {
 	if err != nil {
 		return data,err
 	}			
+	defer db.Close()
+
 	var qmain string
 
 	qmain = "SELECT ID_Tipe_Pencairan, Nama_Tipe_Pencairan from INISIASI_MASTER_TIPE_PENCAIRAN with (NOLOCK)"
@@ -1398,6 +1462,8 @@ func GetMasterJenisPembiayaan() ([]MasterJenisPembiayaan,error) {
 	if err != nil {
 		return data,err
 	}			
+	defer db.Close()
+
 	var qmain string
 
 	qmain = "EXEC GET_MASTER_JENIS_PEMBIAYAAN "
@@ -1424,6 +1490,8 @@ func GetMasterSubJenisPembiayaan() ([]MasterSubJenisPembiayaan,error) {
 	if err != nil {
 		return data,err
 	}			
+	defer db.Close()
+
 	var qmain string
 
 	qmain = "EXEC GET_MASTER_SUB_JENIS_PEMBIAYAAN "
@@ -1449,6 +1517,8 @@ func GetMasterTujuanPembiayaan() ([]MasterTujuanPembiayaan,error) {
 	if err != nil {
 		return data,err
 	}			
+	defer db.Close()
+
 	var qmain string
 
 	qmain = "EXEC GET_MASTER_TUJUAN_PEMBIAYAAN "
@@ -1474,6 +1544,8 @@ func GetMasterKategoriTujuanPembiayaan() ([]MasterKategoriTujuanPembiayaan,error
 	if err != nil {
 		return data,err
 	}			
+	defer db.Close()
+
 	var qmain string
 
 	qmain = "EXEC GET_MASTER_KATEGORI_TUJUAN_PEMBIAYAAN "
@@ -1499,6 +1571,8 @@ func GetMasterFrekuensi() ([]MasterFrekuensi,error) {
 	if err != nil {
 		return data,err
 	}			
+	defer db.Close()
+
 	var qmain string
 
 	qmain = "EXEC [GET_MASTER_FREKUENSI]"
@@ -1530,6 +1604,8 @@ func GetMasterWilayahMobile(OurBranchID string) ([]MasterWilayahMobile,error) {
 	if err != nil {
 		return data,err
 	}			
+	defer db.Close()
+
 	var qmain string
 
 	qmain = "EXEC [GET_MASTER_WILAYAH_MOBILE] @OurBranchID='"+OurBranchID+"' "
@@ -1550,6 +1626,8 @@ func GetAllMasterWilayahMobile() ([]MasterWilayahMobile,error) {
 	if err != nil {
 		return data,err
 	}			
+	defer db.Close()
+
 	var qmain string
 
 	qmain = "SELECT  e.ID_Provinsi,e.Nama_Provinsi,b.ID_Kabkot, b.Nama_KabKot, c.ID_Kecamatan, c.Nama_Kecamatan, d.ID_KelDes, d.Nama_KelurahanDesa "+
@@ -1580,6 +1658,8 @@ func GetMasterGroupProduct()([]MasterGroupProduct,error){
 	if err != nil {
 		return data,err
 	}			
+	defer db.Close()
+
 	var qmain string
 
 	qmain = "EXEC [GET_MASTER_GROUP_PRODUCT] "

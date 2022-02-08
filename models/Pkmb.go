@@ -232,6 +232,7 @@ func Post_Pkm_Survey(params []PostPkmSurvey) (error) {
 	if err != nil {
 		return err
 	}
+	defer db.Close()
 
 	err = db.Begin() //Begin Transaction
 	if err != nil {return err}		
@@ -265,8 +266,8 @@ func Post_Pkm_Survey(params []PostPkmSurvey) (error) {
 	err = db.Commit() //Commit Transaction
 	if err != nil {return err}
 
-	err = db.Close()	
-	if err != nil {return err}		
+	// err = db.Close()	
+	// if err != nil {return err}		
 
 	return nil
 }

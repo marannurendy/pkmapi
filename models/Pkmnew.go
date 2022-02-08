@@ -12,7 +12,7 @@ func PostTotalTransactionNew(params map[string]interface{}) {
 	if err != nil {
 		fmt.Println(err.Error())
 	}	
-
+	defer db.Close()
 
 	_, err = db.Exec("EXEC ADD_PKM_Transaction @GroupID = '" + fmt.Sprintf("%v", params["GroupID"]) + "', @ClientID = '" + fmt.Sprintf("%v", params["ClientID"]) + "', @AccountID = '" + fmt.Sprintf("%v", params["AccountID"]) + "', @AttendStatus = '" + fmt.Sprintf("%v", params["Attendance"]) + "' , @InstallmentAmount = '" + fmt.Sprintf("%v", params["Angsuran"]) + "', @CreditSaving = '" + fmt.Sprintf("%v", params["Tarikan"]) + "', @DebitSaving = '" + fmt.Sprintf("%v", params["Setoran"]) + "', @CreditUP = '0', @TTD1 = '" + fmt.Sprintf("%v", params["TtdAccountOfficer"]) + "', @TTD2 = '" + fmt.Sprintf("%v", params["TtdKetuaKelompok"]) + "', @CreatedDate = '" + fmt.Sprintf("%v", params["CreatedDate"]) + "'")
 	fmt.Println("EXEC ADD_PKM_Transaction @GroupID = '" + fmt.Sprintf("%v", params["GroupID"]) + "', @ClientID = '" + fmt.Sprintf("%v", params["ClientID"]) + "', @AccountID = '" + fmt.Sprintf("%v", params["AccountID"]) + "', @AttendStatus = '" + fmt.Sprintf("%v", params["Attendance"]) + "' , @InstallmentAmount = '" + fmt.Sprintf("%v", params["Angsuran"]) + "', @CreditSaving = '" + fmt.Sprintf("%v", params["Tarikan"]) + "', @DebitSaving = '" + fmt.Sprintf("%v", params["Setoran"]) + "', @CreditUP = '0'")
@@ -28,7 +28,7 @@ func PostTotalTransactionNew(params map[string]interface{}) {
 	// 	// fmt.Println(path)
 	// 	global.SuccessLog("SUCCESS POST PKM EXEC ADD_PKM_Transaction @GroupID = '" + fmt.Sprintf("%v", params["GroupID"]) + "', @ClientID = '" + fmt.Sprintf("%v", params["ClientID"]) + "', @AccountID = '" + fmt.Sprintf("%v", params["AccountID"]) + "', @AttendStatus = '" + fmt.Sprintf("%v", params["Attendance"]) + "' , @InstallmentAmount = '" + fmt.Sprintf("%v", params["Angsuran"]) + "', @CreditSaving = '" + fmt.Sprintf("%v", params["Tarikan"]) + "', @DebitSaving = '" + fmt.Sprintf("%v", params["Setoran"]) + "', @CreditUP = '0', @TTD1 = '" + fmt.Sprintf("%v", params["TtdAccountOfficer"]) + "', @TTD2 = '" + fmt.Sprintf("%v", params["TtdKetuaKelompok"]) + "', @CreatedDate = '" + fmt.Sprintf("%v", params["CreatedDate"]) + "'")
 	// }
-	db.Close()
+	// db.Close()
 }
 
 
@@ -39,6 +39,7 @@ func PostTotalTransactionPARNew(params map[string]interface{}) {
 	if err != nil {
 		fmt.Println(err.Error())
 	}	
+	defer db.Close()
 
 	_, err = db.Exec("EXEC ADD_PKM_Transaction_PAR @GroupID = '" + fmt.Sprintf("%v", params["groupid"]) + "', @ClientID = '" + fmt.Sprintf("%v", params["clientid"]) + "', @AccountID = '" + fmt.Sprintf("%v", params["accountid"]) + "', @DebitPAR = '" + fmt.Sprintf("%v", params["jumlahpar"]) + "', @TTD1 = '" + fmt.Sprintf("%v", params["clientSign"]) + "', @TTD2 = '" + fmt.Sprintf("%v", params["AOSign"]) + "', @CreatedBy = '" + fmt.Sprintf("%v", params["createdby"]) + "'")
 	fmt.Println("EXEC ADD_PKM_Transaction_PAR @GroupID = '" + fmt.Sprintf("%v", params["groupid"]) + "', @ClientID = '" + fmt.Sprintf("%v", params["clientid"]) + "', @AccountID = '" + fmt.Sprintf("%v", params["accountid"]) + "', @DebitPAR = '" + fmt.Sprintf("%v", params["jumlahpar"]) + "', @TTD1 = '" + fmt.Sprintf("%v", params["clientSign"]) + "', @TTD2 = '" + fmt.Sprintf("%v", params["AOSign"]) + "', @CreatedBy = '" + fmt.Sprintf("%v", params["createdby"]) + "'")
@@ -53,7 +54,7 @@ func PostTotalTransactionPARNew(params map[string]interface{}) {
 	// 	fmt.Println("TRUE")
 	// 	global.SuccessLog("SUCCESS POST PAR EXEC ADD_PKM_Transaction_PAR @GroupID = '" + fmt.Sprintf("%v", params["groupid"]) + "', @ClientID = '" + fmt.Sprintf("%v", params["clientid"]) + "', @AccountID = '" + fmt.Sprintf("%v", params["accountid"]) + "', @DebitPAR = '" + fmt.Sprintf("%v", params["jumlahpar"]) + "', @TTD1 = '" + fmt.Sprintf("%v", params["clientSign"]) + "', @TTD2 = '" + fmt.Sprintf("%v", params["AOSign"]) + "', @CreatedBy = '" + fmt.Sprintf("%v", params["createdby"]) + "'")
 	// }
-	db.Close()
+	// db.Close()
 }
 
 type ListCollectionNew struct {
@@ -79,7 +80,7 @@ func GetListCollectionNew(OurBranchID string, AO_ID string) []ListCollectionNew 
 	if err != nil {
 		fmt.Println(err.Error())
 	}	
-
+	defer db.Close()
 
 	fmt.Println("EXEC GET_PKM_ANGSURAN @AO_ID = '" + AO_ID + "', @OurBranchID = '" + OurBranchID + "', @type = 'Angsuran'")
 	global.Logging("INFO","EXEC GET_PKM_ANGSURAN @AO_ID = '" + AO_ID + "', @OurBranchID = '" + OurBranchID + "', @type = 'Angsuran'")
@@ -125,7 +126,7 @@ func GetListCollectionNew(OurBranchID string, AO_ID string) []ListCollectionNew 
 		fmt.Println("that")
 	}
 	// fmt.Println(data)
-	db.Close()
+	// db.Close()
 	return data
 }
 
@@ -145,7 +146,7 @@ func GetListupNew(OurBranchID string, AO_ID string) []ListupNew {
 	if err != nil {
 		fmt.Println(err.Error())
 	}	
-
+	defer db.Close()
 
 	rows, err := db.Query("EXEC GET_PKM_ANGSURAN @AO_ID = '" + AO_ID + "', @OurBranchID = '" + OurBranchID + "', @type = 'UP'")
 	global.Logging("INFO","EXEC GET_PKM_ANGSURAN @AO_ID = '" + AO_ID + "', @OurBranchID = '" + OurBranchID + "', @type = 'UP'")
@@ -165,7 +166,7 @@ func GetListupNew(OurBranchID string, AO_ID string) []ListupNew {
 		}
 		data = append(data, each)
 	}
-	db.Close()
+	// db.Close()
 	return data
 }
 
@@ -186,7 +187,7 @@ func GetListGroupNew(OurBranchID string, USERNAME string) []GroupListNew {
 	if err != nil {
 		fmt.Println(err.Error())
 	}	
-
+	defer db.Close()
 
 	rows, err := db.Query("EXEC GET_Detail_PKM_LPM @OurBranchID='" + OurBranchID + "', @USERNAME='" + USERNAME + "', @type= 'Process'")
 	fmt.Println("EXEC GET_Detail_PKM_LPM @OurBranchID='" + OurBranchID + "', @USERNAME='" + USERNAME + "', @type= 'Process'")
@@ -209,7 +210,7 @@ func GetListGroupNew(OurBranchID string, USERNAME string) []GroupListNew {
 		}
 		data = append(data, each)
 	}
-	db.Close()
+	// db.Close()
 	return data
 }
 
@@ -231,7 +232,7 @@ func GetListCollectionPARNew(AO_ID string, OurBranchID string) []DetailPKM_PARNe
 	if err != nil {
 		fmt.Println(err.Error())
 	}	
-
+	defer db.Close()
 
 	rows, err := db.Query("EXEC GET_Detail_PKM_LPM_PAR @AO_ID = '" + AO_ID + "', @OurBranchID = '" + OurBranchID + "', @type = 'PAR'")
 
@@ -248,7 +249,7 @@ func GetListCollectionPARNew(AO_ID string, OurBranchID string) []DetailPKM_PARNe
 		}
 		data = append(data, each)
 	}
-	db.Close()
+	// db.Close()
 	return data
 }
 
@@ -276,7 +277,7 @@ func GetListPKMIndividualNew(AO_ID string, OurBranchID string) []DetailGetPKMInd
 	if err != nil {
 		fmt.Println(err.Error())
 	}	
-
+	defer db.Close()
 
 	rows, err := db.Query("EXEC GET_Detail_PKM_LPM_PAR_INDIVIDUAL @USERNAME = '" + AO_ID + "', @OurBranchID = '" + OurBranchID + "', @type = 'Process'")
 
@@ -296,7 +297,7 @@ func GetListPKMIndividualNew(AO_ID string, OurBranchID string) []DetailGetPKMInd
 		}
 		data = append(data, each)
 	}
-	db.Close()
+	// db.Close()
 	return data
 }
 
@@ -307,6 +308,7 @@ func PostPKMIndividualNew(params map[string]interface{}) {
 	if err != nil {
 		fmt.Println(err.Error())
 	}	
+	defer db.Close()
 
 	_, err = db.Exec("EXEC ADD_PKM_Transaction_PAR_Individual @GroupID = '" + fmt.Sprintf("%v", params["groupid"]) + "', @ClientID = '" + fmt.Sprintf("%v", params["clientid"]) + "', @AccountID = '" + fmt.Sprintf("%v", params["accountid"]) + "', @DebitValue = '" + fmt.Sprintf("%v", params["jumlahpar"]) + "', @TTD1 = '" + fmt.Sprintf("%v", params["clientSign"]) + "', @TTD2 = '" + fmt.Sprintf("%v", params["AOSign"]) + "', @CreatedBy = '" + fmt.Sprintf("%v", params["createdby"]) + "', @CreatedDate = '" + fmt.Sprintf("%v", params["CreatedDate"]) + "'")
 	fmt.Println("EXEC ADD_PKM_Transaction_PAR_Individual @GroupID = '" + fmt.Sprintf("%v", params["groupid"]) + "', @ClientID = '" + fmt.Sprintf("%v", params["clientid"]) + "', @AccountID = '" + fmt.Sprintf("%v", params["accountid"]) + "', @DebitValue = '" + fmt.Sprintf("%v", params["jumlahpar"]) + "', @TTD1 = '" + fmt.Sprintf("%v", params["clientSign"]) + "', @TTD2 = '" + fmt.Sprintf("%v", params["AOSign"]) + "', @CreatedBy = '" + fmt.Sprintf("%v", params["createdby"]) + "', @CreatedDate = '" + fmt.Sprintf("%v", params["CreatedDate"]) + "'")
@@ -319,5 +321,5 @@ func PostPKMIndividualNew(params map[string]interface{}) {
 	// 	fmt.Println("TRUE")
 	// 	global.SuccessLog("SUCCESS POST PKM Individu EXEC ADD_PKM_Transaction_PAR_Individual @GroupID = '" + fmt.Sprintf("%v", params["groupid"]) + "', @ClientID = '" + fmt.Sprintf("%v", params["clientid"]) + "', @AccountID = '" + fmt.Sprintf("%v", params["accountid"]) + "', @DebitValue = '" + fmt.Sprintf("%v", params["jumlahpar"]) + "', @TTD1 = '" + fmt.Sprintf("%v", params["clientSign"]) + "', @TTD2 = '" + fmt.Sprintf("%v", params["AOSign"]) + "', @CreatedBy = '" + fmt.Sprintf("%v", params["createdby"]) + "', @CreatedDate = '" + fmt.Sprintf("%v", params["CreatedDate"]) + "'")
 	// }
-	db.Close()
+	// db.Close()
 }

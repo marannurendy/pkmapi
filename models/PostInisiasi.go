@@ -36,6 +36,8 @@ func POST_PROSPEK(data SP_ADD_PROSPEK)error {
 	if err != nil {
 		return err
 	}	
+	defer db.Close()
+
 	var query string
 
 	err = db.Begin() //Begin Transaction
@@ -70,8 +72,8 @@ func POST_PROSPEK(data SP_ADD_PROSPEK)error {
 	err = db.Commit() //Commit Transaction
 	if err != nil {return err}
 
-	err = db.Close()
-	if err != nil {return err}	
+	// err = db.Close()
+	// if err != nil {return err}	
 
 	return nil	
 
@@ -274,6 +276,7 @@ func POST_PROSPEK_UK(data SP_ADD_PROSPEK_UK) ([]RESPONSE_ADD_PROSPEK_UK,error){
 	if err != nil {
 		return responsedata,err
 	}
+	defer db.Close()
 
 	valid := validation.Validation{}
 	// path := make([]PATH, 0)
@@ -657,8 +660,8 @@ func POST_PROSPEK_UK(data SP_ADD_PROSPEK_UK) ([]RESPONSE_ADD_PROSPEK_UK,error){
 	err = db.Commit() //Commit Transaction
 	if err != nil {return responsedata,err}
 
-	err = db.Close()
-	if err != nil {return responsedata,err}	
+	// err = db.Close()
+	// if err != nil {return responsedata,err}	
 
 	return responsedata,nil
 }
@@ -690,6 +693,8 @@ func POST_PROSPEK_LAMA(params []SP_ADD_PERSETUJUAN_KELOMPOK)error {
 	if err != nil {
 		return err
 	}	
+	defer db.Close()
+
 	var query string
 	var fileimages = make(map[string]string)
 	// path := make([]PATH, 0)
@@ -758,8 +763,8 @@ func POST_PROSPEK_LAMA(params []SP_ADD_PERSETUJUAN_KELOMPOK)error {
 	err = db.Commit() //Commit Transaction
 	if err != nil {return err}
 
-	err = db.Close()
-	if err != nil {return err}	
+	// err = db.Close()
+	// if err != nil {return err}	
 
 	return nil	
 
@@ -783,6 +788,8 @@ func POST_DATA_KELOMPOK(data SP_ADD_DATA_KELOMPOK)error {
 	if err != nil {
 		return err
 	}	
+	defer db.Close()
+
 	var query string
 
 	err = db.Begin() //Begin Transaction
@@ -816,8 +823,8 @@ func POST_DATA_KELOMPOK(data SP_ADD_DATA_KELOMPOK)error {
 	err = db.Commit() //Commit Transaction
 	if err != nil {return err}
 
-	err = db.Close()
-	if err != nil {return err}	
+	// err = db.Close()
+	// if err != nil {return err}	
 
 	return nil	
 
@@ -848,6 +855,8 @@ func POST_PP(data SP_ADD_INISIASI_PP)error {
 	if err != nil {
 		return err
 	}	
+	defer db.Close()
+
 	var query string	
 
 
@@ -911,8 +920,8 @@ func POST_PP(data SP_ADD_INISIASI_PP)error {
 	err = db.Commit() //Commit Transaction
 	if err != nil {return err}
 
-	err = db.Close()
-	if err != nil {return err}	
+	// err = db.Close()
+	// if err != nil {return err}	
 
 
 	return nil	
@@ -934,6 +943,9 @@ func POST_VERIF_STATUS(data SP_SET_VERIF_STATUS)error {
 	if err != nil {
 		return err
 	}	
+	defer db.Close()
+
+
 	var query string
 	var fileimages = make(map[string]string)
 	// path := make([]PATH, 0)
@@ -993,8 +1005,8 @@ func POST_VERIF_STATUS(data SP_SET_VERIF_STATUS)error {
 	err = db.Commit() //Commit Transaction
 	if err != nil {return err}
 
-	err = db.Close()
-	if err != nil {return err}	
+	// err = db.Close()
+	// if err != nil {return err}	
 
 	return nil	
 
@@ -1018,6 +1030,8 @@ func POST_SET_DATA_FROM_INISIASI_MOBILE_BRNET(param SP_SET_VERIF_STATUS)error {
 	if err != nil {
 		return err
 	}	
+	defer dbget.Close()
+
 	var query string
 
 
@@ -1046,6 +1060,7 @@ func POST_SET_DATA_FROM_INISIASI_MOBILE_BRNET(param SP_SET_VERIF_STATUS)error {
 		if err != nil {
 			return err
 		}	
+		defer db.Close()
 
 		err = db.Begin() //Begin Transaction
 		if err != nil {return err}	
@@ -1074,13 +1089,13 @@ func POST_SET_DATA_FROM_INISIASI_MOBILE_BRNET(param SP_SET_VERIF_STATUS)error {
 		err = db.Commit() //Commit Transaction
 		if err != nil {return err}
 
-		err = db.Close()
-		if err != nil {return err}		
+		// err = db.Close()
+		// if err != nil {return err}		
 
 	}
 
-	err = dbget.Close()
-	if err != nil {return err}	
+	// err = dbget.Close()
+	// if err != nil {return err}	
 
 
 	return nil
@@ -1098,6 +1113,8 @@ func POST_KK_KSK_DATA(data SP_ADD_KK_KSK_DATA)error {
 	if err != nil {
 		return err
 	}	
+	defer db.Close()
+
 	var query string
 
 	err = db.Begin() //Begin Transaction
@@ -1122,8 +1139,8 @@ func POST_KK_KSK_DATA(data SP_ADD_KK_KSK_DATA)error {
 	err = db.Commit() //Commit Transaction
 	if err != nil {return err}
 
-	err = db.Close()
-	if err != nil {return err}	
+	// err = db.Close()
+	// if err != nil {return err}	
 
 	return nil		
 }
@@ -1178,6 +1195,8 @@ func POST_PERSETUJUAN_PEMBIAYAAN(data_add_persetujuan_pembiayaan SP_ADD_PERSETUJ
 	if err != nil {
 		return err
 	}	
+	defer db.Close()
+
 	var query string
 	var fileimages = make(map[string]string)
 
@@ -1335,8 +1354,8 @@ func POST_PERSETUJUAN_PEMBIAYAAN(data_add_persetujuan_pembiayaan SP_ADD_PERSETUJ
 	err = db.Commit() //Commit Transaction
 	if err != nil {return err}
 
-	err = db.Close()
-	if err != nil {return err}	
+	// err = db.Close()
+	// if err != nil {return err}	
 
 	return nil	
 
@@ -1406,6 +1425,8 @@ func SYNC_TO_BRNET(data_param_to_brnet PARAM_TO_BRNET,ID_Prospek string)([]RESPO
 	if err != nil {
 		return PROJECTION_SANCTION,err
 	}	
+	defer db.Close()
+
 	var query,groupid,clientid string
 
 	groupid = data_param_to_brnet.Kelompok_ID
@@ -1642,8 +1663,8 @@ func SYNC_TO_BRNET(data_param_to_brnet PARAM_TO_BRNET,ID_Prospek string)([]RESPO
 	err = db.Commit() //Commit Transaction
 	if err != nil {return PROJECTION_SANCTION,err}
 
-	err = db.Close()
-	if err != nil {return PROJECTION_SANCTION,err}	
+	// err = db.Close()
+	// if err != nil {return PROJECTION_SANCTION,err}	
 
 	return PROJECTION_SANCTION,nil		
 }
@@ -1654,6 +1675,8 @@ func UPDATE_INISIASI_SETELAH_BRNET_SUCCESS(PROJECTION_SANCTION []RESPONSE_POST_P
 	if err != nil {
 		return err
 	}	
+	defer db.Close()
+
 	var query string
 
 	start_update_pp_brnet := time.Now()	
@@ -1709,8 +1732,8 @@ func UPDATE_INISIASI_SETELAH_BRNET_SUCCESS(PROJECTION_SANCTION []RESPONSE_POST_P
 	elapsed_update_prospek_brnet := time.Since(start_update_prospek_brnet)
 	global.Logging("SYNC_TO_BRNET","INFO models.UPDATE_INISIASI_SETELAH_BRNET_SUCCESS ID_DK!='' "+query+" process_time "+elapsed_update_prospek_brnet.String()+" ---> ")					
 
-	err = db.Close()
-	if err != nil {return err}	
+	// err = db.Close()
+	// if err != nil {return err}	
 
 	return nil	
 }
