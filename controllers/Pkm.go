@@ -532,6 +532,11 @@ func (c *MainController) PostTransaction() models.TransactionResponse {
 			dtpkm.TransactionPKM[i].Savings = "0"
 		}
 
+		if (dtpkm.TransactionPKM[i].InstallmentAmount == "null"){
+			dtpkm.TransactionPKM[i].InstallmentAmount = "0"
+		}
+		
+
 		queryexec = `IF NOT EXISTS (SELECT TOP 1 * FROM PKM_LPM_Transaction_Individu WITH(NOLOCK) WHERE ClientID = '`+dtpkm.TransactionPKM[i].ClientID+`' AND AccountID = '`+dtpkm.TransactionPKM[i].AccountID+`' AND CAST(TrxDate as DATE) = CAST('`+tranDate+`' as DATE)) 
 		BEGIN
 			INSERT INTO PKM_LPM_Transaction
