@@ -45,6 +45,14 @@ func Conn() (*godb.DB,error) {
 	return conn,nil
 }
 
+func ConnINISIASI_WITHTIME() (*godb.DB,error) {
+	conn, err := godb.Open(mssql.Adapter, beego.AppConfig.String("SqlConnInisiasi_WITHTIME"))
+	if err != nil {
+		return nil,err
+	}
+	return conn,nil
+}
+
 func ConnPKU() (*godb.DB,error) {
 	conn, err := godb.Open(mssql.Adapter, beego.AppConfig.String("SqlConnPelatihan"))
 	if err != nil {
