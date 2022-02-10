@@ -244,12 +244,40 @@ func (c *PkmController) AuthLogin() {
 	var dtpkm models.LoginRequest		
     err := json.Unmarshal(c.Ctx.Input.RequestBody, &dtpkm)	
 	if err != nil {
-		c.ServeJSON()
+		if err != nil {
+			c.Ctx.ResponseWriter.WriteHeader(500)
+			statcod := c.Ctx.ResponseWriter.Status
+			statusCode := strconv.Itoa(statcod)
+	
+			var response = models.LoginResponse{
+				ResponseStatus: false,
+				Status:         statusCode,
+				Message:        err.Error(),
+			}
+			c.Data["json"] = response
+	
+			c.ServeJSON()
+			return
+		}	
 	}
 
 	db,err := global.ConnPKM()
 	if err != nil {
-		fmt.Println(err.Error())
+		if err != nil {
+			c.Ctx.ResponseWriter.WriteHeader(500)
+			statcod := c.Ctx.ResponseWriter.Status
+			statusCode := strconv.Itoa(statcod)
+	
+			var response = models.LoginResponse{
+				ResponseStatus: false,
+				Status:         statusCode,
+				Message:        err.Error(),
+			}
+			c.Data["json"] = response
+	
+			c.ServeJSON()
+			return
+		}	
 	}	
 	defer db.Close()
 
