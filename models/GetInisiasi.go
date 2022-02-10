@@ -1774,3 +1774,29 @@ func GetMasterAvailableSubGroupBRNET(OurBranchID string)([]MasterAvailableSubGro
 
 	return data,nil
 }
+
+type CheckNikBRNET struct {
+	RESULT string `json:"RESULT" db:"RESULT"`
+}
+
+
+func GetCheckNikBRNET(NIK string)(CheckNikBRNET,error){
+	// data := make([]CheckNikBRNET, 0)
+	var data CheckNikBRNET
+	db,err := global.ConnBRNET_GET()
+	if err != nil {
+		return data,err
+	}		
+	var qmain string	
+
+	qmain = "EXEC [DB_INISIASI].dbo.[GET_INISIASI_NIK] @NIK= '"+NIK+"' "		
+
+	err = db.RawSQL(qmain).Do(&data)
+
+	if err != nil {
+		global.Logging("ERROR","models GetCheckNikBRNET ---> "+qmain+" ---> " + err.Error())			
+		return data,err
+	}			
+
+	return data,nil
+}

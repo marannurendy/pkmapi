@@ -8,7 +8,7 @@ import (
 	"github.com/samonzeweb/godb/adapters/mssql"
 
 	"github.com/jlaffaye/ftp"
-	// "errors"
+	"errors"
 	// "fmt"
 	// "github.com/minio/minio-go"
 	// "github.com/minio/minio-go/pkg/credentials"
@@ -34,6 +34,12 @@ func ConnPKM() (*sql.DB,error) {
 	if err != nil {
 		return nil,err
 	}
+
+	err = conn.Ping()
+	if err != nil {
+		return nil,errors.New("KONEKSI KE DATABASE PENUH, COBA BEBERAPA MENIT LAGI")
+	}	
+	
 	return conn,nil	
 }
 
@@ -42,6 +48,12 @@ func Conn() (*godb.DB,error) {
 	if err != nil {
 		return nil,err
 	}
+
+	err = conn.CobaPing()
+	if err != nil {
+		return nil,errors.New("KONEKSI KE DATABASE PENUH, COBA BEBERAPA MENIT LAGI")
+	}
+
 	return conn,nil
 }
 
@@ -50,6 +62,13 @@ func ConnINISIASI_WITHTIME() (*godb.DB,error) {
 	if err != nil {
 		return nil,err
 	}
+
+	err = conn.CobaPing()
+	if err != nil {
+		return nil,errors.New("KONEKSI KE DATABASE PENUH, COBA BEBERAPA MENIT LAGI")
+	}
+
+
 	return conn,nil
 }
 
@@ -58,6 +77,13 @@ func ConnPKU() (*godb.DB,error) {
 	if err != nil {
 		return nil,err
 	}
+
+	err = conn.CobaPing()
+	if err != nil {
+		return nil,errors.New("KONEKSI KE DATABASE PENUH, COBA BEBERAPA MENIT LAGI")
+	}
+
+
 	return conn,nil
 }
 
@@ -66,6 +92,12 @@ func ConnPKUold() (*sql.DB,error) {
 	if err != nil {
 		return nil,err
 	}
+
+	err = conn.Ping()
+	if err != nil {
+		return nil,errors.New("KONEKSI KE DATABASE PENUH, COBA BEBERAPA MENIT LAGI")
+	}	
+
 	return conn,nil	
 }
 
@@ -74,6 +106,13 @@ func ConnBRNET_GET() (*godb.DB,error) {
 	if err != nil {
 		return nil,err
 	}
+
+	err = conn.CobaPing()
+	if err != nil {
+		return nil,errors.New("KONEKSI KE DATABASE PENUH, COBA BEBERAPA MENIT LAGI")
+	}
+
+
 	return conn,nil
 }
 
@@ -83,6 +122,12 @@ func ConnBRNET_POST() (*godb.DB,error) {
 	if err != nil {
 		return nil,err
 	}
+
+	err = conn.CobaPing()
+	if err != nil {
+		return nil,errors.New("KONEKSI KE DATABASE PENUH, COBA BEBERAPA MENIT LAGI")
+	}
+
 	return conn,nil
 }
 
@@ -91,6 +136,13 @@ func ConnSCORING() (*godb.DB,error) {
 	if err != nil {
 		return nil,err
 	}
+
+	err = conn.CobaPing()
+	if err != nil {
+		return nil,errors.New("KONEKSI KE DATABASE PENUH, COBA BEBERAPA MENIT LAGI")
+	}
+
+
 	return conn,nil
 }
 

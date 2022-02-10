@@ -301,12 +301,36 @@ func (c *MainController) AuthLogin() {
 	var dtpkm models.LoginRequest		
     err := json.Unmarshal(c.Ctx.Input.RequestBody, &dtpkm)	
 	if err != nil {
+		c.Ctx.ResponseWriter.WriteHeader(500)
+		statcod := c.Ctx.ResponseWriter.Status
+		statusCode := strconv.Itoa(statcod)
+
+		var response = models.LoginResponse{
+			ResponseStatus: false,
+			Status:         statusCode,
+			Message:        err.Error(),
+		}
+		c.Data["json"] = response
+
 		c.ServeJSON()
+		return
 	}
 
 	db,err := global.ConnPKM()
 	if err != nil {
-		fmt.Println(err.Error())
+		c.Ctx.ResponseWriter.WriteHeader(500)
+		statcod := c.Ctx.ResponseWriter.Status
+		statusCode := strconv.Itoa(statcod)
+
+		var response = models.LoginResponse{
+			ResponseStatus: false,
+			Status:         statusCode,
+			Message:        err.Error(),
+		}
+		c.Data["json"] = response
+
+		c.ServeJSON()
+		return
 	}	
 	defer db.Close()
 	// global.Logging("INFO_VERSI","Mobile Version '" + dtpkm.Apk_version + "' API Version '"+beego.AppConfig.String("Version")+"' username='"+dtpkm.Username+"' ")

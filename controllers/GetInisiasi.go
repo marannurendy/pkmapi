@@ -661,3 +661,29 @@ func (c *MasterDataController) Get_All_Wilayah() {
 	c.Data["json"] = data_wilayah_mobile
 	c.ServeJSON()		
 }
+
+
+
+// @Title Get Semua WIlayah PKM
+// @Description Semua wilayah
+// @Param	Authorization header string  false "Authorization Token"
+// @Param	NIK path string  true "NIK"
+// @Success 200 {object} models.CheckNikBRNET
+// @Failure 403 "Error"
+// @Failure 500 "Error"
+// @router /GetCheckNikBRNET/:NIK [get]
+func (c *MasterDataController) Get_Check_Nik_BRNET() {
+
+	NIK := c.Ctx.Input.Param(":NIK")
+
+	data_nik,err := models.GetCheckNikBRNET(NIK)	
+	if err != nil {		
+		global.Logging("ERROR","controllers.Get_Master_Data models.GetCheckNikBRNET ---> " + err.Error())		
+		c.Ctx.Output.SetStatus(500)
+		c.Data["json"] = global.APIGetResponse{Code: 500, Message: err.Error()}
+		c.ServeJSON()
+	}	
+
+	c.Data["json"] = data_nik
+	c.ServeJSON()		
+}

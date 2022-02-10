@@ -144,6 +144,15 @@ func init() {
 
     beego.GlobalControllerRouter["pkmapi/controllers:MasterDataController"] = append(beego.GlobalControllerRouter["pkmapi/controllers:MasterDataController"],
         beego.ControllerComments{
+            Method: "Get_Check_Nik_BRNET",
+            Router: "/GetCheckNikBRNET/:NIK",
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["pkmapi/controllers:MasterDataController"] = append(beego.GlobalControllerRouter["pkmapi/controllers:MasterDataController"],
+        beego.ControllerComments{
             Method: "GetListClient",
             Router: "/GetListClient/:OurBranchID/:CreatedBy/:Search/:PAGE/:LIMIT",
             AllowHTTPMethods: []string{"get"},

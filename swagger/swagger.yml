@@ -87,6 +87,31 @@ paths:
           description: '"Error"'
         "500":
           description: '"Error"'
+  /inisiasi/GetCheckNikBRNET/{NIK}:
+    get:
+      tags:
+      - inisiasi
+      description: Semua wilayah
+      operationId: MasterDataController.Get Semua WIlayah PKM
+      parameters:
+      - in: header
+        name: Authorization
+        description: Authorization Token
+        type: string
+      - in: path
+        name: NIK
+        description: NIK
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.CheckNikBRNET'
+        "403":
+          description: '"Error"'
+        "500":
+          description: '"Error"'
   /inisiasi/GetListClient/{OurBranchID}/{CreatedBy}/{Search}/{PAGE}/{LIMIT}:
     get:
       tags:
@@ -940,55 +965,55 @@ paths:
         "500":
           description: '{"code": 500,"message": "Error sql"}'
 definitions:
-  6752.0xc00053d950.false:
+  6752.0xc0004f40f0.false:
     title: "false"
     type: object
-  6808.0xc00053d980.false:
+  6808.0xc0004f4120.false:
     title: "false"
     type: object
-  9396.0xc00053d9b0.false:
+  9396.0xc0004f4150.false:
     title: "false"
     type: object
-  9476.0xc00053d9e0.false:
+  9476.0xc0004f4180.false:
     title: "false"
     type: object
-  9536.0xc00053da10.false:
+  9536.0xc0004f41b0.false:
     title: "false"
     type: object
-  9605.0xc00053da40.false:
+  9605.0xc0004f41e0.false:
     title: "false"
     type: object
-  9974.0xc00053da70.false:
+  9974.0xc0004f4210.false:
     title: "false"
     type: object
-  10067.0xc00053daa0.false:
+  10067.0xc0004f4240.false:
     title: "false"
     type: object
-  11051.0xc00053dad0.false:
+  11051.0xc0004f4270.false:
     title: "false"
     type: object
-  12974.0xc00053db00.false:
+  12974.0xc0004f42a0.false:
     title: "false"
     type: object
-  13039.0xc00053db30.false:
+  13039.0xc0004f42d0.false:
     title: "false"
     type: object
-  13107.0xc00053db60.false:
+  13107.0xc0004f4300.false:
     title: "false"
     type: object
-  13342.0xc00053db90.false:
+  13342.0xc0004f4330.false:
     title: "false"
     type: object
-  13399.0xc00053dbc0.false:
+  13399.0xc0004f4360.false:
     title: "false"
     type: object
-  13455.0xc00053dbf0.false:
+  13455.0xc0004f4390.false:
     title: "false"
     type: object
-  29942.0xc000561d10.false:
+  29942.0xc0005164b0.false:
     title: "false"
     type: object
-  33037.0xc000566720.false:
+  33037.0xc000516ea0.false:
     title: "false"
     type: object
   global.APIGetResponse:
@@ -1019,6 +1044,12 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/models.SP_ADD_AUDIT_TRAILT'
+  models.CheckNikBRNET:
+    title: CheckNikBRNET
+    type: object
+    properties:
+      RESULT:
+        type: string
   models.GET_DATA_PENCAIRAN:
     title: GET_DATA_PENCAIRAN
     type: object
@@ -1990,7 +2021,7 @@ definitions:
       Angsuran_Per_Minggu:
         type: string
       ClientID:
-        $ref: '#/definitions/33037.0xc000566720.false'
+        $ref: '#/definitions/33037.0xc000516ea0.false'
       ID_Prospek:
         type: string
       Jasa:
@@ -2080,7 +2111,7 @@ definitions:
       ID_Prospek:
         type: string
       Status_Kelayakan:
-        $ref: '#/definitions/29942.0xc000561d10.false'
+        $ref: '#/definitions/29942.0xc0005164b0.false'
   models.SP_GET_SIKLUS_NASABAH_BRNET:
     title: SP_GET_SIKLUS_NASABAH_BRNET
     type: object
@@ -2162,11 +2193,11 @@ definitions:
       ID_Sumber:
         type: string
       Is_Ada_Rekening_Bank:
-        $ref: '#/definitions/9396.0xc00053d9b0.false'
+        $ref: '#/definitions/9396.0xc0004f4150.false'
       Is_AdaAdaToiletPribadi:
-        $ref: '#/definitions/10067.0xc00053daa0.false'
+        $ref: '#/definitions/10067.0xc0004f4240.false'
       Is_AdaAksesAirBersih:
-        $ref: '#/definitions/9974.0xc00053da70.false'
+        $ref: '#/definitions/9974.0xc0004f4210.false'
       Is_AdaPembiayaanLain:
         type: string
       Is_Ditempat:
@@ -2220,7 +2251,7 @@ definitions:
       Kecamatan:
         type: string
       Kelompok_ID:
-        $ref: '#/definitions/12974.0xc00053db00.false'
+        $ref: '#/definitions/12974.0xc0004f42a0.false'
       Kelurahan:
         type: string
       Kemampuan_Angsuran:
@@ -2236,17 +2267,17 @@ definitions:
       Lantai:
         type: string
       Latitude:
-        $ref: '#/definitions/6752.0xc00053d950.false'
+        $ref: '#/definitions/6752.0xc0004f40f0.false'
       Lokasi_Sos:
         type: string
       Longitude:
-        $ref: '#/definitions/6808.0xc00053d980.false'
+        $ref: '#/definitions/6808.0xc0004f4120.false'
       Luas_Bangunan:
         type: string
       Nama_Ayah:
         type: string
       Nama_Bank:
-        $ref: '#/definitions/9476.0xc00053d9e0.false'
+        $ref: '#/definitions/9476.0xc0004f4180.false'
       Nama_Gadis_Ibu_Kandung:
         type: string
       Nama_KabKot:
@@ -2254,13 +2285,13 @@ definitions:
       Nama_Kecamatan:
         type: string
       Nama_Kelompok:
-        $ref: '#/definitions/13107.0xc00053db60.false'
+        $ref: '#/definitions/13107.0xc0004f4300.false'
       Nama_KelurahanDesa:
         type: string
       Nama_Lengkap:
         type: string
       Nama_Pembiayaan_Lembaga_Lain:
-        $ref: '#/definitions/11051.0xc00053dad0.false'
+        $ref: '#/definitions/11051.0xc0004f4270.false'
       Nama_Penjamin:
         type: string
       Nama_Produk:
@@ -2284,7 +2315,7 @@ definitions:
       No_KK:
         type: string
       No_Rekening:
-        $ref: '#/definitions/9536.0xc00053da10.false'
+        $ref: '#/definitions/9536.0xc0004f41b0.false'
       No_Telp:
         type: string
       Nomor_Identitas:
@@ -2294,7 +2325,7 @@ definitions:
       Pekerjaan:
         type: string
       Pemilik_Rekening:
-        $ref: '#/definitions/9605.0xc00053da40.false'
+        $ref: '#/definitions/9605.0xc0004f41e0.false'
       PendapatanBersih_perBulan:
         type: string
       PendapatanBersih_perBulan_Suami:
@@ -2318,13 +2349,13 @@ definitions:
       PengeluaranKel_perHari_Suami:
         type: string
       PostStatus:
-        $ref: '#/definitions/13342.0xc00053db90.false'
+        $ref: '#/definitions/13342.0xc0004f4330.false'
       Produk_Pembiayaan:
         type: string
       Provinsi:
         type: string
       Reason:
-        $ref: '#/definitions/13399.0xc00053dbc0.false'
+        $ref: '#/definitions/13399.0xc0004f4360.false'
       Siklus:
         type: string
       Siklus_Pembiayaan:
@@ -2336,7 +2367,7 @@ definitions:
       StatusRumah:
         type: string
       Sub_Kelompok:
-        $ref: '#/definitions/13039.0xc00053db30.false'
+        $ref: '#/definitions/13039.0xc0004f42d0.false'
       TTD_AO:
         type: string
       TTD_KC_SAO:
@@ -2356,7 +2387,7 @@ definitions:
       Tanggal_Sos:
         type: string
       Tanggal_Verif:
-        $ref: '#/definitions/13455.0xc00053dbf0.false'
+        $ref: '#/definitions/13455.0xc0004f4390.false'
       Tempat_Lahir:
         type: string
       Term_Pembiayaan:
