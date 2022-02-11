@@ -9,6 +9,15 @@ func init() {
 
     beego.GlobalControllerRouter["pkmapi/controllers:ImagesController"] = append(beego.GlobalControllerRouter["pkmapi/controllers:ImagesController"],
         beego.ControllerComments{
+            Method: "ShowS3Image",
+            Router: "/ShowS3Image",
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["pkmapi/controllers:ImagesController"] = append(beego.GlobalControllerRouter["pkmapi/controllers:ImagesController"],
+        beego.ControllerComments{
             Method: "PkmImages",
             Router: "/home/PKM/:data",
             AllowHTTPMethods: []string{"get"},

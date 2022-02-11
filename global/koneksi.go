@@ -9,10 +9,11 @@ import (
 
 	"github.com/jlaffaye/ftp"
 	"errors"
-	// "fmt"
-	// "github.com/minio/minio-go"
-	// "github.com/minio/minio-go/pkg/credentials"
-	// "golang.org/x/net/context"
+
+
+	
+	"github.com/minio/minio-go"
+	"github.com/minio/minio-go/pkg/credentials"
 )
 
 // var Db *sql.DB
@@ -28,6 +29,7 @@ import (
 
 // 	Db3, _ = sql.Open("mssql", beego.AppConfig.String("SqlConnInisiasi"))
 // }
+
 
 func ConnPKM() (*sql.DB,error) {
 	conn,err := sql.Open("mssql", beego.AppConfig.String("SqlConnPKM"))
@@ -166,86 +168,21 @@ func ConnFTP()(*ftp.ServerConn,error){
 }
 
 
-// func init() {
-// 	endpoint := "pnmdc-cluster-cohesity.pnm.co.id:3000"
-// 	accessKeyID := "21jEi3Oaa-90SqunmmBVAgR6qKYsah-iDM2N9ewRKcw"
-// 	secretAccessKey := "FLCnMUmpIg8qepylN8c7nVmop_vX2dW1XFBlvQXmaTo"
-// 	useSSL := false
+func ConnS3Storage()(*minio.Client,error){
+    
+	endpoint := "pnmdc-cluster-cohesity.pnm.co.id:3000"
+	accessKeyID := "MFwH9ODLzSKpPmFiymfZSFSwahkJqYNF-fMcR0C4hnY"
+	secretAccessKey := "B07xJAOJHYyOxk0cdA1TI9lBcMSA7dCASEcBvPRfNlk"
+	useSSL := true
 
-// 	// Initialize minio client object.
-// 	minioClient, err := minio.New(endpoint, &minio.Options{
-// 		Creds:  credentials.NewStaticV4(accessKeyID, secretAccessKey, ""),
-// 		Secure: useSSL,
-// 	})
-// 	if err != nil {
-// 		log.Fatalln(err)
-// 	}
+	// Initialize minio client object.
+	minioClient, err := minio.New(endpoint, &minio.Options{
+		Creds:  credentials.NewStaticV4(accessKeyID, secretAccessKey, ""),
+		Secure: useSSL,
+	})
+	if err != nil {
+		return minioClient,err
+	}
 
-// 	log.Printf("%#v\n", minioClient) // minioClient is now set up
-// }
-
-
-
-
-// func Upload_file_s3()error{
-// 	fmt.Println("serius nih")
-
-//     ctx := context.Background()
-// 	endpoint := "pnmdc-cluster-cohesity.pnm.co.id:3000"
-// 	accessKeyID := "MFwH9ODLzSKpPmFiymfZSFSwahkJqYNF-fMcR0C4hnY"
-// 	secretAccessKey := "B07xJAOJHYyOxk0cdA1TI9lBcMSA7dCASEcBvPRfNlk"
-// 	useSSL := true
-
-// 	// Initialize minio client object.
-// 	minioClient, err := minio.New(endpoint, &minio.Options{
-// 		Creds:  credentials.NewStaticV4(accessKeyID, secretAccessKey, ""),
-// 		Secure: useSSL,
-// 	})
-// 	if err != nil {
-// 		// log.Fatalln(err)
-// 		return err
-// 	}
-
-	
-// 	fmt.Println("minioClient set ")
-
-// 	// Make a new bucket called mymusic.
-// 	bucketName := "mekdi"
-// 	// location := "us-east-1"
-// 	// location := ""
-
-// 	// err = minioClient.MakeBucket(ctx, bucketName, minio.MakeBucketOptions{Region: location})
-// 	// if err != nil {
-// 	// 	// Check to see if we already own this bucket (which happens if you run this twice)
-// 	// 	exists, errBucketExists := minioClient.BucketExists(ctx, bucketName)
-// 	// 	if errBucketExists == nil && exists {
-// 	// 		// log.Printf("We already own %s\n", bucketName)
-// 	// 		fmt.Println("We already own %s\n", bucketName)			
-// 	// 	} else {
-// 	// 		// log.Fatalln(err)
-// 	// 		return 
-// 	// 	}
-// 	// } else {
-// 	// 	// log.Printf("Successfully created %s\n", bucketName)
-// 	// 	fmt.Println("Successfully created %s\n", bucketName)
-// 	// }
-
-
-// 	// fmt.Println("selesai bucket")
-
-// 	// Upload the zip file
-// 	objectName := "absensi-fandi-zainal-january-2020.pdf"
-// 	filePath := "./images/absensi-fandi-zainal-january-2020.pdf"
-// 	contentType := "application/pdf"
-
-// 	// Upload the zip file with FPutObject
-// 	info, err := minioClient.FPutObject(ctx, bucketName, objectName, filePath, minio.PutObjectOptions{ContentType: contentType})
-// 	if err != nil {
-// 		// log.Fatalln(err)
-// 		return err
-// 	}
-
-// 	// log.Printf("Successfully uploaded %s of size %d\n", objectName, info.Size)
-// 	fmt.Println("Successfully uploaded %s of size %d\n", objectName, info.Size)
-// 	return nil
-// }
+	return minioClient,nil
+}

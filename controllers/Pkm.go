@@ -444,7 +444,7 @@ func (c *MainController) AuthLogin() {
 // @router /GetDate [get]
 func (c *MainController) GetNewDate() {
 
-	// err := global.Upload_file_s3()
+	// err := global.PutS3()
 	// if err != nil {
 	// 	fmt.Println(err)
 	// }

@@ -170,6 +170,32 @@ func (c *ImagesController) PkmImagesProd() {
 
 
 
+// @Title PkmImages
+// @Description PkmImages
+// @Param	Authorization header string  false "Authorization Token"
+// @Success 200 {object} global.APIResponse {"code": 200,"message": "Data berhasil disimpan"}
+// @Failure 404 {"code": 404,"message": "Error not found"}
+// @Failure 405 {"code": 405,"message": "Error json"}
+// @Failure 500 {"code": 500,"message": "Error sql"}
+// @router /ShowS3Image [get]
+func (c *ImagesController) ShowS3Image() {	
+	
+	object,err := global.GetS3()
+	if err != nil {
+		global.Logging("ERROR","global.ConnS3Storage controller ShowS3Image ---> " + err.Error())	
+		c.Ctx.Output.SetStatus(500)	
+		c.Data["json"] = global.APIResponse{Code: 500, Message: err.Error()}
+		c.ServeJSON()
+    }    
+	if _, err := io.Copy(c.Ctx.ResponseWriter,object); err != nil {
+		global.Logging("ERROR","io.Copy controller ShowS3Image ---> " + err.Error())	
+		c.Ctx.Output.SetStatus(500)	
+		c.Data["json"] = global.APIResponse{Code: 500, Message: err.Error()}
+		c.ServeJSON()
+    }		
+}
+
+
 // @Title Logout
 // @Description Logout Hapus Prospek yang ke ambil oleh user
 // @Param	Authorization header string  false "Authorization Token"

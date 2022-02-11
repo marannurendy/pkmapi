@@ -15,6 +15,40 @@
     },
     "basePath": "/v1",
     "paths": {
+        "/images/ShowS3Image": {
+            "get": {
+                "tags": [
+                    "images"
+                ],
+                "description": "PkmImages",
+                "operationId": "ImagesController.PkmImages",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Authorization Token",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\": 200,\"message\": \"Data berhasil disimpan\"}",
+                        "schema": {
+                            "$ref": "#/definitions/global.APIResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "{\"code\": 404,\"message\": \"Error not found\"}"
+                    },
+                    "405": {
+                        "description": "{\"code\": 405,\"message\": \"Error json\"}"
+                    },
+                    "500": {
+                        "description": "{\"code\": 500,\"message\": \"Error sql\"}"
+                    }
+                }
+            }
+        },
         "/images/home/PKM/{data}": {
             "get": {
                 "tags": [
@@ -1463,71 +1497,71 @@
         }
     },
     "definitions": {
-        "10067.0xc0004f4240.false": {
+        "10067.0xc0005a7770.false": {
             "title": "false",
             "type": "object"
         },
-        "11051.0xc0004f4270.false": {
+        "11051.0xc0005a77a0.false": {
             "title": "false",
             "type": "object"
         },
-        "12974.0xc0004f42a0.false": {
+        "12974.0xc0005a77d0.false": {
             "title": "false",
             "type": "object"
         },
-        "13039.0xc0004f42d0.false": {
+        "13039.0xc0005a7800.false": {
             "title": "false",
             "type": "object"
         },
-        "13107.0xc0004f4300.false": {
+        "13107.0xc0005a7830.false": {
             "title": "false",
             "type": "object"
         },
-        "13342.0xc0004f4330.false": {
+        "13342.0xc0005a7860.false": {
             "title": "false",
             "type": "object"
         },
-        "13399.0xc0004f4360.false": {
+        "13399.0xc0005a7890.false": {
             "title": "false",
             "type": "object"
         },
-        "13455.0xc0004f4390.false": {
+        "13455.0xc0005a78c0.false": {
             "title": "false",
             "type": "object"
         },
-        "29942.0xc0005164b0.false": {
+        "29942.0xc0005cd9e0.false": {
             "title": "false",
             "type": "object"
         },
-        "33037.0xc000516ea0.false": {
+        "33037.0xc0005d83f0.false": {
             "title": "false",
             "type": "object"
         },
-        "6752.0xc0004f40f0.false": {
+        "6752.0xc0005a7620.false": {
             "title": "false",
             "type": "object"
         },
-        "6808.0xc0004f4120.false": {
+        "6808.0xc0005a7650.false": {
             "title": "false",
             "type": "object"
         },
-        "9396.0xc0004f4150.false": {
+        "9396.0xc0005a7680.false": {
             "title": "false",
             "type": "object"
         },
-        "9476.0xc0004f4180.false": {
+        "9476.0xc0005a76b0.false": {
             "title": "false",
             "type": "object"
         },
-        "9536.0xc0004f41b0.false": {
+        "9536.0xc0005a76e0.false": {
             "title": "false",
             "type": "object"
         },
-        "9605.0xc0004f41e0.false": {
+        "9605.0xc0005a7710.false": {
             "title": "false",
             "type": "object"
         },
-        "9974.0xc0004f4210.false": {
+        "9974.0xc0005a7740.false": {
             "title": "false",
             "type": "object"
         },
@@ -3035,7 +3069,7 @@
                     "type": "string"
                 },
                 "ClientID": {
-                    "$ref": "#/definitions/33037.0xc000516ea0.false"
+                    "$ref": "#/definitions/33037.0xc0005d83f0.false"
                 },
                 "ID_Prospek": {
                     "type": "string"
@@ -3170,7 +3204,7 @@
                     "type": "string"
                 },
                 "Status_Kelayakan": {
-                    "$ref": "#/definitions/29942.0xc0005164b0.false"
+                    "$ref": "#/definitions/29942.0xc0005cd9e0.false"
                 }
             }
         },
@@ -3293,16 +3327,16 @@
                     "type": "string"
                 },
                 "Is_AdaAdaToiletPribadi": {
-                    "$ref": "#/definitions/10067.0xc0004f4240.false"
+                    "$ref": "#/definitions/10067.0xc0005a7770.false"
                 },
                 "Is_AdaAksesAirBersih": {
-                    "$ref": "#/definitions/9974.0xc0004f4210.false"
+                    "$ref": "#/definitions/9974.0xc0005a7740.false"
                 },
                 "Is_AdaPembiayaanLain": {
                     "type": "string"
                 },
                 "Is_Ada_Rekening_Bank": {
-                    "$ref": "#/definitions/9396.0xc0004f4150.false"
+                    "$ref": "#/definitions/9396.0xc0005a7680.false"
                 },
                 "Is_Ditempat": {
                     "type": "string"
@@ -3380,7 +3414,7 @@
                     "type": "string"
                 },
                 "Kelompok_ID": {
-                    "$ref": "#/definitions/12974.0xc0004f42a0.false"
+                    "$ref": "#/definitions/12974.0xc0005a77d0.false"
                 },
                 "Kelurahan": {
                     "type": "string"
@@ -3404,13 +3438,13 @@
                     "type": "string"
                 },
                 "Latitude": {
-                    "$ref": "#/definitions/6752.0xc0004f40f0.false"
+                    "$ref": "#/definitions/6752.0xc0005a7620.false"
                 },
                 "Lokasi_Sos": {
                     "type": "string"
                 },
                 "Longitude": {
-                    "$ref": "#/definitions/6808.0xc0004f4120.false"
+                    "$ref": "#/definitions/6808.0xc0005a7650.false"
                 },
                 "Luas_Bangunan": {
                     "type": "string"
@@ -3419,7 +3453,7 @@
                     "type": "string"
                 },
                 "Nama_Bank": {
-                    "$ref": "#/definitions/9476.0xc0004f4180.false"
+                    "$ref": "#/definitions/9476.0xc0005a76b0.false"
                 },
                 "Nama_Gadis_Ibu_Kandung": {
                     "type": "string"
@@ -3431,7 +3465,7 @@
                     "type": "string"
                 },
                 "Nama_Kelompok": {
-                    "$ref": "#/definitions/13107.0xc0004f4300.false"
+                    "$ref": "#/definitions/13107.0xc0005a7830.false"
                 },
                 "Nama_KelurahanDesa": {
                     "type": "string"
@@ -3440,7 +3474,7 @@
                     "type": "string"
                 },
                 "Nama_Pembiayaan_Lembaga_Lain": {
-                    "$ref": "#/definitions/11051.0xc0004f4270.false"
+                    "$ref": "#/definitions/11051.0xc0005a77a0.false"
                 },
                 "Nama_Penjamin": {
                     "type": "string"
@@ -3476,7 +3510,7 @@
                     "type": "string"
                 },
                 "No_Rekening": {
-                    "$ref": "#/definitions/9536.0xc0004f41b0.false"
+                    "$ref": "#/definitions/9536.0xc0005a76e0.false"
                 },
                 "No_Telp": {
                     "type": "string"
@@ -3491,7 +3525,7 @@
                     "type": "string"
                 },
                 "Pemilik_Rekening": {
-                    "$ref": "#/definitions/9605.0xc0004f41e0.false"
+                    "$ref": "#/definitions/9605.0xc0005a7710.false"
                 },
                 "PendapatanBersih_perBulan": {
                     "type": "string"
@@ -3527,7 +3561,7 @@
                     "type": "string"
                 },
                 "PostStatus": {
-                    "$ref": "#/definitions/13342.0xc0004f4330.false"
+                    "$ref": "#/definitions/13342.0xc0005a7860.false"
                 },
                 "Produk_Pembiayaan": {
                     "type": "string"
@@ -3536,7 +3570,7 @@
                     "type": "string"
                 },
                 "Reason": {
-                    "$ref": "#/definitions/13399.0xc0004f4360.false"
+                    "$ref": "#/definitions/13399.0xc0005a7890.false"
                 },
                 "Siklus": {
                     "type": "string"
@@ -3554,7 +3588,7 @@
                     "type": "string"
                 },
                 "Sub_Kelompok": {
-                    "$ref": "#/definitions/13039.0xc0004f42d0.false"
+                    "$ref": "#/definitions/13039.0xc0005a7800.false"
                 },
                 "TTD_AO": {
                     "type": "string"
@@ -3584,7 +3618,7 @@
                     "type": "string"
                 },
                 "Tanggal_Verif": {
-                    "$ref": "#/definitions/13455.0xc0004f4390.false"
+                    "$ref": "#/definitions/13455.0xc0005a78c0.false"
                 },
                 "Tempat_Lahir": {
                     "type": "string"

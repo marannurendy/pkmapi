@@ -31,6 +31,9 @@ import (
     "path/filepath"
 
     // "errors"
+    "github.com/minio/minio-go"
+    "golang.org/x/net/context"
+    "fmt"
 )
 
 func MapB64SaveFile(data_arr map[string]string,path string)(map[string]string,error) {
@@ -87,22 +90,12 @@ func B64SaveFile(data string,pathnya string)(string,error) {
     }
 
 
-    
-
-
-
     // fmt.Println("======= UPLOAD FILE TO FTP SERVER =======")
 
     conn,err := ConnFTP()
     if err != nil {
         return "",err
     }    
-
-    // err = conn.MakeDir("pkm/images/")
-    // if err != nil {
-    //     return "",err
-    // }
-    
 
     sourceFile := filepath.Clean(fileName)
     f, err := os.Open(sourceFile)
@@ -128,6 +121,60 @@ func B64SaveFile(data string,pathnya string)(string,error) {
 
 
 	return fileName,nil
+}
+
+
+func PutS3()error{
+    ctx := context.Background()
+    minioClient,err := ConnS3Storage()
+    if err != nil {
+        return err
+    }    
+    	// Make a new bucket called mymusic.
+	bucketName := "mekdi"
+	// location := "us-east-1"
+	location := ""
+
+	err = minioClient.MakeBucket(ctx, bucketName, minio.MakeBucketOptions{Region: location})
+	if err != nil {
+		// Check to see if we already own this bucket (which happens if you run this twice)
+		exists, errBucketExists := minioClient.BucketExists(ctx, bucketName)
+		if errBucketExists == nil && exists {
+			fmt.Println("We already own bucket", bucketName)			
+		} else {
+			return err
+		}
+	} else {
+		fmt.Println("Successfully created ", bucketName)
+	}
+
+	// Upload the zip file
+	objectName := "development/test2.jpeg"
+	filePath := "./images/test1.jpeg"
+	// contentType := "application/pdf"
+	contentType := ""
+
+	// Upload the zip file with FPutObject
+	info, err := minioClient.FPutObject(ctx, bucketName, objectName, filePath, minio.PutObjectOptions{ContentType: contentType})
+	if err != nil {
+		return err
+	}
+
+	fmt.Println("Successfully uploaded",objectName," of size ",info.Size)
+	return nil
+}
+
+func GetS3() (*minio.Object,error){
+    minioClient,err := ConnS3Storage()
+    if err != nil {
+        return nil,err
+    }    
+    object, err := minioClient.GetObject(context.Background(), "mekdi", "development/test2.jpeg", minio.GetObjectOptions{})
+    if err != nil {
+        return nil,err
+    }
+
+    return object,nil
 }
 
 
@@ -186,65 +233,6 @@ func FileB64(pathfile string) (string,error) {
    //=================FTP======================//    
 }
 
-// func FileB64Resize(pathfile string) (string,error) {
-
-//     file, err := os.Open(pathfile)
-//     if err != nil {
-//         return "",err
-//     }        
-//     defer file.Close()
-
-//     img, filetype, err := image.Decode(file)
-//     if err != nil {
-//         return "",err
-//     }        
-
-//     sizenya64, err := strconv.ParseUint(beego.AppConfig.String("RESIZE_GAMBAR"),10,32)
-//     if err != nil {
-//         return "",err
-//     }        
-//     sizenya := uint(sizenya64)
-
-//     newImage := resize.Resize(sizenya, sizenya, img, resize.Lanczos3)
-
-//     fileTemp := "temp/"+guid.New().String()+"."+filetype    
-
-//     w, err := os.Create(fileTemp)
-//     if err != nil {
-//         return "",err
-//     }
-//     defer w.Close()        
-    
-
-
-//     switch filetype {
-//     case "png":
-//         err = png.Encode(w, newImage)
-//     case "gif":
-//         err = gif.Encode(w, newImage, nil)
-//     case "jpeg", "jpg":
-//         err = jpeg.Encode(w, newImage, nil)
-//     case "bmp":
-//         err = bmp.Encode(w, newImage)
-//     case "tiff":
-//         err = tiff.Encode(w, newImage, nil)
-//     default:
-//         // not sure how you got here but what are we going to do with you?
-//         fmt.Println("Unknown image type: ", filetype)
-//         io.Copy(w, file)
-//     }        
-
-
-
-//     var base64Encoding string
-
-//     bytes, err := ioutil.ReadFile(fileTemp)    
-//     if err != nil {
-//         return base64Encoding,err
-//     }                
-//     base64Encoding = toBase64(bytes)    
-//     return base64Encoding,nil        
-// }
 
 func StringInSlice(a string, list []string) bool {
     for _, b := range list {
@@ -254,38 +242,6 @@ func StringInSlice(a string, list []string) bool {
     }
     return false
 }
-
-// func Oauth2() error {
-
-// 	fmt.Println("cek kesini dlu kan")
-// 	// ctx.Output.Header("Content-Type", "application/json")
-
-// 	clientID := "PKM"
-// 	clientSecret := "b53d714e-8e21-4271-9eb6-d43a8505b936"
-
-
-// 	config := &cc.Config{
-// 		ClientID:     clientID,
-// 		ClientSecret: clientSecret,
-// 		TokenURL: "http://127.0.0.1:8080/v1/oauth2/token",
-// 		Scopes:   []string{"all"},
-// 		AuthStyle: 1,
-// 	}
-
-// 	goctx := goctx.Background()
-// 	// 	client := config.Client(goctx)
-// 	// fmt.Println(client)
-
-// 	token, err := config.Token(goctx)
-// 	if err != nil {
-// 		fmt.Println(err)
-// 		return err
-// 	}
-// 	fmt.Println(token)
-
-
-// 	return nil
-// }
 
 func GenerateTokenJWT(d string) string {
 	var uid int = 0
@@ -323,54 +279,3 @@ func GenerateTokenJWT(d string) string {
 	return (tokenString)
 }
 
-
-
-
-
-
-// func S3storage(){
-//     ctx := context.Background()
-// 	endpoint := "pnmdc-cluster-cohesity.pnm.co.id:3000"
-// 	accessKeyID := "21jEi3Oaa-90SqunmmBVAgR6qKYsah-iDM2N9ewRKcw"
-// 	secretAccessKey := "FLCnMUmpIg8qepylN8c7nVmop_vX2dW1XFBlvQXmaTo"
-// 	useSSL := false
-
-// 	// Initialize minio client object.
-// 	minioClient, err := minio.New(endpoint, &minio.Options{
-// 		Creds:  credentials.NewStaticV4(accessKeyID, secretAccessKey, ""),
-// 		Secure: useSSL,
-// 	})
-// 	if err != nil {
-// 		log.Fatalln(err)
-// 	}
-
-// 	// Make a new bucket called mymusic.
-// 	bucketName := "PKM"
-// 	location := "us-east-1"
-
-// 	err = minioClient.MakeBucket(ctx, bucketName, minio.MakeBucketOptions{Region: location})
-// 	if err != nil {
-// 		// Check to see if we already own this bucket (which happens if you run this twice)
-// 		exists, errBucketExists := minioClient.BucketExists(ctx, bucketName)
-// 		if errBucketExists == nil && exists {
-// 			log.Printf("We already own %s\n", bucketName)
-// 		} else {
-// 			log.Fatalln(err)
-// 		}
-// 	} else {
-// 		log.Printf("Successfully created %s\n", bucketName)
-// 	}
-
-// 	// Upload the zip file
-// 	objectName := "absensi-fandi-zainal-january-2020.pdf"
-// 	filePath := "/images/golden-oldies.zip"
-// 	contentType := "application/pdf"
-
-// 	// Upload the zip file with FPutObject
-// 	info, err := minioClient.FPutObject(ctx, bucketName, objectName, filePath, minio.PutObjectOptions{ContentType: contentType})
-// 	if err != nil {
-// 		log.Fatalln(err)
-// 	}
-
-// 	log.Printf("Successfully uploaded %s of size %d\n", objectName, info.Size)
-// }
