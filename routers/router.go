@@ -9,13 +9,13 @@ package routers
 
 import (
 	"pkmapi/controllers"
-	// "pkmapi/middleware"
+	"pkmapi/middleware"
 	"github.com/astaxie/beego"
 )
 
 func init() {
 	ns := beego.NewNamespace("/v1",
-		// beego.NSBefore(middleware.Jwt),
+		beego.NSBefore(middleware.Jwt),
 		beego.NSNamespace("/pkm",
 			beego.NSInclude(
 				&controllers.MainController{},

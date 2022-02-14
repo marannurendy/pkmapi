@@ -696,6 +696,7 @@ type LoginResponse struct {
 	Status         string    `json:"status"`
 	Message        string    `json:"message"`
 	Token		   string	 `json:"token"`
+	TokenExpired   string	 `json:"tokenexpired"`
 	Data           LoginData `json:"data"`
 }
 

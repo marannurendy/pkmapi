@@ -333,7 +333,7 @@ func (c *MainController) AuthLogin() {
 		return
 	}	
 	defer db.Close()
-	// global.Logging("INFO_VERSI","Mobile Version '" + dtpkm.Apk_version + "' API Version '"+beego.AppConfig.String("Version")+"' username='"+dtpkm.Username+"' ")
+	global.Logging("INFO_VERSI","Mobile Version '" + dtpkm.Apk_version + "' API Version '"+beego.AppConfig.String("Version")+"' username='"+dtpkm.Username+"' ")
 
 	rows, err := db.Query(`EXEC GET_User_Mobile_Only_II @Username = '` + dtpkm.Username + `', @Password = '` + b64.StdEncoding.EncodeToString([]byte(dtpkm.Password)) + `'`)
 	
@@ -422,11 +422,15 @@ func (c *MainController) AuthLogin() {
 	statcod := c.Ctx.ResponseWriter.Status
 	statusCode := strconv.Itoa(statcod)
 
+
+	TokenTime := time.Now().Local().Add(time.Hour * time.Duration(12))
+
 	var response = models.LoginResponse{
 		ResponseStatus: true,
 		Status:         statusCode,
 		Message:        "Login Success",
 		Token: 			global.GenerateTokenJWT(dtpkm.Username+b64.StdEncoding.EncodeToString([]byte(dtpkm.Password))),
+		TokenExpired:   TokenTime.Format("2006-01-02 15:04:05"),
 		Data:           each,		
 	}
 
