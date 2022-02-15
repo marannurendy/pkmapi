@@ -310,7 +310,7 @@ type SP_GET_UK_CLIENT_DATA_MOBILE struct {
 	Kualitas_KehadiranPKM string `json:"Kualitas_KehadiranPKM" db:"Kualitas_KehadiranPKM"`
 	Kualitas_Pembayaran string `json:"Kualitas_Pembayaran" db:"Kualitas_Pembayaran"`
 	Pendidikan_Anak_Tertinggi string `json:"Pendidikan_Anak" db:"Pendidikan_Anak_Tertinggi"`
-	Nama_Pendidikan string `json:"Nama_Pendidikan" db:"Nama_Pendidikan"`
+	// Nama_Pendidikan string `json:"Nama_Pendidikan" db:"Nama_Pendidikan"`
 }
 
 func GetUkClientDataMobile(params PARAM_DATA_SOSIALISASI)([]SP_GET_UK_CLIENT_DATA_MOBILE,error) {

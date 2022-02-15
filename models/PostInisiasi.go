@@ -134,7 +134,7 @@ type SP_ADD_PROSPEK_UK struct {
 	JmlhAnak string `json:"JmlhAnak" valid:"Numeric"` 
 	JmlhTanggungan string `json:"JmlhTanggungan" valid:"Numeric"` 
 	JmlTenagaKerja string `json:"JmlTenagaKerja"` 
-	PendidikanAnak string `json:"PendidikanAnak"`
+	// PendidikanAnak string `json:"PendidikanAnak"`
 	StatusRumah string `json:"StatusRumah" valid:"Numeric"` 
 	LamaTinggal string `json:"LamaTinggal" valid:"Numeric"` 
 	IsAdaRekening string `json:"IsAdaRekening" valid:"Numeric"`
@@ -166,7 +166,7 @@ type SP_ADD_PROSPEK_UK struct {
 	JenisAtap string `json:"JenisAtap" valid:"Numeric"` 
 	Dinding string `json:"Dinding" valid:"Numeric"` 
 	Lantai string `json:"Lantai" valid:"Numeric"` 
-	FotoRumah1 string `json:"FotoRumah1"`
+	// FotoRumah1 string `json:"FotoRumah1"`
 	// FotoRumah2 string `json:"FotoRumah2"`
 	// Foto_Jenis_Atap string `json:"Foto_Jenis_Atap"`
 	// Foto_Dinding string `json:"Foto_Dinding"`
@@ -430,8 +430,8 @@ func POST_PROSPEK_UK(data SP_ADD_PROSPEK_UK) ([]RESPONSE_ADD_PROSPEK_UK,error){
 		",@NoTelp = '"+data.NoHP+"' "+
 		",@JmlhAnak = '"+data.JmlhAnak+"' "+
 		",@JmlhTanggungan = '"+data.JmlhTanggungan+"' "+
-		",@PendidikanAnak = '"+data.PendidikanAnak+"' "+
-		// ",@PendidikanAnak = '0' "+
+		// ",@PendidikanAnak = '"+data.PendidikanAnak+"' "+
+		",@PendidikanAnak = '0' "+
 		",@StatusRumah = '"+data.StatusRumah+"' "+
 		",@LamaTinggal = '"+data.LamaTinggal+"' "+
 		",@IsAdaRekening = '"+data.IsAdaRekening+"' "+
@@ -464,7 +464,7 @@ func POST_PROSPEK_UK(data SP_ADD_PROSPEK_UK) ([]RESPONSE_ADD_PROSPEK_UK,error){
 		",@JenisAtap = '"+data.JenisAtap+"' "+
 		",@Dinding = '"+data.Dinding+"' "+
 		",@Lantai = '"+data.Lantai+"' "+
-		",@FotoRumah1 = '"+fileimages["FotoRumah1"]+"' "+
+		// ",@FotoRumah1 = '"+fileimages["FotoRumah1"]+"' "+
 		// ",@FotoRumah2 = '"+fileimages["FotoRumah2"]+"' "+
 		// ",@Foto_Jenis_Atap = '"+fileimages["Foto_Jenis_Atap"]+"' "+
 		// ",@Foto_Dinding = '"+fileimages["Foto_Dinding"]+"' "+

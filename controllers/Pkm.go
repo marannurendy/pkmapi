@@ -333,7 +333,7 @@ func (c *MainController) AuthLogin() {
 		return
 	}	
 	defer db.Close()
-	global.Logging("INFO_VERSI","Mobile Version '" + dtpkm.Apk_version + "' API Version '"+beego.AppConfig.String("Version")+"' username='"+dtpkm.Username+"' ")
+	// global.Logging("INFO_VERSI","Mobile Version '" + dtpkm.Apk_version + "' API Version '"+beego.AppConfig.String("Version")+"' username='"+dtpkm.Username+"' ")
 
 	rows, err := db.Query(`EXEC GET_User_Mobile_Only_II @Username = '` + dtpkm.Username + `', @Password = '` + b64.StdEncoding.EncodeToString([]byte(dtpkm.Password)) + `'`)
 	
