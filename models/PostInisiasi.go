@@ -366,7 +366,7 @@ func POST_PROSPEK_UK(data SP_ADD_PROSPEK_UK) ([]RESPONSE_ADD_PROSPEK_UK,error){
 		fileimages["TTD_KSK"] = data.TTD_KSK
 		fileimages["TTD_KK"] = data.TTD_KK
 		fileimages["TTD_AO"] = data.TTD_AO
-		fileimages["FotoRumah1"] = data.FotoRumah1
+		// fileimages["FotoRumah1"] = data.FotoRumah1
 		
 
 		// fileimages,err = global.MapB64SaveFile(fileimages,path[0].FILE)
@@ -1193,7 +1193,7 @@ func POST_PERSETUJUAN_PEMBIAYAAN(data_add_persetujuan_pembiayaan SP_ADD_PERSETUJ
 	PROJECTION_SANCTION := make([]RESPONSE_POST_PROJECTION_SANCTION, 0)
 	// path := make([]PATH, 0)
 
-	db,err := global.ConnINISIASI_WITHTIME()
+	db,err := global.ConnINISIASI_BRNET()
 	if err != nil {
 		return err
 	}	
@@ -1673,7 +1673,7 @@ func SYNC_TO_BRNET(data_param_to_brnet PARAM_TO_BRNET,ID_Prospek string)([]RESPO
 
 func UPDATE_INISIASI_SETELAH_BRNET_SUCCESS(PROJECTION_SANCTION []RESPONSE_POST_PROJECTION_SANCTION,ID_Prospek string,ID_DK string)error{
 
-	db,err := global.ConnINISIASI_WITHTIME()
+	db,err := global.ConnINISIASI_BRNET()
 	if err != nil {
 		return err
 	}	

@@ -565,7 +565,7 @@ func (c *MainController) PostTransaction() models.TransactionResponse {
 		}
 		
 
-		queryexec = `IF NOT EXISTS (SELECT TOP 1 * FROM PKM_LPM_Transaction_Individu WITH(NOLOCK) WHERE ClientID = '`+dtpkm.TransactionPKM[i].ClientID+`' AND AccountID = '`+dtpkm.TransactionPKM[i].AccountID+`' AND CAST(TrxDate as DATE) = CAST('`+tranDate+`' as DATE)) 
+		queryexec = `IF NOT EXISTS (SELECT 1 FROM PKM_LPM_Transaction_Individu WITH(NOLOCK) WHERE ClientID = '`+dtpkm.TransactionPKM[i].ClientID+`' AND AccountID = '`+dtpkm.TransactionPKM[i].AccountID+`' AND CAST(TrxDate as DATE) = CAST('`+tranDate+`' as DATE)) 
 		BEGIN
 			INSERT INTO PKM_LPM_Transaction
 			SELECT
@@ -626,10 +626,10 @@ func (c *MainController) PostTransaction() models.TransactionResponse {
 				NULL,
 				NULL,
 				NULL
-			FROM PKM_LPM WITH(NOLOCK) INNER JOIN AO_GROUP
+			FROM PKM_LPM WITH(NOLOCK) INNER JOIN AO_GROUP WITH(NOLOCK)
 			ON PKM_LPM.GroupID = AO_GROUP.GROUPID AND PKM_LPM.OurBranchID = AO_GROUP.OURBRANCHID
-			INNER JOIN Cabang_Mekaar ON PKM_LPM.OurBranchID = Cabang_Mekaar.OurBranchID
-			INNER JOIN AO ON AO_GROUP.Username = AO.USERNAME
+			INNER JOIN Cabang_Mekaar WITH(NOLOCK) ON PKM_LPM.OurBranchID = Cabang_Mekaar.OurBranchID
+			INNER JOIN AO WITH(NOLOCK) ON AO_GROUP.Username = AO.USERNAME
 			WHERE ClientID = '`+dtpkm.TransactionPKM[i].ClientID+`' AND AccountID = '`+dtpkm.TransactionPKM[i].AccountID+`'
 
 			PRINT 'Successful'

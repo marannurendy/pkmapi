@@ -59,8 +59,8 @@ func Conn() (*godb.DB,error) {
 	return conn,nil
 }
 
-func ConnINISIASI_WITHTIME() (*godb.DB,error) {
-	conn, err := godb.Open(mssql.Adapter, beego.AppConfig.String("SqlConnInisiasi_WITHTIME"))
+func ConnINISIASI_BRNET() (*godb.DB,error) {
+	conn, err := godb.Open(mssql.Adapter, beego.AppConfig.String("SqlConnInisiasi_BRNET"))
 	if err != nil {
 		return nil,err
 	}
