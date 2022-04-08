@@ -2,18 +2,18 @@ package global
 
 import (
 	"database/sql"
+
 	"github.com/astaxie/beego"
-	_ "github.com/denisenkom/go-mssqldb"	
+	_ "github.com/denisenkom/go-mssqldb"
 	"github.com/samonzeweb/godb"
 	"github.com/samonzeweb/godb/adapters/mssql"
 
-	"github.com/jlaffaye/ftp"
 	"errors"
 
+	"github.com/jlaffaye/ftp"
 
-	
-	"github.com/minio/minio-go"
-	"github.com/minio/minio-go/pkg/credentials"
+	"github.com/minio/minio-go/v7"
+	"github.com/minio/minio-go/v7/pkg/credentials"
 )
 
 // var Db *sql.DB
@@ -30,146 +30,197 @@ import (
 // 	Db3, _ = sql.Open("mssql", beego.AppConfig.String("SqlConnInisiasi"))
 // }
 
+// UPDATE RENDY, ganti sqlConn pkm dan inisiasi (25-01-2022  11:14)
 
-func ConnPKM() (*sql.DB,error) {
-	conn,err := sql.Open("mssql", beego.AppConfig.String("SqlConnPKM"))
+// func ConnPKM() (*sql.DB, error) {
+// 	conn, err := sql.Open("mssql", beego.AppConfig.String("SqlConnPKM"))
+// 	if err != nil {
+// 		return nil, err
+// 	}
+
+// 	err = conn.Ping()
+// 	if err != nil {
+// 		return nil, errors.New("KONEKSI KE DATABASE PENUH, COBA BEBERAPA MENIT LAGI")
+// 	}
+
+// 	return conn, nil
+// }
+
+// func Conn() (*godb.DB, error) {
+// 	conn, err := godb.Open(mssql.Adapter, beego.AppConfig.String("SqlConnInisiasi"))
+// 	if err != nil {
+// 		return nil, err
+// 	}
+
+// 	// err = conn.CobaPing()
+// 	// if err != nil {
+// 	// 	return nil, errors.New("KONEKSI KE DATABASE PENUH, COBA BEBERAPA MENIT LAGI")
+// 	// }
+
+// 	return conn, nil
+// }
+
+func ConnPKMGet() (*sql.DB, error) {
+	conn, err := sql.Open("mssql", beego.AppConfig.String("SqlConnPKMGet"))
 	if err != nil {
-		return nil,err
+		return nil, err
 	}
 
 	err = conn.Ping()
 	if err != nil {
-		return nil,errors.New("KONEKSI KE DATABASE PENUH, COBA BEBERAPA MENIT LAGI")
-	}	
-	
-	return conn,nil	
-}
-
-func Conn() (*godb.DB,error) {
-	conn, err := godb.Open(mssql.Adapter, beego.AppConfig.String("SqlConnInisiasi"))
-	if err != nil {
-		return nil,err
+		return nil, errors.New("KONEKSI KE DATABASE PENUH, COBA BEBERAPA MENIT LAGI")
 	}
 
-	err = conn.CobaPing()
-	if err != nil {
-		return nil,errors.New("KONEKSI KE DATABASE PENUH, COBA BEBERAPA MENIT LAGI")
-	}
-
-	return conn,nil
+	return conn, nil
 }
 
-func ConnINISIASI_BRNET() (*godb.DB,error) {
+func ConnPKMPost() (*sql.DB, error) {
+	conn, err := sql.Open("mssql", beego.AppConfig.String("SqlConnPKMPost"))
+	if err != nil {
+		return nil, err
+	}
+
+	err = conn.Ping()
+	if err != nil {
+		return nil, errors.New("KONEKSI KE DATABASE PENUH, COBA BEBERAPA MENIT LAGI")
+	}
+
+	return conn, nil
+}
+
+func ConnGet() (*godb.DB, error) {
+	conn, err := godb.Open(mssql.Adapter, beego.AppConfig.String("SqlConnInisiasiGet"))
+	if err != nil {
+		return nil, err
+	}
+
+	// err = conn.CobaPing()
+	// if err != nil {
+	// 	return nil, errors.New("KONEKSI KE DATABASE PENUH, COBA BEBERAPA MENIT LAGI")
+	// }
+
+	return conn, nil
+}
+
+func ConnPost() (*godb.DB, error) {
+	conn, err := godb.Open(mssql.Adapter, beego.AppConfig.String("SqlConnUnisiasiPost"))
+	if err != nil {
+		return nil, err
+	}
+
+	// err = conn.CobaPing()
+	// if err != nil {
+	// 	return nil, errors.New("KONEKSI KE DATABASE PENUH, COBA BEBERAPA MENIT LAGI")
+	// }
+
+	return conn, nil
+}
+
+func ConnINISIASI_BRNET() (*godb.DB, error) {
 	conn, err := godb.Open(mssql.Adapter, beego.AppConfig.String("SqlConnInisiasi_BRNET"))
 	if err != nil {
-		return nil,err
+		return nil, err
 	}
 
-	err = conn.CobaPing()
-	if err != nil {
-		return nil,errors.New("KONEKSI KE DATABASE PENUH, COBA BEBERAPA MENIT LAGI")
-	}
+	// err = conn.CobaPing()
+	// if err != nil {
+	// 	return nil, errors.New("KONEKSI KE DATABASE PENUH, COBA BEBERAPA MENIT LAGI")
+	// }
 
-
-	return conn,nil
+	return conn, nil
 }
 
-func ConnPKU() (*godb.DB,error) {
+func ConnPKU() (*godb.DB, error) {
 	conn, err := godb.Open(mssql.Adapter, beego.AppConfig.String("SqlConnPelatihan"))
 	if err != nil {
-		return nil,err
+		return nil, err
 	}
 
-	err = conn.CobaPing()
-	if err != nil {
-		return nil,errors.New("KONEKSI KE DATABASE PENUH, COBA BEBERAPA MENIT LAGI")
-	}
+	// err = conn.CobaPing()
+	// if err != nil {
+	// 	return nil, errors.New("KONEKSI KE DATABASE PENUH, COBA BEBERAPA MENIT LAGI")
+	// }
 
-
-	return conn,nil
+	return conn, nil
 }
 
-func ConnPKUold() (*sql.DB,error) {
-	conn,err := sql.Open("mssql", beego.AppConfig.String("SqlConnPelatihan"))
+func ConnPKUold() (*sql.DB, error) {
+	conn, err := sql.Open("mssql", beego.AppConfig.String("SqlConnPelatihan"))
 	if err != nil {
-		return nil,err
+		return nil, err
 	}
 
 	err = conn.Ping()
 	if err != nil {
-		return nil,errors.New("KONEKSI KE DATABASE PENUH, COBA BEBERAPA MENIT LAGI")
-	}	
+		return nil, errors.New("KONEKSI KE DATABASE PENUH, COBA BEBERAPA MENIT LAGI")
+	}
 
-	return conn,nil	
+	return conn, nil
 }
 
-func ConnBRNET_GET() (*godb.DB,error) {
+func ConnBRNET_GET() (*godb.DB, error) {
 	conn, err := godb.Open(mssql.Adapter, beego.AppConfig.String("SqlConnBRNET_GET"))
 	if err != nil {
-		return nil,err
+		return nil, err
 	}
 
-	err = conn.CobaPing()
-	if err != nil {
-		return nil,errors.New("KONEKSI KE DATABASE PENUH, COBA BEBERAPA MENIT LAGI")
-	}
+	// err = conn.CobaPing()
+	// if err != nil {
+	// 	return nil, errors.New("KONEKSI KE DATABASE PENUH, COBA BEBERAPA MENIT LAGI")
+	// }
 
-
-	return conn,nil
+	return conn, nil
 }
 
-
-func ConnBRNET_POST() (*godb.DB,error) {
+func ConnBRNET_POST() (*godb.DB, error) {
 	conn, err := godb.Open(mssql.Adapter, beego.AppConfig.String("SqlConnBRNET_POST"))
 	if err != nil {
-		return nil,err
+		return nil, err
 	}
 
-	err = conn.CobaPing()
-	if err != nil {
-		return nil,errors.New("KONEKSI KE DATABASE PENUH, COBA BEBERAPA MENIT LAGI")
-	}
+	// err = conn.CobaPing()
+	// if err != nil {
+	// 	return nil, errors.New("KONEKSI KE DATABASE PENUH, COBA BEBERAPA MENIT LAGI")
+	// }
 
-	return conn,nil
+	return conn, nil
 }
 
-func ConnSCORING() (*godb.DB,error) {
+func ConnSCORING() (*godb.DB, error) {
 	conn, err := godb.Open(mssql.Adapter, beego.AppConfig.String("SqlConnSCORING"))
 	if err != nil {
-		return nil,err
+		return nil, err
 	}
 
-	err = conn.CobaPing()
-	if err != nil {
-		return nil,errors.New("KONEKSI KE DATABASE PENUH, COBA BEBERAPA MENIT LAGI")
-	}
+	// err = conn.CobaPing()
+	// if err != nil {
+	// 	return nil, errors.New("KONEKSI KE DATABASE PENUH, COBA BEBERAPA MENIT LAGI")
+	// }
 
-
-	return conn,nil
+	return conn, nil
 }
 
-func ConnFTP()(*ftp.ServerConn,error){
-	
+func ConnFTP() (*ftp.ServerConn, error) {
+
 	const FTP_ADDR = "10.61.4.110:21"
 	const FTP_USERNAME = "itd"
 	const FTP_PASSWORD = "pnm123#"
 
 	conn, err := ftp.Dial(FTP_ADDR)
 	if err != nil {
-		return nil,err
+		return nil, err
 	}
 
 	err = conn.Login(FTP_USERNAME, FTP_PASSWORD)
 	if err != nil {
-		return nil,err
+		return nil, err
 	}
 
-	return conn,nil
+	return conn, nil
 }
 
+func ConnS3Storage() (*minio.Client, error) {
 
-func ConnS3Storage()(*minio.Client,error){
-    
 	endpoint := "pnmdc-cluster-cohesity.pnm.co.id:3000"
 	accessKeyID := "MFwH9ODLzSKpPmFiymfZSFSwahkJqYNF-fMcR0C4hnY"
 	secretAccessKey := "B07xJAOJHYyOxk0cdA1TI9lBcMSA7dCASEcBvPRfNlk"
@@ -181,8 +232,8 @@ func ConnS3Storage()(*minio.Client,error){
 		Secure: useSSL,
 	})
 	if err != nil {
-		return minioClient,err
+		return minioClient, err
 	}
 
-	return minioClient,nil
+	return minioClient, nil
 }

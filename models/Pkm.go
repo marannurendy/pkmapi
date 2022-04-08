@@ -18,10 +18,10 @@ type DetailPKM struct {
 // func Select_list()[]DetailPKM {
 func Select_list(MeetingDayID string, AO_ID string, tipe string, GroupID string) []DetailPKM {
 	var data []DetailPKM
-	db,err := global.ConnPKM()
+	db, err := global.ConnPKMGet()
 	if err != nil {
 		fmt.Println(err.Error())
-	}	
+	}
 	defer db.Close()
 
 	rows, err := db.Query("EXEC GET_Detail_PKM_LPM_TYW @MeetingDayID=" + MeetingDayID + ", @AO_ID=" + AO_ID + ", @type=" + tipe + ", @GroupID=" + GroupID)
@@ -55,10 +55,10 @@ type DetailPKM2 struct {
 
 func Select_data() []DetailPKM2 {
 	var data []DetailPKM2
-	db,err := global.ConnPKM()
+	db, err := global.ConnPKMGet()
 	if err != nil {
 		fmt.Println(err.Error())
-	}	
+	}
 	defer db.Close()
 
 	rows, err := db.Query("EXEC SP_Rendy_Test")
@@ -105,12 +105,12 @@ type DetailTest struct {
 func SelectTest() []DetailTest {
 	var data []DetailTest
 
-	db,err := global.ConnPKM()
+	db, err := global.ConnPKMGet()
 	if err != nil {
 		fmt.Println(err.Error())
-	}	
+	}
 	defer db.Close()
-	
+
 	// rows, err := global.Db.Query("SELECT DISTINCT TOP 10 OurBranchID, GroupID, Initial, GroupName, MeetingDay FROM PKM_LPM WHERE GroupName NOT LIKE '%TRF%'")
 	// rows, err := global.Db.Query("Select OurBranchID, GroupID, GroupName, MeetingDay, CreditOfficerID from PKM_LPM where CreditOfficerID is not null AND CreditOfficerID = '54545422'")
 	rows, err := db.Query("SELECT OurBranchID, GroupName, GroupID, MeetingDay, COUNT(ClientID) as AnggotaAktif, SUM(InstallmentAmount) JumlahTagihan, CASE WHEN MeetingPlace is null then '-' else MeetingDay end as MeetingPlace, MeetingTime, CreditOfficerID FROM PKM_LPM WHERE CreditOfficerID = '54545422' GROUP BY OurBranchID,MeetingDay,MeetingPlace,MeetingTime,GroupName,GroupID,CreditOfficerID")
@@ -148,10 +148,10 @@ type DetailShit struct {
 
 func SelectShit() []DetailShit {
 	var data []DetailShit
-	db,err := global.ConnPKM()
+	db, err := global.ConnPKMGet()
 	if err != nil {
 		fmt.Println(err.Error())
-	}	
+	}
 	defer db.Close()
 
 	rows, err := db.Query("SELECT OurBranchID, GroupName, GroupID, MeetingDay, CASE WHEN MeetingPlace is null then '-' else MeetingDay end as MeetingPlace, MeetingTime, ClientID, ClientName, AccountID, InstallmentAmount, VolSavingsBal, CASE WHEN CompSavingsBal is null then '0' else CompSavingsBal end as CompSavingsBal FROM PKM_LPM WHERE CreditOfficerID = '54545422'")
@@ -177,19 +177,18 @@ func PostTotalTransaction(params map[string]interface{}) {
 	//
 	// _, err := global.Db.Exec("EXEC ADD_PKM_Transaction @GroupID = '" + fmt.Sprintf("%v", params["GroupID"]) + "', @ClientID = '" + fmt.Sprintf("%v", params["ClientID"]) + "', @AccountID = '" + fmt.Sprintf("%v", params["AccountID"]) + "', @AttendStatus = '" + fmt.Sprintf("%v", params["Attendance"]) + "' , @InstallmentAmount = '" + fmt.Sprintf("%v", params["Angsuran"]) + "', @CreditSaving = '" + fmt.Sprintf("%v", params["Tarikan"]) + "', @DebitSaving = '" + fmt.Sprintf("%v", params["Setoran"]) + "', @CreditUP = '0', @TTD1 = '" + fmt.Sprintf("%v", params["TtdAccountOfficer"]) + "', @TTD2 = '" + fmt.Sprintf("%v", params["TtdKetuaKelompok"]) + "', @CreatedDate = '" + fmt.Sprintf("%v", params["CreatedDate"]) + "'")
 	// global.Logging("INFO EXEC ADD_PKM_Transaction @GroupID = '" + fmt.Sprintf("%v", params["GroupID"]) + "', @ClientID = '" + fmt.Sprintf("%v", params["ClientID"]) + "', @AccountID = '" + fmt.Sprintf("%v", params["AccountID"]) + "', @AttendStatus = '" + fmt.Sprintf("%v", params["Attendance"]) + "' , @InstallmentAmount = '" + fmt.Sprintf("%v", params["Angsuran"]) + "', @CreditSaving = '" + fmt.Sprintf("%v", params["Tarikan"]) + "', @DebitSaving = '" + fmt.Sprintf("%v", params["Setoran"]) + "', @CreditUP = '0'")
-	db,err := global.ConnPKM()
+	db, err := global.ConnPKMPost()
 	if err != nil {
 		fmt.Println(err.Error())
-	}	
+	}
 	defer db.Close()
 
 	_, err = db.Exec("EXEC ADD_PKM_Transaction @GroupID = '" + fmt.Sprintf("%v", params["GroupID"]) + "', @ClientID = '" + fmt.Sprintf("%v", params["ClientID"]) + "', @AccountID = '" + fmt.Sprintf("%v", params["AccountID"]) + "', @AttendStatus = '" + fmt.Sprintf("%v", params["Attendance"]) + "' , @InstallmentAmount = '" + fmt.Sprintf("%v", params["Angsuran"]) + "', @CreditSaving = '" + fmt.Sprintf("%v", params["Tarikan"]) + "', @DebitSaving = '" + fmt.Sprintf("%v", params["Setoran"]) + "', @CreditUP = '0', @TTD1 = '1', @TTD2 = '2', @CreatedDate = '" + fmt.Sprintf("%v", params["CreatedDate"]) + "'")
-	global.Logging("INFO_PKM","EXEC ADD_PKM_Transaction @GroupID = '" + fmt.Sprintf("%v", params["GroupID"]) + "', @ClientID = '" + fmt.Sprintf("%v", params["ClientID"]) + "', @AccountID = '" + fmt.Sprintf("%v", params["AccountID"]) + "', @AttendStatus = '" + fmt.Sprintf("%v", params["Attendance"]) + "' , @InstallmentAmount = '" + fmt.Sprintf("%v", params["Angsuran"]) + "', @CreditSaving = '" + fmt.Sprintf("%v", params["Tarikan"]) + "', @DebitSaving = '" + fmt.Sprintf("%v", params["Setoran"]) + "', @CreditUP = '0', @TTD1 = '1', @TTD2 = '2', @CreatedDate = '" + fmt.Sprintf("%v", params["CreatedDate"]) + "'")
-
+	global.Logging("INFO_PKM", "EXEC ADD_PKM_Transaction @GroupID = '"+fmt.Sprintf("%v", params["GroupID"])+"', @ClientID = '"+fmt.Sprintf("%v", params["ClientID"])+"', @AccountID = '"+fmt.Sprintf("%v", params["AccountID"])+"', @AttendStatus = '"+fmt.Sprintf("%v", params["Attendance"])+"' , @InstallmentAmount = '"+fmt.Sprintf("%v", params["Angsuran"])+"', @CreditSaving = '"+fmt.Sprintf("%v", params["Tarikan"])+"', @DebitSaving = '"+fmt.Sprintf("%v", params["Setoran"])+"', @CreditUP = '0', @TTD1 = '1', @TTD2 = '2', @CreatedDate = '"+fmt.Sprintf("%v", params["CreatedDate"])+"'")
 
 	if err != nil {
 		fmt.Println(err)
-		global.Logging("ERROR_PKM","EXEC ADD_PKM_Transaction @GroupID = '" + fmt.Sprintf("%v", params["GroupID"]) + "', @ClientID = '" + fmt.Sprintf("%v", params["ClientID"]) + "', @AccountID = '" + fmt.Sprintf("%v", params["AccountID"]) + "', @AttendStatus = '" + fmt.Sprintf("%v", params["Attendance"]) + "' , @InstallmentAmount = '" + fmt.Sprintf("%v", params["Angsuran"]) + "', @CreditSaving = '" + fmt.Sprintf("%v", params["Tarikan"]) + "', @DebitSaving = '" + fmt.Sprintf("%v", params["Setoran"]) + "', @CreditUP = '0', @TTD1 = '1', @TTD2 = '2', @CreatedDate = '" + fmt.Sprintf("%v", params["CreatedDate"]) + "' ---> " + err.Error())
+		global.Logging("ERROR_PKM", "EXEC ADD_PKM_Transaction @GroupID = '"+fmt.Sprintf("%v", params["GroupID"])+"', @ClientID = '"+fmt.Sprintf("%v", params["ClientID"])+"', @AccountID = '"+fmt.Sprintf("%v", params["AccountID"])+"', @AttendStatus = '"+fmt.Sprintf("%v", params["Attendance"])+"' , @InstallmentAmount = '"+fmt.Sprintf("%v", params["Angsuran"])+"', @CreditSaving = '"+fmt.Sprintf("%v", params["Tarikan"])+"', @DebitSaving = '"+fmt.Sprintf("%v", params["Setoran"])+"', @CreditUP = '0', @TTD1 = '1', @TTD2 = '2', @CreatedDate = '"+fmt.Sprintf("%v", params["CreatedDate"])+"' ---> "+err.Error())
 	}
 	// else {
 	// 	fmt.Println("TRUE")
@@ -202,20 +201,20 @@ func PostTotalTransaction(params map[string]interface{}) {
 func PostTotalTransactionUP(params map[string]interface{}) {
 	// fmt.Println(
 	//
-	db,err := global.ConnPKM()
+	db, err := global.ConnPKMPost()
 	if err != nil {
 		fmt.Println(err.Error())
-	}	
+	}
 	defer db.Close()
 
 	_, err = db.Exec("EXEC ADD_PKM_Transaction_UP @ClientID = '" + fmt.Sprintf("%v", params["clientid"]) + "', @CreditUP = '" + fmt.Sprintf("%v", params["jumlahup"]) + "'")
 	fmt.Println("EXEC ADD_PKM_Transaction_UP @ClientID = '" + fmt.Sprintf("%v", params["clientid"]) + "', @CreditUP = '" + fmt.Sprintf("%v", params["jumlahup"]) + "'")
 
-	global.Logging("INFO_PKM","EXEC ADD_PKM_Transaction_UP @ClientID = '" + fmt.Sprintf("%v", params["clientid"]) + "', @CreditUP = '" + fmt.Sprintf("%v", params["jumlahup"]) + "'")
+	global.Logging("INFO_PKM", "EXEC ADD_PKM_Transaction_UP @ClientID = '"+fmt.Sprintf("%v", params["clientid"])+"', @CreditUP = '"+fmt.Sprintf("%v", params["jumlahup"])+"'")
 
 	if err != nil {
 		fmt.Println(err)
-		global.Logging("ERROR_PKM","UP EXEC ADD_PKM_Transaction_UP @ClientID = '" + fmt.Sprintf("%v", params["clientid"]) + "', @CreditUP = '" + fmt.Sprintf("%v", params["jumlahup"]) + "' ---> " + err.Error())
+		global.Logging("ERROR_PKM", "UP EXEC ADD_PKM_Transaction_UP @ClientID = '"+fmt.Sprintf("%v", params["clientid"])+"', @CreditUP = '"+fmt.Sprintf("%v", params["jumlahup"])+"' ---> "+err.Error())
 	}
 	// else {
 	// 	fmt.Println("TRUE")
@@ -229,18 +228,18 @@ func PostTotalTransactionPAR(params map[string]interface{}) {
 	//
 	// _, err := global.Db.Exec("EXEC ADD_PKM_Transaction_PAR @GroupID = '" + fmt.Sprintf("%v", params["groupid"]) + "', @ClientID = '" + fmt.Sprintf("%v", params["clientid"]) + "', @AccountID = '" + fmt.Sprintf("%v", params["accountid"]) + "', @DebitPAR = '" + fmt.Sprintf("%v", params["jumlahpar"]) + "', @TTD1 = '" + fmt.Sprintf("%v", params["clientSign"]) + "', @TTD2 = '" + fmt.Sprintf("%v", params["AOSign"]) + "', @CreatedBy = '" + fmt.Sprintf("%v", params["createdby"]) + "'")
 	// global.Logging("INFO EXEC ADD_PKM_Transaction_PAR @GroupID = '" + fmt.Sprintf("%v", params["groupid"]) + "', @ClientID = '" + fmt.Sprintf("%v", params["clientid"]) + "', @AccountID = '" + fmt.Sprintf("%v", params["accountid"]) + "', @DebitPAR = '" + fmt.Sprintf("%v", params["jumlahpar"]) + "', @TTD1 = '" + fmt.Sprintf("%v", params["clientSign"]) + "', @TTD2 = '" + fmt.Sprintf("%v", params["AOSign"]) + "', @CreatedBy = '" + fmt.Sprintf("%v", params["createdby"]) + "'")
-	db,err := global.ConnPKM()
+	db, err := global.ConnPKMPost()
 	if err != nil {
 		fmt.Println(err.Error())
-	}	
+	}
 	defer db.Close()
 
 	_, err = db.Exec("EXEC ADD_PKM_Transaction_PAR @GroupID = '" + fmt.Sprintf("%v", params["groupid"]) + "', @ClientID = '" + fmt.Sprintf("%v", params["clientid"]) + "', @AccountID = '" + fmt.Sprintf("%v", params["accountid"]) + "', @DebitPAR = '" + fmt.Sprintf("%v", params["jumlahpar"]) + "', @TTD1 = '1', @TTD2 = '1', @CreatedBy = '" + fmt.Sprintf("%v", params["createdby"]) + "'")
-	global.Logging("INFO_PKM","EXEC ADD_PKM_Transaction_PAR @GroupID = '" + fmt.Sprintf("%v", params["groupid"]) + "', @ClientID = '" + fmt.Sprintf("%v", params["clientid"]) + "', @AccountID = '" + fmt.Sprintf("%v", params["accountid"]) + "', @DebitPAR = '" + fmt.Sprintf("%v", params["jumlahpar"]) + "', @TTD1 = '1', @TTD2 = '1', @CreatedBy = '" + fmt.Sprintf("%v", params["createdby"]) + "'")
+	global.Logging("INFO_PKM", "EXEC ADD_PKM_Transaction_PAR @GroupID = '"+fmt.Sprintf("%v", params["groupid"])+"', @ClientID = '"+fmt.Sprintf("%v", params["clientid"])+"', @AccountID = '"+fmt.Sprintf("%v", params["accountid"])+"', @DebitPAR = '"+fmt.Sprintf("%v", params["jumlahpar"])+"', @TTD1 = '1', @TTD2 = '1', @CreatedBy = '"+fmt.Sprintf("%v", params["createdby"])+"'")
 
 	if err != nil {
 		fmt.Println(err)
-		global.Logging("ERROR_PKM","PAR EXEC ADD_PKM_Transaction_PAR @GroupID = '" + fmt.Sprintf("%v", params["groupid"]) + "', @ClientID = '" + fmt.Sprintf("%v", params["clientid"]) + "', @AccountID = '" + fmt.Sprintf("%v", params["accountid"]) + "', @DebitPAR = '" + fmt.Sprintf("%v", params["jumlahpar"]) + "', @TTD1 = '1', @TTD2 = '1', @CreatedBy = '" + fmt.Sprintf("%v", params["createdby"]) + "' ---> " + err.Error())
+		global.Logging("ERROR_PKM", "PAR EXEC ADD_PKM_Transaction_PAR @GroupID = '"+fmt.Sprintf("%v", params["groupid"])+"', @ClientID = '"+fmt.Sprintf("%v", params["clientid"])+"', @AccountID = '"+fmt.Sprintf("%v", params["accountid"])+"', @DebitPAR = '"+fmt.Sprintf("%v", params["jumlahpar"])+"', @TTD1 = '1', @TTD2 = '1', @CreatedBy = '"+fmt.Sprintf("%v", params["createdby"])+"' ---> "+err.Error())
 	}
 	// else {
 	// 	fmt.Println("TRUE")
@@ -267,21 +266,21 @@ type ListCollection struct {
 
 func GetListCollection(OurBranchID string, AO_ID string) []ListCollection {
 	var data []ListCollection
-	db,err := global.ConnPKM()
+	db, err := global.ConnPKMGet()
 	if err != nil {
 		fmt.Println(err.Error())
-	}	
+	}
 	defer db.Close()
 
 	fmt.Println("EXEC GET_PKM_ANGSURAN @AO_ID = '" + AO_ID + "', @OurBranchID = '" + OurBranchID + "', @type = 'Angsuran'")
-	global.Logging("INFO_PKM","EXEC GET_PKM_ANGSURAN @AO_ID = '" + AO_ID + "', @OurBranchID = '" + OurBranchID + "', @type = 'Angsuran'")
+	global.Logging("INFO_PKM", "EXEC GET_PKM_ANGSURAN @AO_ID = '"+AO_ID+"', @OurBranchID = '"+OurBranchID+"', @type = 'Angsuran'")
 
 	rows, err := db.Query("EXEC GET_PKM_ANGSURAN @AO_ID = '" + AO_ID + "', @OurBranchID = '" + OurBranchID + "', @type = 'Angsuran'")
 
 	if err != nil {
 		// fmt.Println(err.Error())
 		fmt.Println("ERROR")
-		global.Logging("ERROR_PKM","EXEC GET_PKM_ANGSURAN @AO_ID = '" + AO_ID + "', @OurBranchID = '" + OurBranchID + "', @type = 'Angsuran' ---> " + err.Error())
+		global.Logging("ERROR_PKM", "EXEC GET_PKM_ANGSURAN @AO_ID = '"+AO_ID+"', @OurBranchID = '"+OurBranchID+"', @type = 'Angsuran' ---> "+err.Error())
 	}
 
 	fmt.Println("dibawah")
@@ -333,17 +332,17 @@ type Listup struct {
 
 func GetListup(OurBranchID string, AO_ID string) []Listup {
 	var data []Listup
-	db,err := global.ConnPKM()
+	db, err := global.ConnPKMGet()
 	if err != nil {
 		fmt.Println(err.Error())
-	}	
+	}
 	defer db.Close()
 
 	rows, err := db.Query("EXEC GET_PKM_ANGSURAN @AO_ID = '" + AO_ID + "', @OurBranchID = '" + OurBranchID + "', @type = 'UP'")
-	global.Logging("INFO_PKM","EXEC GET_PKM_ANGSURAN @AO_ID = '" + AO_ID + "', @OurBranchID = '" + OurBranchID + "', @type = 'UP'")
+	global.Logging("INFO_PKM", "EXEC GET_PKM_ANGSURAN @AO_ID = '"+AO_ID+"', @OurBranchID = '"+OurBranchID+"', @type = 'UP'")
 	if err != nil {
 		fmt.Println(err.Error())
-		global.Logging("ERROR_PKM","UP EXEC GET_PKM_ANGSURAN @AO_ID = '" + AO_ID + "', @OurBranchID = '" + OurBranchID + "', @type = 'UP' ---> " + err.Error())
+		global.Logging("ERROR_PKM", "UP EXEC GET_PKM_ANGSURAN @AO_ID = '"+AO_ID+"', @OurBranchID = '"+OurBranchID+"', @type = 'UP' ---> "+err.Error())
 	}
 	// else {
 	// 	global.SuccessLog("SUCCESS GET UP EXEC GET_PKM_ANGSURAN @AO_ID = '" + AO_ID + "', @OurBranchID = '" + OurBranchID + "', @type = 'UP' | MATCH")
@@ -374,10 +373,10 @@ type GroupList struct {
 
 func GetListGroup(OurBranchID string, USERNAME string) []GroupList {
 	var data []GroupList
-	db,err := global.ConnPKM()
+	db, err := global.ConnPKMGet()
 	if err != nil {
 		fmt.Println(err.Error())
-	}	
+	}
 	defer db.Close()
 
 	rows, err := db.Query("EXEC GET_Detail_PKM_LPM @OurBranchID='" + OurBranchID + "', @USERNAME='" + USERNAME + "', @type= 'Process'")
@@ -386,7 +385,7 @@ func GetListGroup(OurBranchID string, USERNAME string) []GroupList {
 	// rows, err := global.Db.Query("SELECT TOP 5 OurBranchID, GroupName, MeetingDay, COUNT(ClientID) as AnggotaAktif, SUM(InstallmentAmount) JumlahTagihan, MeetingPlace, MeetingTime FROM PKM_LPM WHERE OurBranchID = '90001'")
 	if err != nil {
 		fmt.Println(err.Error())
-		global.Logging("ERROR_PKM","EXEC GET_Detail_PKM_LPM @OurBranchID='" + OurBranchID + "', @USERNAME='" + USERNAME + "', @type= 'Process' --->> " + err.Error())
+		global.Logging("ERROR_PKM", "EXEC GET_Detail_PKM_LPM @OurBranchID='"+OurBranchID+"', @USERNAME='"+USERNAME+"', @type= 'Process' --->> "+err.Error())
 	}
 	// else {
 	// 	global.SuccessLog("SUCCESS GET EXEC GET_Detail_PKM_LPM @OurBranchID='" + OurBranchID + "', @USERNAME='" + USERNAME + "', @type= 'Process' | MATCH")
@@ -419,10 +418,10 @@ type DetailPKM_PAR struct {
 // func Select_list()[]DetailPKM {
 func GetListCollectionPAR(AO_ID string, OurBranchID string) []DetailPKM_PAR {
 	var data []DetailPKM_PAR
-	db,err := global.ConnPKM()
+	db, err := global.ConnPKMGet()
 	if err != nil {
 		fmt.Println(err.Error())
-	}	
+	}
 	defer db.Close()
 
 	rows, err := db.Query("EXEC GET_Detail_PKM_LPM_PAR @AO_ID = '" + AO_ID + "', @OurBranchID = '" + OurBranchID + "', @type = 'PAR'")
@@ -452,30 +451,31 @@ type Login struct {
 	Password     string `json:"Password"`
 	NAMA         string `json:"NAMA"`
 	LoginSession string `json:"LoginSession"`
-	Is_Syariah	 string `json:"Is_Syariah"`
 }
 
 type SetLogin struct {
-	LoginStat []Login
-	Status    string
-	Token	  string
+	LoginStat  []Login
+	Status     string
+	Token      string
 	Is_Syariah string
 }
 
 func GetLogin(Username string, Password string) SetLogin {
 	var data []Login
 	var loginStatus = ""
-	db,err := global.ConnPKM()
+	db, err := global.ConnPKMGet()
 	if err != nil {
 		fmt.Println(err.Error())
-	}	
+	}
 	defer db.Close()
 
 	rows, err := db.Query("EXEC GET_User_Mobile_Only @Username = '" + Username + "', @Password = '" + Password + "', @Status = '1'")
 
+	fmt.Println("EXEC GET_User_Mobile_Only @Username = '" + Username + "', @Password = '" + Password + "', @Status = '1'")
+
 	if err != nil {
 		fmt.Println(err.Error())
-		global.Logging("ERROR_PKM","LOGIN EXEC GET_User_Mobile_Only @Username = '" + Username + "', @Password = '" + Password + "', @Status = '1' | MATCH ---> " + err.Error())
+		global.Logging("ERROR_PKM", "LOGIN EXEC GET_User_Mobile_Only @Username = '"+Username+"', @Password = '"+Password+"', @Status = '1' | MATCH ---> "+err.Error())
 	}
 	// else {
 	// 	global.SuccessLog("SUCCESS LOGIN EXEC GET_User_Mobile_Only @Username = '" + Username + "', @Password = '" + Password + "', @Status = '1' | MATCH")
@@ -483,7 +483,7 @@ func GetLogin(Username string, Password string) SetLogin {
 	defer rows.Close()
 	for rows.Next() {
 		var each = Login{}
-		err = rows.Scan(&each.OURBRANCHID, &each.NIP, &each.BranchName, &each.USERNAME, &each.Password, &each.NAMA, &each.LoginSession, &each.Is_Syariah)
+		err = rows.Scan(&each.OURBRANCHID, &each.NIP, &each.BranchName, &each.USERNAME, &each.Password, &each.NAMA, &each.LoginSession)
 		if err != nil {
 			fmt.Println(err.Error())
 		}
@@ -503,7 +503,7 @@ func GetLogin(Username string, Password string) SetLogin {
 	var hasil = SetLogin{
 		LoginStat: data,
 		Status:    loginStatus,
-		Token: 	   global.GenerateTokenJWT(Username+Password),
+		Token:     global.GenerateTokenJWT(Username + Password),
 	}
 
 	// db.Close()
@@ -528,12 +528,11 @@ type SetLogout struct {
 func GetLogout(Username string, Password string) SetLogout {
 	var data []Logout
 	var logoutStatus = ""
-	db,err := global.ConnPKM()
+	db, err := global.ConnPKMGet()
 	if err != nil {
 		fmt.Println(err.Error())
-	}	
+	}
 	defer db.Close()
-
 
 	rows, err := db.Query("EXEC GET_User_Mobile_Only @Username = '" + Username + "', @Password = '" + Password + "', @Status = '0'")
 
@@ -587,17 +586,17 @@ type DetailGetPKMIndividual struct {
 // func Select_list()[]DetailPKM {
 func GetListPKMIndividual(AO_ID string, OurBranchID string) []DetailGetPKMIndividual {
 	var data []DetailGetPKMIndividual
-	db,err := global.ConnPKM()
+	db, err := global.ConnPKMGet()
 	if err != nil {
 		fmt.Println(err.Error())
-	}	
+	}
 	defer db.Close()
 
 	rows, err := db.Query("EXEC GET_Detail_PKM_LPM_PAR_INDIVIDUAL @USERNAME = '" + AO_ID + "', @OurBranchID = '" + OurBranchID + "', @type = 'Process'")
 
 	if err != nil {
 		fmt.Println(err.Error())
-		global.Logging("ERROR_PKM","Individu EXEC GET_Detail_PKM_LPM_PAR_INDIVIDUAL @USERNAME = '" + AO_ID + "', @OurBranchID = '" + OurBranchID + "', @type = 'Process' ---> " + err.Error())
+		global.Logging("ERROR_PKM", "Individu EXEC GET_Detail_PKM_LPM_PAR_INDIVIDUAL @USERNAME = '"+AO_ID+"', @OurBranchID = '"+OurBranchID+"', @type = 'Process' ---> "+err.Error())
 	}
 	// else {
 	// 	global.SuccessLog("SUCCESS PKM Individu EXEC GET_Detail_PKM_LPM_PAR_INDIVIDUAL @USERNAME = '" + AO_ID + "', @OurBranchID = '" + OurBranchID + "', @type = 'Process' | MATCH")
@@ -620,18 +619,18 @@ func PostPKMIndividual(params map[string]interface{}) {
 	//
 	// _, err := global.Db.Exec("EXEC ADD_PKM_Transaction_PAR_Individual @GroupID = '" + fmt.Sprintf("%v", params["groupid"]) + "', @ClientID = '" + fmt.Sprintf("%v", params["clientid"]) + "', @AccountID = '" + fmt.Sprintf("%v", params["accountid"]) + "', @DebitValue = '" + fmt.Sprintf("%v", params["jumlahpar"]) + "', @TTD1 = '" + fmt.Sprintf("%v", params["clientSign"]) + "', @TTD2 = '" + fmt.Sprintf("%v", params["AOSign"]) + "', @CreatedBy = '" + fmt.Sprintf("%v", params["createdby"]) + "', @CreatedDate = '" + fmt.Sprintf("%v", params["CreatedDate"]) + "'")
 	// fmt.Println("EXEC ADD_PKM_Transaction_PAR_Individual @GroupID = '" + fmt.Sprintf("%v", params["groupid"]) + "', @ClientID = '" + fmt.Sprintf("%v", params["clientid"]) + "', @AccountID = '" + fmt.Sprintf("%v", params["accountid"]) + "', @DebitValue = '" + fmt.Sprintf("%v", params["jumlahpar"]) + "', @TTD1 = '" + fmt.Sprintf("%v", params["clientSign"]) + "', @TTD2 = '" + fmt.Sprintf("%v", params["AOSign"]) + "', @CreatedBy = '" + fmt.Sprintf("%v", params["createdby"]) + "', @CreatedDate = '" + fmt.Sprintf("%v", params["CreatedDate"]) + "'")
-	db,err := global.ConnPKM()
+	db, err := global.ConnPKMPost()
 	if err != nil {
 		fmt.Println(err.Error())
-	}	
+	}
 	defer db.Close()
 
 	_, err = db.Exec("EXEC ADD_PKM_Transaction_PAR_Individual @GroupID = '" + fmt.Sprintf("%v", params["groupid"]) + "', @ClientID = '" + fmt.Sprintf("%v", params["clientid"]) + "', @AccountID = '" + fmt.Sprintf("%v", params["accountid"]) + "', @DebitValue = '" + fmt.Sprintf("%v", params["jumlahpar"]) + "', @TTD1 = '1', @TTD2 = '1', @CreatedBy = '" + fmt.Sprintf("%v", params["createdby"]) + "', @CreatedDate = '" + fmt.Sprintf("%v", params["CreatedDate"]) + "'")
-	global.Logging("INFO_PKM","EXEC ADD_PKM_Transaction_PAR_Individual @GroupID = '" + fmt.Sprintf("%v", params["groupid"]) + "', @ClientID = '" + fmt.Sprintf("%v", params["clientid"]) + "', @AccountID = '" + fmt.Sprintf("%v", params["accountid"]) + "', @DebitValue = '" + fmt.Sprintf("%v", params["jumlahpar"]) + "', @TTD1 = '1', @TTD2 = '1', @CreatedBy = '" + fmt.Sprintf("%v", params["createdby"]) + "', @CreatedDate = '" + fmt.Sprintf("%v", params["CreatedDate"]) + "'")	
+	global.Logging("INFO_PKM", "EXEC ADD_PKM_Transaction_PAR_Individual @GroupID = '"+fmt.Sprintf("%v", params["groupid"])+"', @ClientID = '"+fmt.Sprintf("%v", params["clientid"])+"', @AccountID = '"+fmt.Sprintf("%v", params["accountid"])+"', @DebitValue = '"+fmt.Sprintf("%v", params["jumlahpar"])+"', @TTD1 = '1', @TTD2 = '1', @CreatedBy = '"+fmt.Sprintf("%v", params["createdby"])+"', @CreatedDate = '"+fmt.Sprintf("%v", params["CreatedDate"])+"'")
 
 	if err != nil {
 		fmt.Println(err)
-		global.Logging("ERROR_PKM","EXEC ADD_PKM_Transaction_PAR_Individual @GroupID = '" + fmt.Sprintf("%v", params["groupid"]) + "', @ClientID = '" + fmt.Sprintf("%v", params["clientid"]) + "', @AccountID = '" + fmt.Sprintf("%v", params["accountid"]) + "', @DebitValue = '" + fmt.Sprintf("%v", params["jumlahpar"]) + "', @TTD1 = '1', @TTD2 = '1', @CreatedBy = '" + fmt.Sprintf("%v", params["createdby"]) + "', @CreatedDate = '" + fmt.Sprintf("%v", params["CreatedDate"]) + "' ---> " + err.Error())
+		global.Logging("ERROR_PKM", "EXEC ADD_PKM_Transaction_PAR_Individual @GroupID = '"+fmt.Sprintf("%v", params["groupid"])+"', @ClientID = '"+fmt.Sprintf("%v", params["clientid"])+"', @AccountID = '"+fmt.Sprintf("%v", params["accountid"])+"', @DebitValue = '"+fmt.Sprintf("%v", params["jumlahpar"])+"', @TTD1 = '1', @TTD2 = '1', @CreatedBy = '"+fmt.Sprintf("%v", params["createdby"])+"', @CreatedDate = '"+fmt.Sprintf("%v", params["CreatedDate"])+"' ---> "+err.Error())
 	}
 	// else {
 	// 	fmt.Println("TRUE")
@@ -643,10 +642,10 @@ func PostPKMIndividual(params map[string]interface{}) {
 func PostTotalTransactionUPnew(params map[string]interface{}) {
 	// fmt.Println(
 	//
-	db,err := global.ConnPKM()
+	db, err := global.ConnPKMPost()
 	if err != nil {
 		fmt.Println(err.Error())
-	}	
+	}
 	defer db.Close()
 
 	_, err = db.Exec("EXEC ADD_PKM_Transaction_UP @ClientID = '" + fmt.Sprintf("%v", params["clientid"]) + "', @CreditUP = '" + fmt.Sprintf("%v", params["jumlahup"]) + "', @TTD1 = '" + fmt.Sprintf("%v", params["TtdAccountOfficer"]) + "', @TTD2 = '" + fmt.Sprintf("%v", params["TtdKetuaKelompok"]) + "'")
@@ -654,7 +653,7 @@ func PostTotalTransactionUPnew(params map[string]interface{}) {
 
 	if err != nil {
 		fmt.Println(err)
-		global.Logging("ERROR_PKM","POST UP EXEC ADD_PKM_Transaction_UP @ClientID = '" + fmt.Sprintf("%v", params["clientid"]) + "', @CreditUP = '" + fmt.Sprintf("%v", params["jumlahup"]) + "', @TTD1 = '" + fmt.Sprintf("%v", params["TtdAccountOfficer"]) + "', @TTD2 = '" + fmt.Sprintf("%v", params["TtdKetuaKelompok"]) + "' ---> " + err.Error())
+		global.Logging("ERROR_PKM", "POST UP EXEC ADD_PKM_Transaction_UP @ClientID = '"+fmt.Sprintf("%v", params["clientid"])+"', @CreditUP = '"+fmt.Sprintf("%v", params["jumlahup"])+"', @TTD1 = '"+fmt.Sprintf("%v", params["TtdAccountOfficer"])+"', @TTD2 = '"+fmt.Sprintf("%v", params["TtdKetuaKelompok"])+"' ---> "+err.Error())
 	}
 	// else {
 	// 	fmt.Println("TRUE")
@@ -676,18 +675,9 @@ func PostListMahasiswa() []DetailMahasiswa {
 	return datam
 }
 
-
-
-
-
-
-
-
-
-
 type LoginRequest struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
+	Username    string `json:"username"`
+	Password    string `json:"password"`
 	Apk_version string `json:"apk_version"`
 }
 
@@ -695,38 +685,26 @@ type LoginResponse struct {
 	ResponseStatus bool      `json:"responseStatus"`
 	Status         string    `json:"status"`
 	Message        string    `json:"message"`
-	Token		   string	 `json:"token"`
-	TokenExpired   string	 `json:"tokenexpired"`
+	Token          string    `json:"token"`
+	TokenExpired   string    `json:"tokenexpired"`
 	Data           LoginData `json:"data"`
 }
 
 type LoginData struct {
-	UnitKerja  string `json:"unitKerja"`
-	Nip        string `json:"nip"`
-	BranchName string `json:"branchName"`
-	UserName   string `json:"userName"`
-	Password   string `json:"password"`
-	Name       string `json:"nama"`
-	Jabatan    string `json:"jabatan"`
+	UnitKerja    string `json:"unitKerja"`
+	Nip          string `json:"nip"`
+	BranchName   string `json:"branchName"`
+	UserName     string `json:"userName"`
+	Password     string `json:"password"`
+	Name         string `json:"nama"`
+	Jabatan      string `json:"jabatan"`
 	LoginSession string `json:"LoginSession"`
 }
-
 
 type DateResponse struct {
 	ResponseStatus bool   `json:"responseStatus"`
 	CurrentDate    string `json:"currentDate"`
 }
-
-
-
-
-
-
-
-
-
-
-
 
 type TransactionAll struct {
 	TransactionPKM []TransactionPost `json:"pkm"`
@@ -767,4 +745,50 @@ type TransactionResponse struct {
 	Status         string
 	Message        string
 	Statusid       string
+}
+
+type IndividualTransaction struct {
+	ListIndividualTransaction []ListTransaction `json:"data"`
+	DetailTransaction         DetailTransaction `json:"detailTransaction"`
+}
+
+type ListTransaction struct {
+	AccountID         string `json:"accountid"`
+	ClientID          string `json:"clientid"`
+	GroupID           string `json:"groupid"`
+	BranchID          string `json:"cabangid"`
+	InstallmentAmount string `json:"jumlahpar"`
+	CreatedBy         string `json:"createdby"`
+	AOSign            string `json:"AOSign"`
+	ClientSign        string `json:"clientSign"`
+	CreatedDate       string `json:"createdDate"`
+}
+
+type DetailTransaction struct {
+	CreatedBy   string `json:"createdby"`
+	BranchID    string `json:"cabangid"`
+	CreatedDate string `json:"createdDate"`
+}
+
+type GetFailedIndividualTransaction struct {
+	OurBranchID string `json:"ourBranchid"`
+	GroupID     string `json:"groupId"`
+	Initial     string `json:"initial"`
+	GroupName   string `json:"groupName"`
+	ClientID    string `json:"clientId"`
+	AccountID   string `json:"accountId"`
+	ClientName  string `json:"clientName"`
+}
+
+type IndividualTransactionResponse struct {
+	ResponseStatus    bool
+	Status            string
+	Message           string
+	Statusid          string
+	FailedTransaction []GetFailedIndividualTransaction `json:"failedTransaction"`
+}
+
+type FailedData struct {
+	ClientName   string `json:"clientName"`
+	FailedStatus string `json:"failedStatus"`
 }

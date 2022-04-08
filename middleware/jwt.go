@@ -1,12 +1,15 @@
 package middleware
 
 import (
+	"encoding/json"
+	"fmt"
+	"pkmapi/global"
+
+	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/context"
 	"github.com/dgrijalva/jwt-go"
-	"fmt"
-	"github.com/astaxie/beego"
-	"encoding/json"
-	"aktivis/api/global"
+
+	// "aktivis/api/global"
 	"strings"
 )
 
@@ -22,23 +25,22 @@ func Jwt(ctx *context.Context) {
 		return
 	}
 	//sementara yang di pkm tidak menggunakan token
-	if strings.Contains(uri,"/v1/pkm/") == true {
+	if strings.Contains(uri, "/v1/pkm/") == true {
 		return
 	}
 
-	if strings.Contains(uri,"/v1/other/") == true {
+	if strings.Contains(uri, "/v1/other/") == true {
 		return
-	}	
+	}
 
-	if strings.Contains(uri,"/v1/images/") == true {
+	if strings.Contains(uri, "/v1/images/") == true {
 		return
-	}	
-
+	}
 
 	// karena Preflight Request tidak mengirim token
 	if ctx.Input.Method() == "OPTIONS" {
-        return
-    }
+		return
+	}
 
 	if ctx.Input.Header("Authorization") == "" {
 		ctx.Output.SetStatus(403)
@@ -56,7 +58,7 @@ func Jwt(ctx *context.Context) {
 		}
 
 		return []byte(beego.AppConfig.String("KEY")), nil
-	})	
+	})
 
 	if err != nil {
 		ctx.Output.SetStatus(403)

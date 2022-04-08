@@ -806,7 +806,7 @@
                 }
             }
         },
-        "/pkm/PostPKMIndividual": {
+        "/pkm/PostIndividualTransaction": {
             "post": {
                 "tags": [
                     "pkm"
@@ -815,82 +815,24 @@
                 "operationId": "MainController.PKM",
                 "parameters": [
                     {
-                        "in": "formData",
-                        "name": "accountid",
-                        "description": "accountid",
+                        "in": "body",
+                        "name": "data",
+                        "description": "PostIndividualTransaction",
                         "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "in": "formData",
-                        "name": "AOSign",
-                        "description": "AOSign",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "in": "formData",
-                        "name": "accountid",
-                        "description": "accountid",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "in": "formData",
-                        "name": "cabangid",
-                        "description": "cabangid",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "in": "formData",
-                        "name": "clientSign",
-                        "description": "clientSign",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "in": "formData",
-                        "name": "clientid",
-                        "description": "clientid",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "in": "formData",
-                        "name": "createdby",
-                        "description": "createdby",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "in": "formData",
-                        "name": "groupid",
-                        "description": "groupid",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "in": "formData",
-                        "name": "jumlahpar",
-                        "description": "jumlahpar",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "in": "formData",
-                        "name": "CreatedDate",
-                        "description": "CreatedDate",
-                        "required": true,
-                        "type": "string"
+                        "schema": {
+                            "$ref": "#/definitions/models.IndividualTransaction"
+                        }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "models.ListCollection"
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.IndividualTransactionResponse"
+                        }
                     },
                     "403": {
-                        "description": "\"Error\""
+                        "description": "\"Errorss\""
                     }
                 }
             }
@@ -1497,71 +1439,71 @@
         }
     },
     "definitions": {
-        "10067.0xc0005dd710.false": {
+        "10976.0xc0005a5e30.false": {
             "title": "false",
             "type": "object"
         },
-        "11051.0xc0005dd740.false": {
+        "11079.0xc0005a5e60.false": {
             "title": "false",
             "type": "object"
         },
-        "12974.0xc0005dd770.false": {
+        "11160.0xc0005a5e90.false": {
             "title": "false",
             "type": "object"
         },
-        "13039.0xc0005dd7a0.false": {
+        "11245.0xc0005a5ec0.false": {
             "title": "false",
             "type": "object"
         },
-        "13107.0xc0005dd7d0.false": {
+        "11759.0xc0005a5ef0.false": {
             "title": "false",
             "type": "object"
         },
-        "13342.0xc0005dd800.false": {
+        "11862.0xc0005a5f20.false": {
             "title": "false",
             "type": "object"
         },
-        "13399.0xc0005dd830.false": {
+        "13013.0xc0005a5f50.false": {
             "title": "false",
             "type": "object"
         },
-        "13455.0xc0005dd860.false": {
+        "15083.0xc0005a5f80.false": {
             "title": "false",
             "type": "object"
         },
-        "29942.0xc0005fb980.false": {
+        "15157.0xc0005a5fb0.false": {
             "title": "false",
             "type": "object"
         },
-        "33037.0xc000606390.false": {
+        "15233.0xc0005c2000.false": {
             "title": "false",
             "type": "object"
         },
-        "6752.0xc0005dd5c0.false": {
+        "15490.0xc0005c2030.false": {
             "title": "false",
             "type": "object"
         },
-        "6808.0xc0005dd5f0.false": {
+        "15559.0xc0005c2060.false": {
             "title": "false",
             "type": "object"
         },
-        "9396.0xc0005dd620.false": {
+        "15620.0xc0005c2090.false": {
             "title": "false",
             "type": "object"
         },
-        "9476.0xc0005dd650.false": {
+        "32357.0xc0005d9e30.false": {
             "title": "false",
             "type": "object"
         },
-        "9536.0xc0005dd680.false": {
+        "35559.0xc0005deab0.false": {
             "title": "false",
             "type": "object"
         },
-        "9605.0xc0005dd6b0.false": {
+        "7492.0xc0005a5dd0.false": {
             "title": "false",
             "type": "object"
         },
-        "9974.0xc0005dd6e0.false": {
+        "7559.0xc0005a5e00.false": {
             "title": "false",
             "type": "object"
         },
@@ -1611,6 +1553,21 @@
             "type": "object",
             "properties": {
                 "RESULT": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.DetailTransaction": {
+            "title": "DetailTransaction",
+            "type": "object",
+            "properties": {
+                "cabangid": {
+                    "type": "string"
+                },
+                "createdDate": {
+                    "type": "string"
+                },
+                "createdby": {
                     "type": "string"
                 }
             }
@@ -1699,6 +1656,33 @@
                 }
             }
         },
+        "models.GetFailedIndividualTransaction": {
+            "title": "GetFailedIndividualTransaction",
+            "type": "object",
+            "properties": {
+                "accountId": {
+                    "type": "string"
+                },
+                "clientId": {
+                    "type": "string"
+                },
+                "clientName": {
+                    "type": "string"
+                },
+                "groupId": {
+                    "type": "string"
+                },
+                "groupName": {
+                    "type": "string"
+                },
+                "initial": {
+                    "type": "string"
+                },
+                "ourBranchid": {
+                    "type": "string"
+                }
+            }
+        },
         "models.GetMasterDataResponse": {
             "title": "GetMasterDataResponse",
             "type": "object",
@@ -1713,6 +1697,78 @@
                     "type": "string"
                 },
                 "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.IndividualTransaction": {
+            "title": "IndividualTransaction",
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.ListTransaction"
+                    }
+                },
+                "detailTransaction": {
+                    "$ref": "#/definitions/models.DetailTransaction"
+                }
+            }
+        },
+        "models.IndividualTransactionResponse": {
+            "title": "IndividualTransactionResponse",
+            "type": "object",
+            "properties": {
+                "Message": {
+                    "type": "string"
+                },
+                "ResponseStatus": {
+                    "type": "boolean"
+                },
+                "Status": {
+                    "type": "string"
+                },
+                "Statusid": {
+                    "type": "string"
+                },
+                "failedTransaction": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.GetFailedIndividualTransaction"
+                    }
+                }
+            }
+        },
+        "models.ListTransaction": {
+            "title": "ListTransaction",
+            "type": "object",
+            "properties": {
+                "AOSign": {
+                    "type": "string"
+                },
+                "accountid": {
+                    "type": "string"
+                },
+                "cabangid": {
+                    "type": "string"
+                },
+                "clientSign": {
+                    "type": "string"
+                },
+                "clientid": {
+                    "type": "string"
+                },
+                "createdDate": {
+                    "type": "string"
+                },
+                "createdby": {
+                    "type": "string"
+                },
+                "groupid": {
+                    "type": "string"
+                },
+                "jumlahpar": {
                     "type": "string"
                 }
             }
@@ -3072,7 +3128,7 @@
                     "type": "string"
                 },
                 "ClientID": {
-                    "$ref": "#/definitions/33037.0xc000606390.false"
+                    "$ref": "#/definitions/35559.0xc0005deab0.false"
                 },
                 "ID_Prospek": {
                     "type": "string"
@@ -3207,7 +3263,7 @@
                     "type": "string"
                 },
                 "Status_Kelayakan": {
-                    "$ref": "#/definitions/29942.0xc0005fb980.false"
+                    "$ref": "#/definitions/32357.0xc0005d9e30.false"
                 }
             }
         },
@@ -3330,16 +3386,16 @@
                     "type": "string"
                 },
                 "Is_AdaAdaToiletPribadi": {
-                    "$ref": "#/definitions/10067.0xc0005dd710.false"
+                    "$ref": "#/definitions/11862.0xc0005a5f20.false"
                 },
                 "Is_AdaAksesAirBersih": {
-                    "$ref": "#/definitions/9974.0xc0005dd6e0.false"
+                    "$ref": "#/definitions/11759.0xc0005a5ef0.false"
                 },
                 "Is_AdaPembiayaanLain": {
                     "type": "string"
                 },
                 "Is_Ada_Rekening_Bank": {
-                    "$ref": "#/definitions/9396.0xc0005dd620.false"
+                    "$ref": "#/definitions/10976.0xc0005a5e30.false"
                 },
                 "Is_Ditempat": {
                     "type": "string"
@@ -3417,7 +3473,7 @@
                     "type": "string"
                 },
                 "Kelompok_ID": {
-                    "$ref": "#/definitions/12974.0xc0005dd770.false"
+                    "$ref": "#/definitions/15083.0xc0005a5f80.false"
                 },
                 "Kelurahan": {
                     "type": "string"
@@ -3441,13 +3497,13 @@
                     "type": "string"
                 },
                 "Latitude": {
-                    "$ref": "#/definitions/6752.0xc0005dd5c0.false"
+                    "$ref": "#/definitions/7492.0xc0005a5dd0.false"
                 },
                 "Lokasi_Sos": {
                     "type": "string"
                 },
                 "Longitude": {
-                    "$ref": "#/definitions/6808.0xc0005dd5f0.false"
+                    "$ref": "#/definitions/7559.0xc0005a5e00.false"
                 },
                 "Luas_Bangunan": {
                     "type": "string"
@@ -3456,7 +3512,7 @@
                     "type": "string"
                 },
                 "Nama_Bank": {
-                    "$ref": "#/definitions/9476.0xc0005dd650.false"
+                    "$ref": "#/definitions/11079.0xc0005a5e60.false"
                 },
                 "Nama_Gadis_Ibu_Kandung": {
                     "type": "string"
@@ -3468,7 +3524,7 @@
                     "type": "string"
                 },
                 "Nama_Kelompok": {
-                    "$ref": "#/definitions/13107.0xc0005dd7d0.false"
+                    "$ref": "#/definitions/15233.0xc0005c2000.false"
                 },
                 "Nama_KelurahanDesa": {
                     "type": "string"
@@ -3477,7 +3533,7 @@
                     "type": "string"
                 },
                 "Nama_Pembiayaan_Lembaga_Lain": {
-                    "$ref": "#/definitions/11051.0xc0005dd740.false"
+                    "$ref": "#/definitions/13013.0xc0005a5f50.false"
                 },
                 "Nama_Penjamin": {
                     "type": "string"
@@ -3513,7 +3569,7 @@
                     "type": "string"
                 },
                 "No_Rekening": {
-                    "$ref": "#/definitions/9536.0xc0005dd680.false"
+                    "$ref": "#/definitions/11160.0xc0005a5e90.false"
                 },
                 "No_Telp": {
                     "type": "string"
@@ -3528,7 +3584,7 @@
                     "type": "string"
                 },
                 "Pemilik_Rekening": {
-                    "$ref": "#/definitions/9605.0xc0005dd6b0.false"
+                    "$ref": "#/definitions/11245.0xc0005a5ec0.false"
                 },
                 "PendapatanBersih_perBulan": {
                     "type": "string"
@@ -3564,7 +3620,7 @@
                     "type": "string"
                 },
                 "PostStatus": {
-                    "$ref": "#/definitions/13342.0xc0005dd800.false"
+                    "$ref": "#/definitions/15490.0xc0005c2030.false"
                 },
                 "Produk_Pembiayaan": {
                     "type": "string"
@@ -3573,7 +3629,7 @@
                     "type": "string"
                 },
                 "Reason": {
-                    "$ref": "#/definitions/13399.0xc0005dd830.false"
+                    "$ref": "#/definitions/15559.0xc0005c2060.false"
                 },
                 "Siklus": {
                     "type": "string"
@@ -3591,7 +3647,7 @@
                     "type": "string"
                 },
                 "Sub_Kelompok": {
-                    "$ref": "#/definitions/13039.0xc0005dd7a0.false"
+                    "$ref": "#/definitions/15157.0xc0005a5fb0.false"
                 },
                 "TTD_AO": {
                     "type": "string"
@@ -3621,7 +3677,7 @@
                     "type": "string"
                 },
                 "Tanggal_Verif": {
-                    "$ref": "#/definitions/13455.0xc0005dd860.false"
+                    "$ref": "#/definitions/15620.0xc0005c2090.false"
                 },
                 "Tempat_Lahir": {
                     "type": "string"
@@ -3806,7 +3862,7 @@
     "tags": [
         {
             "name": "pkm",
-            "description": "PKM controllerrr\n"
+            "description": "PKM controllerrrer\n"
         },
         {
             "name": "inisiasi",

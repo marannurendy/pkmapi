@@ -1,20 +1,22 @@
 package controllers
 
 import (
-	"pkmapi/models"
 	"pkmapi/global"
+	"pkmapi/models"
+
 	"github.com/astaxie/beego"
+
 	// "PKM_mekaar/conf"
 	// "strings"
+	"context"
 	b64 "encoding/base64"
 	"encoding/json"
-	"fmt"	
+	"fmt"
 	"strconv"
 	"time"
-	"context"
 )
 
-// PKM controllerrr
+// PKM controllerrrer
 type MainController struct {
 	beego.Controller
 }
@@ -257,40 +259,6 @@ func (c *MainController) GetCollectionListPKMIndividual() {
 }
 
 // @Title PKM
-// @Description pkm
-// @Param	accountid formData string  true "accountid"
-// @Param AOSign formData string true "AOSign"
-// @Param accountid formData string true "accountid"
-// @Param cabangid formData string true "cabangid"
-// @Param clientSign formData string true "clientSign"
-// @Param clientid formData string true "clientid"
-// @Param createdby formData string true "createdby"
-// @Param groupid formData string true "groupid"
-// @Param jumlahpar formData string true "jumlahpar"
-// @Param CreatedDate formData string true "CreatedDate"
-// @Success 200 models.ListCollection
-// @Failure 403 "Error"
-// @router /PostPKMIndividual [post]
-func (c *MainController) PostPKMIndividual() {
-	var params = make(map[string]interface{})
-
-	for i := 0; i < len(c.GetStrings("accountid")); i++ {
-		params["AOSign"] = c.GetStrings("AOSign")[i]
-		params["accountid"] = c.GetStrings("accountid")[i]
-		params["cabangid"] = c.GetStrings("cabangid")[i]
-		params["clientSign"] = c.GetStrings("clientSign")[i]
-		params["clientid"] = c.GetStrings("clientid")[i]
-		params["createdby"] = c.GetStrings("createdby")[i]
-		params["groupid"] = c.GetStrings("groupid")[i]
-		params["jumlahpar"] = c.GetStrings("jumlahpar")[i]
-		params["CreatedDate"] = c.GetStrings("CreatedDate")[i]
-
-		models.PostPKMIndividual(params)
-	}
-	c.ServeJSON()
-}
-
-// @Title PKM
 // @Description Auth Login
 // @Param   data body models.LoginRequest true "login"
 // @Success 200 {object} models.LoginResponse
@@ -298,8 +266,8 @@ func (c *MainController) PostPKMIndividual() {
 // @Failure 500 "Error"
 // @router /AuthLogin [post]
 func (c *MainController) AuthLogin() {
-	var dtpkm models.LoginRequest		
-    err := json.Unmarshal(c.Ctx.Input.RequestBody, &dtpkm)	
+	var dtpkm models.LoginRequest
+	err := json.Unmarshal(c.Ctx.Input.RequestBody, &dtpkm)
 	if err != nil {
 		c.Ctx.ResponseWriter.WriteHeader(500)
 		statcod := c.Ctx.ResponseWriter.Status
@@ -316,7 +284,7 @@ func (c *MainController) AuthLogin() {
 		return
 	}
 
-	db,err := global.ConnPKM()
+	db, err := global.ConnPKMGet()
 	if err != nil {
 		c.Ctx.ResponseWriter.WriteHeader(500)
 		statcod := c.Ctx.ResponseWriter.Status
@@ -331,17 +299,16 @@ func (c *MainController) AuthLogin() {
 
 		c.ServeJSON()
 		return
-	}	
+	}
 	defer db.Close()
 	// global.Logging("INFO_VERSI","Mobile Version '" + dtpkm.Apk_version + "' API Version '"+beego.AppConfig.String("Version")+"' username='"+dtpkm.Username+"' ")
 
 	rows, err := db.Query(`EXEC GET_User_Mobile_Only_II @Username = '` + dtpkm.Username + `', @Password = '` + b64.StdEncoding.EncodeToString([]byte(dtpkm.Password)) + `'`)
-	
+
 	if err != nil {
 		c.Ctx.ResponseWriter.WriteHeader(404)
 		statcod := c.Ctx.ResponseWriter.Status
 		statusCode := strconv.Itoa(statcod)
-		
 
 		var response = models.LoginResponse{
 			ResponseStatus: false,
@@ -353,7 +320,6 @@ func (c *MainController) AuthLogin() {
 		c.ServeJSON()
 		return
 	}
-
 
 	//FZL get token start
 	// err = global.Oauth2()
@@ -370,7 +336,7 @@ func (c *MainController) AuthLogin() {
 	// 	}
 	// 	c.Data["json"] = response
 
-	// 	c.ServeJSON()		
+	// 	c.ServeJSON()
 	// }
 	//FZL get token end
 
@@ -380,7 +346,7 @@ func (c *MainController) AuthLogin() {
 	var dataArr []models.LoginData
 	for rows.Next() {
 
-		err = rows.Scan(&each.UnitKerja, &each.Nip, &each.BranchName, &each.UserName, &each.Password, &each.Name, &each.LoginSession, &each.Jabatan )
+		err = rows.Scan(&each.UnitKerja, &each.Nip, &each.BranchName, &each.UserName, &each.Password, &each.Name, &each.LoginSession, &each.Jabatan)
 		if err != nil {
 			c.Ctx.ResponseWriter.WriteHeader(500)
 			fmt.Printf(err.Error())
@@ -399,7 +365,6 @@ func (c *MainController) AuthLogin() {
 		}
 		dataArr = append(dataArr, each)
 	}
-
 
 	if len(dataArr) == 0 {
 		c.Ctx.ResponseWriter.WriteHeader(404)
@@ -422,18 +387,16 @@ func (c *MainController) AuthLogin() {
 	statcod := c.Ctx.ResponseWriter.Status
 	statusCode := strconv.Itoa(statcod)
 
-
 	TokenTime := time.Now().Local().Add(time.Hour * time.Duration(12))
 
 	var response = models.LoginResponse{
 		ResponseStatus: true,
 		Status:         statusCode,
 		Message:        "Login Success",
-		Token: 			global.GenerateTokenJWT(dtpkm.Username+b64.StdEncoding.EncodeToString([]byte(dtpkm.Password))),
+		Token:          global.GenerateTokenJWT(dtpkm.Username + b64.StdEncoding.EncodeToString([]byte(dtpkm.Password))),
 		TokenExpired:   TokenTime.Format("2006-01-02 15:04:05"),
-		Data:           each,		
+		Data:           each,
 	}
-
 
 	c.Data["json"] = response
 
@@ -466,7 +429,6 @@ func (c *MainController) GetNewDate() {
 	c.ServeJSON()
 }
 
-
 func GetDate() string {
 	current_time := time.Now().Local()
 
@@ -477,6 +439,251 @@ func GetDate() string {
 
 	// fmt.Println(current_time.Format("2006-01-02"))
 	return response.CurrentDate
+}
+
+// @Title PKM
+// @Description pkm
+// @Param data body models.IndividualTransaction true "PostIndividualTransaction"
+// @Success 200 {object} models.IndividualTransactionResponse
+// @Failure 403 "Errorss"
+// @router /PostIndividualTransaction [post]
+func (c *MainController) PostIndividualTransaction() models.IndividualTransactionResponse {
+	decodeJson := json.NewDecoder(c.Ctx.Request.Body)
+	servDate := GetDate()
+
+	var dtpkm models.IndividualTransaction
+	err := decodeJson.Decode(&dtpkm)
+	if err != nil {
+		c.Ctx.ResponseWriter.WriteHeader(404)
+		statcod := c.Ctx.ResponseWriter.Status
+		statusCode := strconv.Itoa(statcod)
+
+		global.Logging("ERROR_PKM_INDIVIDU", "Decode Json ---> "+err.Error())
+
+		var response = models.IndividualTransactionResponse{
+			ResponseStatus: false,
+			Status:         statusCode,
+			Message:        err.Error(),
+			Statusid:       "2",
+		}
+		c.Data["json"] = response
+
+		c.ServeJSON()
+
+		return response
+	}
+
+	var tranDate = dtpkm.DetailTransaction.CreatedDate
+	if servDate != tranDate {
+		tranDate = servDate
+	}
+
+	db, err := global.ConnPKMPost()
+	if err != nil {
+		c.Ctx.ResponseWriter.WriteHeader(404)
+		statcod := c.Ctx.ResponseWriter.Status
+		statusCode := strconv.Itoa(statcod)
+
+		fmt.Println("json decode " + err.Error())
+		global.Logging("ERROR_PKM_INDIVIDU", "Decode Json ---> "+err.Error())
+
+		var response = models.IndividualTransactionResponse{
+			ResponseStatus: false,
+			Status:         statusCode,
+			Message:        err.Error(),
+			Statusid:       "2",
+		}
+		c.Data["json"] = response
+
+		c.ServeJSON()
+
+		return response
+	}
+
+	var queryCek string
+
+	queryCek = `SELECT 	OurBranchID,
+						GroupID,
+						Initial,
+						GroupName,
+						ClientID,
+						AccountID,
+						ClientName
+				FROM PKM_LPM_Transaction WITH(NOLOCK) WHERE AccountID IN (`
+	for i := 0; i < len(dtpkm.ListIndividualTransaction); i++ {
+		queryCek = queryCek + `'` + dtpkm.ListIndividualTransaction[i].AccountID
+		if i == len(dtpkm.ListIndividualTransaction)-1 {
+			queryCek = queryCek + `')`
+		} else {
+			queryCek = queryCek + `',`
+		}
+	}
+	queryCek = queryCek + ` AND CAST(TrxDate as DATE) = CAST('` + tranDate + `' AS DATE) AND AttendStatus IN ('1','2','5','6')`
+
+	failedData := []models.GetFailedIndividualTransaction{}
+
+	rows, err := db.Query(queryCek)
+	if err != nil {
+		c.Ctx.ResponseWriter.WriteHeader(404)
+		statcod := c.Ctx.ResponseWriter.Status
+		statusCode := strconv.Itoa(statcod)
+
+		fmt.Println("json decode " + err.Error())
+		global.Logging("ERROR_PKM_INDIVIDU", "Decode Json ---> "+err.Error())
+
+		var response = models.IndividualTransactionResponse{
+			ResponseStatus: false,
+			Status:         statusCode,
+			Message:        err.Error(),
+			Statusid:       "2",
+		}
+		c.Data["json"] = response
+
+		c.ServeJSON()
+
+		return response
+	}
+	defer rows.Close()
+	var each = models.GetFailedIndividualTransaction{}
+	for rows.Next() {
+		err = rows.Scan(&each.OurBranchID, &each.GroupID, &each.Initial, &each.GroupName, &each.ClientID, &each.AccountID, &each.ClientName)
+		if err != nil {
+			c.Ctx.ResponseWriter.WriteHeader(404)
+			statcod := c.Ctx.ResponseWriter.Status
+			statusCode := strconv.Itoa(statcod)
+
+			fmt.Println("json decode " + err.Error())
+			global.Logging("ERROR_PKM_INDIVIDU", "Decode Json ---> "+err.Error())
+
+			var response = models.IndividualTransactionResponse{
+				ResponseStatus: false,
+				Status:         statusCode,
+				Message:        err.Error(),
+				Statusid:       "2",
+			}
+			c.Data["json"] = response
+
+			c.ServeJSON()
+
+			return response
+		}
+		failedData = append(failedData, each)
+	}
+	// fmt.Println(len(failedData))
+	defer db.Close()
+
+	ctx := context.Background()
+	tx, err := db.BeginTx(ctx, nil)
+	if err != nil {
+		c.Ctx.ResponseWriter.WriteHeader(500)
+		statcod := c.Ctx.ResponseWriter.Status
+		statusCode := strconv.Itoa(statcod)
+
+		fmt.Println("begin tran " + err.Error())
+		global.Logging("ERROR_PKM", "Access Database Begin Transaction ---> "+err.Error())
+
+		var response = models.IndividualTransactionResponse{
+			ResponseStatus: false,
+			Status:         statusCode,
+			Message:        "Accessing Database Error",
+			Statusid:       "2",
+		}
+		c.Data["json"] = response
+
+		c.ServeJSON()
+
+		return response
+	}
+
+	var queryExec string
+	for i := 0; i < len(dtpkm.ListIndividualTransaction); i++ {
+		queryExec = `EXEC ADD_PKM_Transaction_PAR_Individual 
+						@GroupID = '` + dtpkm.ListIndividualTransaction[i].GroupID + `', 
+						@ClientID = '` + dtpkm.ListIndividualTransaction[i].ClientID + `', 
+						@AccountID = '` + dtpkm.ListIndividualTransaction[i].AccountID + `', 
+						@DebitValue = '` + dtpkm.ListIndividualTransaction[i].InstallmentAmount + `', 
+						@TTD1 = '1', 
+						@TTD2 = '2', 
+						@CreatedBy = '` + dtpkm.ListIndividualTransaction[i].CreatedBy + `', 
+						@CreatedDate = '` + tranDate + `'`
+
+		fmt.Println(queryExec)
+
+		_, err := tx.ExecContext(ctx, queryExec)
+		if err != nil {
+			c.Ctx.ResponseWriter.WriteHeader(400)
+			statcod := c.Ctx.ResponseWriter.Status
+			statusCode := strconv.Itoa(statcod)
+
+			fmt.Println("exec pkm " + err.Error())
+			global.Logging("ERROR_PKM_INDIVIDU", "Transaction "+queryExec+" --->"+dtpkm.ListIndividualTransaction[i].ClientID+"  ---> "+err.Error())
+
+			errrollback := tx.Rollback()
+			if errrollback != nil {
+				var response = models.IndividualTransactionResponse{
+					ResponseStatus: false,
+					Status:         statusCode,
+					Message:        errrollback.Error(),
+					Statusid:       "3",
+				}
+				c.Data["json"] = response
+				c.ServeJSON()
+				return response
+			}
+			var response = models.IndividualTransactionResponse{
+				ResponseStatus: false,
+				Status:         statusCode,
+				Message:        "Submit PKM to Database Error",
+				Statusid:       "3",
+			}
+			c.Data["json"] = response
+			c.ServeJSON()
+			return response
+		}
+	}
+
+	err = tx.Commit()
+	if err != nil {
+		c.Ctx.ResponseWriter.WriteHeader(400)
+		statcod := c.Ctx.ResponseWriter.Status
+		statusCode := strconv.Itoa(statcod)
+		global.Logging("ERROR_PKM", "Commit Transaction "+dtpkm.DetailTransaction.BranchID+"  ---> "+err.Error())
+		var response = models.IndividualTransactionResponse{
+			ResponseStatus: false,
+			Status:         statusCode,
+			Message:        "Submit Data to Database Error",
+			Statusid:       "3",
+		}
+		c.Data["json"] = response
+		c.ServeJSON()
+		return response
+	}
+
+	c.Ctx.ResponseWriter.WriteHeader(200)
+	statcod := c.Ctx.ResponseWriter.Status
+	statusCode := strconv.Itoa(statcod)
+
+	var response = models.IndividualTransactionResponse{
+		ResponseStatus:    true,
+		Status:            statusCode,
+		Message:           "Submit PKM Berhasil",
+		Statusid:          "1",
+		FailedTransaction: nil,
+	}
+
+	if len(failedData) != 0 {
+		response = models.IndividualTransactionResponse{
+			ResponseStatus:    true,
+			Status:            statusCode,
+			Message:           "Submit PKM Berhasil",
+			Statusid:          "1",
+			FailedTransaction: failedData,
+		}
+	}
+
+	c.Data["json"] = response
+	c.ServeJSON()
+	return response
 }
 
 // @Title PKM
@@ -501,7 +708,7 @@ func (c *MainController) PostTransaction() models.TransactionResponse {
 		statusCode := strconv.Itoa(statcod)
 
 		fmt.Println("json decode " + err.Error())
-		global.Logging("ERROR_PKM","Decode Json ---> " + err.Error())
+		global.Logging("ERROR_PKM", "Decode Json ---> "+err.Error())
 
 		var response = models.TransactionResponse{
 			ResponseStatus: false,
@@ -510,7 +717,7 @@ func (c *MainController) PostTransaction() models.TransactionResponse {
 			Statusid:       "2",
 		}
 		c.Data["json"] = response
-		
+
 		c.ServeJSON()
 
 		return response
@@ -523,10 +730,10 @@ func (c *MainController) PostTransaction() models.TransactionResponse {
 		tranDate = servDate
 	}
 
-	db,err := global.ConnPKM()
+	db, err := global.ConnPKMPost()
 	if err != nil {
 		fmt.Println(err.Error())
-	}	
+	}
 	defer db.Close()
 	// fmt.Println("ini tanggal yang dipake " + tranDate)
 
@@ -538,7 +745,7 @@ func (c *MainController) PostTransaction() models.TransactionResponse {
 		statusCode := strconv.Itoa(statcod)
 
 		fmt.Println("begin tran " + err.Error())
-		global.Logging("ERROR_PKM","Access Database Begin Transaction ---> " + err.Error())
+		global.Logging("ERROR_PKM", "Access Database Begin Transaction ---> "+err.Error())
 
 		var response = models.TransactionResponse{
 			ResponseStatus: false,
@@ -553,19 +760,18 @@ func (c *MainController) PostTransaction() models.TransactionResponse {
 		return response
 	}
 
-	var queryexec,querysign string
+	var queryexec, querysign string
 	for i := 0; i < len(dtpkm.TransactionPKM); i++ {
 
-		if (dtpkm.TransactionPKM[i].Savings == "null"){
+		if dtpkm.TransactionPKM[i].Savings == "null" {
 			dtpkm.TransactionPKM[i].Savings = "0"
 		}
 
-		if (dtpkm.TransactionPKM[i].InstallmentAmount == "null"){
+		if dtpkm.TransactionPKM[i].InstallmentAmount == "null" {
 			dtpkm.TransactionPKM[i].InstallmentAmount = "0"
 		}
-		
 
-		queryexec = `IF NOT EXISTS (SELECT 1 FROM PKM_LPM_Transaction_Individu WITH(NOLOCK) WHERE ClientID = '`+dtpkm.TransactionPKM[i].ClientID+`' AND AccountID = '`+dtpkm.TransactionPKM[i].AccountID+`' AND CAST(TrxDate as DATE) = CAST('`+tranDate+`' as DATE)) 
+		queryexec = `IF NOT EXISTS (SELECT 1 FROM PKM_LPM_Transaction_Individu WITH(NOLOCK) WHERE ClientID = '` + dtpkm.TransactionPKM[i].ClientID + `' AND AccountID = '` + dtpkm.TransactionPKM[i].AccountID + `' AND CAST(TrxDate as DATE) = CAST('` + tranDate + `' as DATE)) 
 		BEGIN
 			INSERT INTO PKM_LPM_Transaction
 			SELECT
@@ -573,20 +779,20 @@ func (c *MainController) PostTransaction() models.TransactionResponse {
 				Cabang_Mekaar.AreaID,
 				PKM_LPM.OurBranchID,
 				Initial,
-				'`+dtpkm.TransactionPKM[i].GroupID+`',
+				'` + dtpkm.TransactionPKM[i].GroupID + `',
 				GroupName,
 				MeetingDay,
 				NULL,
-				'`+dtpkm.TransactionPKM[i].ClientID+`',
+				'` + dtpkm.TransactionPKM[i].ClientID + `',
 				ClientName,
-				'`+dtpkm.TransactionPKM[i].AccountID+`',
+				'` + dtpkm.TransactionPKM[i].AccountID + `',
 				NULL,
 				ProductID,
-				'`+dtpkm.TransactionPKM[i].AttendStatus+`',
-				'`+dtpkm.TransactionPKM[i].InstallmentAmount+`',
+				'` + dtpkm.TransactionPKM[i].AttendStatus + `',
+				'` + dtpkm.TransactionPKM[i].InstallmentAmount + `',
 				VolAccountID,
-				'`+dtpkm.TransactionPKM[i].Savings+`',
-				'`+dtpkm.TransactionPKM[i].WithDraw+`',
+				'` + dtpkm.TransactionPKM[i].Savings + `',
+				'` + dtpkm.TransactionPKM[i].WithDraw + `',
 				'0',
 				NULL,
 				MeetingPlace,
@@ -611,8 +817,8 @@ func (c *MainController) PostTransaction() models.TransactionResponse {
 					ELSE AO_GROUP.Username
 				END,
 				AO.NAMA,				
-				CAST('`+tranDate+`' as DATETIME),
-				CAST('`+tranDate+`' as DATETIME),
+				CAST('` + tranDate + `' as DATETIME),
+				CAST('` + tranDate + `' as DATETIME),
 				NULL,
 				0,
 				CASE
@@ -630,7 +836,7 @@ func (c *MainController) PostTransaction() models.TransactionResponse {
 			ON PKM_LPM.GroupID = AO_GROUP.GROUPID AND PKM_LPM.OurBranchID = AO_GROUP.OURBRANCHID
 			INNER JOIN Cabang_Mekaar WITH(NOLOCK) ON PKM_LPM.OurBranchID = Cabang_Mekaar.OurBranchID
 			INNER JOIN AO WITH(NOLOCK) ON AO_GROUP.Username = AO.USERNAME
-			WHERE ClientID = '`+dtpkm.TransactionPKM[i].ClientID+`' AND AccountID = '`+dtpkm.TransactionPKM[i].AccountID+`'
+			WHERE ClientID = '` + dtpkm.TransactionPKM[i].ClientID + `' AND AccountID = '` + dtpkm.TransactionPKM[i].AccountID + `'
 
 			PRINT 'Successful'
 		END
@@ -649,8 +855,7 @@ func (c *MainController) PostTransaction() models.TransactionResponse {
 			statusCode := strconv.Itoa(statcod)
 
 			fmt.Println("exec pkm " + err.Error())
-			global.Logging("ERROR_PKM","Transaction "+queryexec+" --->" + dtpkm.TransactionPKM[i].GroupID + "  ---> " + err.Error())
-
+			global.Logging("ERROR_PKM", "Transaction "+queryexec+" --->"+dtpkm.TransactionPKM[i].GroupID+"  ---> "+err.Error())
 
 			errrollback := tx.Rollback()
 			if errrollback != nil {
@@ -663,9 +868,9 @@ func (c *MainController) PostTransaction() models.TransactionResponse {
 				c.Data["json"] = response
 
 				c.ServeJSON()
-	
+
 				return response
-			}			
+			}
 
 			var response = models.TransactionResponse{
 				ResponseStatus: false,
@@ -680,7 +885,7 @@ func (c *MainController) PostTransaction() models.TransactionResponse {
 			return response
 		}
 	}
-	
+
 	// querysign = `BEGIN
 	// 	INSERT INTO PKM_SIGNATURES VALUES (
 	// 		(SELECT TOP 1 OurBranchID FROM AO_GROUP WITH(NOLOCK) WHERE GROUPID = '`+dtpkm.Signature.GroupID+`'),
@@ -695,20 +900,20 @@ func (c *MainController) PostTransaction() models.TransactionResponse {
 	// 		'`+dtpkm.Signature.Longitude+`'
 	// 	)
 	// 	END`
-	
+
 	var fileimages = make(map[string]string)
 	fileimages["TtdAccountOfficer"] = dtpkm.Signature.TtdAccountOfficer
 	fileimages["TtdKetuaKelompok"] = dtpkm.Signature.TtdKetuaKelompok
 
-	fileimages,err = global.MapB64SaveFile(fileimages,beego.AppConfig.String("pathimages"))
-	if err != nil { 			
+	fileimages, err = global.MapB64SaveFile(fileimages, beego.AppConfig.String("pathimages"))
+	if err != nil {
 		// tx.Rollback()
 		c.Ctx.ResponseWriter.WriteHeader(400)
 		statcod := c.Ctx.ResponseWriter.Status
 		statusCode := strconv.Itoa(statcod)
 
 		fmt.Println("exec signature " + err.Error())
-		global.Logging("ERROR_PKM","images SIGNATURE  ---> " + err.Error())
+		global.Logging("ERROR_PKM", "images SIGNATURE  ---> "+err.Error())
 
 		errrollback := tx.Rollback()
 		if errrollback != nil {
@@ -723,7 +928,7 @@ func (c *MainController) PostTransaction() models.TransactionResponse {
 			c.ServeJSON()
 
 			return response
-		}		
+		}
 
 		var response = models.TransactionResponse{
 			ResponseStatus: false,
@@ -736,20 +941,20 @@ func (c *MainController) PostTransaction() models.TransactionResponse {
 		c.ServeJSON()
 
 		return response
-	}	
+	}
 
 	querysign = `BEGIN
 		INSERT INTO PKM_SIGNATURES VALUES (
-			(SELECT TOP 1 OurBranchID FROM AO_GROUP WITH(NOLOCK) WHERE GROUPID = '`+dtpkm.Signature.GroupID+`'),
-			'`+dtpkm.Signature.GroupID+`',
-			'`+tranDate+`',
-			'`+fileimages["TtdAccountOfficer"]+`',
-			'`+fileimages["TtdKetuaKelompok"]+`',
+			(SELECT TOP 1 OurBranchID FROM AO_GROUP WITH(NOLOCK) WHERE GROUPID = '` + dtpkm.Signature.GroupID + `'),
+			'` + dtpkm.Signature.GroupID + `',
+			'` + tranDate + `',
+			'` + fileimages["TtdAccountOfficer"] + `',
+			'` + fileimages["TtdKetuaKelompok"] + `',
 			NULL,
 			NULL,
 			NEWID(),
-			'`+dtpkm.Signature.Latitude+`',
-			'`+dtpkm.Signature.Longitude+`'
+			'` + dtpkm.Signature.Latitude + `',
+			'` + dtpkm.Signature.Longitude + `'
 		)
 		END`
 
@@ -763,7 +968,7 @@ func (c *MainController) PostTransaction() models.TransactionResponse {
 		statusCode := strconv.Itoa(statcod)
 
 		fmt.Println("exec signature " + err.Error())
-		global.Logging("ERROR_PKM","Transaction SIGNATURE " + querysign + "  ---> " + err.Error())
+		global.Logging("ERROR_PKM", "Transaction SIGNATURE "+querysign+"  ---> "+err.Error())
 
 		errrollback := tx.Rollback()
 		if errrollback != nil {
@@ -778,7 +983,7 @@ func (c *MainController) PostTransaction() models.TransactionResponse {
 			c.ServeJSON()
 
 			return response
-		}		
+		}
 
 		var response = models.TransactionResponse{
 			ResponseStatus: false,
@@ -787,7 +992,7 @@ func (c *MainController) PostTransaction() models.TransactionResponse {
 			Statusid:       "3",
 		}
 		c.Data["json"] = response
-		
+
 		c.ServeJSON()
 
 		return response
@@ -799,7 +1004,7 @@ func (c *MainController) PostTransaction() models.TransactionResponse {
 		statcod := c.Ctx.ResponseWriter.Status
 		statusCode := strconv.Itoa(statcod)
 
-		global.Logging("ERROR_PKM","Commit Transaction " + dtpkm.Signature.GroupID + "  ---> " + err.Error())
+		global.Logging("ERROR_PKM", "Commit Transaction "+dtpkm.Signature.GroupID+"  ---> "+err.Error())
 
 		var response = models.TransactionResponse{
 			ResponseStatus: false,
@@ -826,8 +1031,6 @@ func (c *MainController) PostTransaction() models.TransactionResponse {
 		Statusid:       "1",
 	}
 	c.Data["json"] = response
-
-
 
 	c.ServeJSON()
 
